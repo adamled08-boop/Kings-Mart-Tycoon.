@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#101827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>King's Mart Tycoon</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#0b1120;
+  color:#f8fafc;
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100%;
+}
+
+body{
+  padding-bottom:80px;
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+  color:white;
+}
+
+.app{
+  width:100%;
+  max-width:900px;
+  margin:auto;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:#111827;
+  border-bottom:1px solid #263244;
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:19px;
+  font-weight:900;
+}
+
+.subtitle{
+  color:#94a3b8;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.money{
+  background:#172235;
+  border:1px solid #30415a;
+  border-radius:12px;
+  padding:8px 11px;
+  font-weight:900;
+  color:#86efac;
+}
+
+main{
+  padding:14px;
+}
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
+}
+
+.hero{
+  background:linear-gradient(135deg,#172554,#111827);
+  border:1px solid #334155;
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:14px;
+}
+
+.hero h1{
+  margin:0 0 6px;
+  font-size:30px;
+}
+
+.hero p{
+  color:#cbd5e1;
+  margin:0 0 18px;
+}
+
+.primary{
+  background:#2563eb;
+}
+
+.primary:active{
+  transform:scale(.98);
+}
+
+.card{
+  background:#111827;
+  border:1px solid #263244;
+  border-radius:17px;
+  padding:15px;
+  margin-bottom:14px;
+}
+
+.card h2{
+  margin:0 0 12px;
+  font-size:19px;
+}
+
+.card h3{
+  margin:0 0 8px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.stat{
+  background:#111827;
+  border:1px solid #263244;
+  border-radius:15px;
+  padding:13px;
+}
+
+.stat-label{
+  color:#94a3b8;
+  font-size:12px;
+}
+
+.stat-value{
+  font-size:21px;
+  font-weight:900;
+  margin-top:5px;
+}
+
+button.action{
+  width:100%;
+  background:#1e293b;
+  border:1px solid #334155;
+  border-radius:12px;
+  padding:12px;
+  margin-top:8px;
+  font-weight:800;
+}
+
+button.action:active{
+  transform:scale(.985);
+}
+
+button.blue{
+  background:#2563eb;
+}
+
+button.green{
+  background:#15803d;
+}
+
+button.red{
+  background:#b91c1c;
+}
+
+button.gold{
+  background:#a16207;
+}
+
+button.purple{
+  background:#7e22ce;
+}
+
+button.small{
+  width:auto;
+  padding:8px 10px;
+  margin:0;
+}
+
+.row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.row>*{
+  flex:1;
+}
+
+.progress{
+  width:100%;
+  height:12px;
+  background:#020617;
+  border-radius:99px;
+  overflow:hidden;
+  margin:7px 0 12px;
+}
+
+.progress div{
+  height:100%;
+  width:0%;
+  background:#22c55e;
+  transition:.4s;
+}
+
+.health{
+  background:#020617;
+  border-radius:99px;
+  height:15px;
+  overflow:hidden;
+}
+
+.health div{
+  height:100%;
+  background:#ef4444;
+  width:100%;
+}
+
+.good{
+  color:#86efac;
+}
+
+.bad{
+  color:#fca5a5;
+}
+
+.muted{
+  color:#94a3b8;
+}
+
+.goldtext{
+  color:#facc15;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.section-title h2{
+  margin:0;
+}
+
+.back{
+  background:#1e293b;
+  border:1px solid #334155;
+  padding:8px 11px;
+  border-radius:10px;
+}
+
+.shop-card{
+  position:relative;
+  overflow:hidden;
+}
+
+.shop-icon{
+  font-size:40px;
+  float:left;
+  margin-right:12px;
+}
+
+.shop-status{
+  font-size:11px;
+  font-weight:900;
+  padding:4px 7px;
+  border-radius:7px;
+  background:#14532d;
+  color:#bbf7d0;
+  display:inline-block;
+}
+
+.shop-status.closed{
+  background:#3f3f46;
+  color:#d4d4d8;
+}
+
+.city{
+  position:relative;
+  width:100%;
+  height:540px;
+  overflow:hidden;
+  border-radius:20px;
+  border:1px solid #334155;
+  background:
+    linear-gradient(90deg,transparent 48%,#475569 49%,#475569 52%,transparent 53%),
+    linear-gradient(0deg,transparent 47%,#475569 48%,#475569 51%,transparent 52%),
+    #172a20;
+}
+
+.city:before,
+.city:after{
+  content:"";
+  position:absolute;
+  background:#334155;
+}
+
+.city:before{
+  width:100%;
+  height:28px;
+  top:25%;
+  left:0;
+  box-shadow:0 180px #334155;
+}
+
+.city:after{
+  height:100%;
+  width:28px;
+  left:28%;
+  top:0;
+  box-shadow:220px 0 #334155;
+}
+
+.location{
+  position:absolute;
+  z-index:5;
+  width:74px;
+  min-height:65px;
+  border-radius:14px;
+  padding:5px;
+  border:2px solid #475569;
+  background:#0f172a;
+  font-size:27px;
+  box-shadow:0 5px 15px #0008;
+}
+
+.location span{
+  display:block;
+  font-size:9px;
+  font-weight:900;
+}
+
+.location.player{
+  border-color:#3b82f6;
+}
+
+.location.rival{
+  border-color:#ef4444;
+}
+
+.location.abandoned{
+  border-color:#f59e0b;
+}
+
+.location.for-sale{
+  border-color:#22c55e;
+}
+
+.employee{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  background:#172033;
+  border:1px solid #2c3a50;
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:9px;
+}
+
+.avatar{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#334155;
+  font-size:24px;
+}
+
+.employee-info{
+  flex:1;
+}
+
+.employee-name{
+  font-weight:900;
+}
+
+.employee-stats{
+  font-size:11px;
+  color:#94a3b8;
+  margin-top:3px;
+}
+
+.badge{
+  font-size:10px;
+  background:#7e22ce;
+  padding:5px 7px;
+  border-radius:7px;
+  font-weight:900;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:#000b;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:430px;
+  background:#111827;
+  border:1px solid #334155;
+  border-radius:20px;
+  padding:20px;
+}
+
+.modal-box h2{
+  margin-top:0;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  border-radius:11px;
+  border:1px solid #475569;
+  background:#020617;
+  color:white;
+  outline:none;
+  margin:8px 0 12px;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:60;
+  background:#0f172a;
+  border-top:1px solid #334155;
+  display:flex;
+  justify-content:center;
+}
+
+.bottom-nav button{
+  flex:1;
+  max-width:180px;
+  background:transparent;
+  padding:9px 4px 8px;
+  color:#94a3b8;
+  font-size:21px;
+}
+
+.bottom-nav button.active{
+  color:#60a5fa;
+}
+
+.bottom-nav small{
+  display:block;
+  font-size:10px;
+  font-weight:800;
+}
+
+.notice{
+  padding:12px;
+  border-radius:12px;
+  background:#172554;
+  border:1px solid #1d4ed8;
+  margin-bottom:12px;
+  font-size:13px;
+}
+
+.event{
+  background:#422006;
+  border:1px solid #92400e;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:12px;
+}
+
+.achievement{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:11px;
+  background:#172033;
+  border-radius:11px;
+  margin-bottom:7px;
+}
+
+.locked{
+  opacity:.4;
+}
+
+.log{
+  max-height:250px;
+  overflow:auto;
+  font-size:12px;
+}
+
+.log-entry{
+  padding:8px 0;
+  border-bottom:1px solid #263244;
+}
+
+.shop-list{
+  display:grid;
+  gap:10px;
+}
+
+@media(min-width:700px){
+  .grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="topbar">
+  <div>
+    <div class="logo">👑 King's Mart Tycoon</div>
+    <div class="subtitle" id="companyHeader">Your Empire</div>
+  </div>
+  <div class="money">💷 <span id="money">10,000</span></div>
+</header>
+
+<main>
+
+<!-- HOME -->
+
+<section id="home" class="screen active">
+
+  <div class="hero">
+    <h1>Build Your Empire</h1>
+    <p>
+      Start with one run-down shop.
+      Take customers from King's Mart.
+      Build the biggest retail empire in the city.
+    </p>
+    <button class="action primary" onclick="showScreen('city')">
+      🗺️ Enter City
+    </button>
+  </div>
+
+  <div id="eventArea"></div>
+
+  <div class="grid">
+
+    <div class="stat">
+      <div class="stat-label">💷 Cash</div>
+      <div class="stat-value" id="statCash">£10,000</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">🏪 Shops</div>
+      <div class="stat-value" id="statShops">1</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">👥 Customers/min</div>
+      <div class="stat-value" id="statCustomers">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">🎯 Market Share</div>
+      <div class="stat-value" id="statMarket">5%</div>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="section-title">
+      <h2>🏢 Company</h2>
+      <button class="back small" onclick="renameCompany()">Rename</button>
+    </div>
+
+    <h3 id="companyName">Your Stores</h3>
+
+    <p class="muted">
+      Reputation:
+      <strong id="companyRep">10</strong>/100
+    </p>
+
+    <div class="progress">
+      <div id="repBar"></div>
+    </div>
+
+    <p>
+      Total profit:
+      <strong class="good" id="totalProfit">£0</strong>/min
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>🏪 Your Stores</h2>
+
+    <div id="homeShops"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>👑 Main Rival</h2>
+
+    <h3>King's Mart</h3>
+
+    <p>
+      King's Mart currently operates
+      <strong id="rivalShopCount">3</strong> stores.
+    </p>
+
+    <p>
+      Customers:
+      <strong id="rivalCustomers">500</strong>/min
+    </p>
+
+    <p>
+      Profit:
+      <strong id="rivalProfit">£1,500</strong>/min
+    </p>
+
+    <button class="action red" onclick="showScreen('rivals')">
+      ⚔️ Attack Their Market
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- CITY -->
+
+<section id="city" class="screen">
+
+  <div class="section-title">
+    <h2>🗺️ City</h2>
+    <button class="back" onclick="showScreen('home')">← Home</button>
+  </div>
+
+  <div class="notice">
+    🟢 Your stores are blue.
+    🔴 King's Mart stores are red.
+    🟡 Abandoned properties can be purchased.
+  </div>
+
+  <div class="city" id="cityMap"></div>
+
+  <div class="card">
+    <h2>🏙️ City Expansion</h2>
+    <p class="muted">
+      Buy abandoned properties, destroy the competition,
+      and eventually control every major location.
+    </p>
+    <p>
+      Locations controlled:
+      <strong id="locationsControlled">1</strong>
+    </p>
+  </div>
+
+</section>
+
+
+<!-- SHOPS -->
+
+<section id="shops" class="screen">
+
+  <div class="section-title">
+    <h2>🏪 Your Shops</h2>
+    <button class="back" onclick="showScreen('home')">← Home</button>
+  </div>
+
+  <div id="allShops"></div>
+
+</section>
+
+
+<!-- SHOP DETAIL -->
+
+<section id="shop" class="screen">
+
+  <div class="section-title">
+    <h2 id="detailTitle">🏪 Shop</h2>
+    <button class="back" onclick="showScreen('shops')">← Shops</button>
+  </div>
+
+  <div id="shopDetail"></div>
+
+</section>
+
+
+<!-- EMPLOYEES -->
+
+<section id="employees" class="screen">
+
+  <div class="section-title">
+    <h2>👨‍💼 Employees</h2>
+    <button class="back" onclick="showScreen('home')">← Home</button>
+  </div>
+
+  <div class="notice">
+    Employees improve your stores.
+    Exceptional employees can transform your business.
+  </div>
+
+  <div id="employeeList"></div>
+
+  <div class="card">
+    <h2>📋 Hiring</h2>
+    <p class="muted">
+      More employees become available as your company grows.
+    </p>
+
+    <button class="action blue" onclick="hireEmployee()">
+      👤 Hire Random Employee — £2,000
+    </button>
+  </div>
+
+</section>
+
+
+<!-- RIVALS -->
+
+<section id="rivals" class="screen">
+
+  <div class="section-title">
+    <h2>⚔️ Competition</h2>
+    <button class="back" onclick="showScreen('home')">← Home</button>
+  </div>
+
+  <div class="card">
+
+    <h2>👑 KING'S MART</h2>
+
+    <p class="muted">
+      Your biggest enemy in the city.
+    </p>
+
+    <p>
+      Reputation:
+      <strong id="rivalRep">75</strong>/100
+    </p>
+
+    <div class="progress">
+      <div id="rivalRepBar"></div>
+    </div>
+
+    <p>
+      Customers:
+      <strong id="rivalCust2">500</strong>/min
+    </p>
+
+    <p>
+      Profit:
+      <strong id="rivalProfit2">£1,500</strong>/min
+    </p>
+
+    <p>
+      Financial health:
+      <strong id="rivalHealthText">HEALTHY</strong>
+    </p>
+
+    <div class="health">
+      <div id="rivalHealthBar"></div>
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>🎯 Business Warfare</h2>
+
+    <p class="muted">
+      You don't directly steal money from King's Mart.
+      You take their customers. Their lower sales reduce their
+      profits, damage their finances and eventually make their
+      stores available for purchase.
+    </p>
+
+    <button class="action blue" onclick="advertise()">
+      📢 Advertising Campaign — £500
+    </button>
+
+    <button class="action gold" onclick="priceWar()">
+      💷 Start Price War — £300
+    </button>
+
+    <button class="action purple" onclick="qualityAttack()">
+      ⭐ Improve Customer Experience — £800
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>📉 Rival Timeline</h2>
+    <div id="rivalLog"></div>
+  </div>
+
+</section>
+
+
+<!-- UPGRADES -->
+
+<section id="upgrades" class="screen">
+
+  <div class="section-title">
+    <h2>🔧 Upgrades</h2>
+    <button class="back" onclick="showScreen('home')">← Home</button>
+  </div>
+
+  <div class="card">
+
+    <h2>🏪 Select a Shop</h2>
+
+    <div id="upgradeShopList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- ACHIEVEMENTS -->
+
+<section id="achievements" class="screen">
+
+  <div class="section-title">
+    <h2>🏆 Achievements</h2>
+    <button class="back" onclick="showScreen('home')">← Home</button>
+  </div>
+
+  <div id="achievementList"></div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section id="settings" class="screen">
+
+  <div class="section-title">
+    <h2>⚙️ Settings</h2>
+    <button class="back" onclick="showScreen('home')">← Home</button>
+  </div>
+
+  <div class="card">
+
+    <h2>💾 Save Game</h2>
+
+    <p class="muted">
+      Your game automatically saves to this device.
+    </p>
+
+    <button class="action green" onclick="saveGame()">
+      💾 Save Now
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <h2>🔄 New Game</h2>
+
+    <p class="bad">
+      This permanently deletes your current local save.
+    </p>
+
+    <button class="action red" onclick="resetGame()">
+      🗑️ Delete Save & Start Again
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <h2>ℹ️ About</h2>
+
+    <p>
+      <strong>King's Mart Tycoon</strong>
+    </p>
+
+    <p class="muted">
+      Build shops. Hire employees. Steal customers.
+      Crush the competition. Own the city.
+    </p>
+
+    <p class="muted">
+      Version 1.0
+    </p>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+  <button id="navHome" onclick="showScreen('home')">
+    🏠
+    <small>Home</small>
+  </button>
+
+  <button id="navCity" onclick="showScreen('city')">
+    🗺️
+    <small>City</small>
+  </button>
+
+  <button id="navShops" onclick="showScreen('shops')">
+    🏪
+    <small>Shops</small>
+  </button>
+
+  <button id="navEmployees" onclick="showScreen('employees')">
+    👨‍💼
+    <small>Staff</small>
+  </button>
+
+  <button id="navRivals" onclick="showScreen('rivals')">
+    ⚔️
+    <small>Rivals</small>
+  </button>
+
+</nav>
+
+</div>
+
+
+<!-- NAME MODAL -->
+
+<div class="modal" id="nameModal">
+
+  <div class="modal-box">
+
+    <h2>🏢 Build Your Company</h2>
+
+    <p class="muted">
+      What will your retail empire be called?
+    </p>
+
+    <input
+      id="companyInput"
+      maxlength="30"
+      placeholder="Example: Adam's Stores"
+    >
+
+    <button class="action blue" onclick="startGame()">
+      🚀 Start Empire
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   KING'S MART TYCOON
+   SINGLE FILE GAME ENGINE
+   ========================================================= */
+
+
+/* -------------------------
+   DEFAULT GAME STATE
+------------------------- */
+
+const DEFAULT_GAME = {
+
+  started:false,
+
+  company:"Your Stores",
+
+  cash:10000,
+
+  reputation:10,
+
+  marketShare:5,
+
+  totalCustomers:0,
+
+  totalEarned:0,
+
+  totalSpent:0,
+
+  totalShopsBought:0,
+
+  rivalAttacks:0,
+
+  lastSave:Date.now(),
+
+  lastTick:Date.now(),
+
+  event:null,
+
+  shops:[
+
+    {
+      id:1,
+      name:"Your Corner Shop",
+      location:"Old Town",
+      level:1,
+      condition:25,
+      open:false,
+
+      customers:0,
+      revenue:0,
+      profit:0,
+
+      price:50,
+      quality:40,
+      advertising:10,
+
+      upgrades:{
+        renovation:0,
+        shelves:0,
+        fridges:0,
+        lighting:0,
+        security:0,
+        checkout:0,
+        staffRoom:0,
+        expansion:0
+      },
+
+      employees:[]
+
+    }
+
+  ],
+
+  employees:[
+
+    {
+      id:1,
+      name:"Adam",
+      age:18,
+      intelligence:100,
+      management:95,
+      stocking:65,
+      customerService:72,
+      problemSolving:100,
+      ability:"Natural Manager",
+      hired:true
+    },
+
+    {
+      id:2,
+      name:"Sarah",
+      age:29,
+      intelligence:78,
+      management:62,
+      stocking:85,
+      customerService:88,
+      problemSolving:71,
+      ability:"Friendly",
+      hired:false
+    },
+
+    {
+      id:3,
+      name:"Mike",
+      age:41,
+      intelligence:65,
+      management:80,
+      stocking:94,
+      customerService:65,
+      problemSolving:73,
+      ability:"Stock Expert",
+      hired:false
+    }
+
+  ],
+
+  rival:{
+
+    name:"King's Mart",
+
+    cash:250000,
+
+    reputation:75,
+
+    customers:500,
+
+    profit:1500,
+
+    health:100,
+
+    shops:3,
+
+    advertising:80,
+
+    price:70,
+
+    quality:75,
+
+    aggression:60,
+
+    state:"HEALTHY",
+
+    locations:[
+
+      {
+        id:"km1",
+        name:"King's Mart Central",
+        x:65,
+        y:22,
+        forSale:false
+      },
+
+      {
+        id:"km2",
+        name:"King's Mart North",
+        x:52,
+        y:53,
+        forSale:false
+      },
+
+      {
+        id:"km3",
+        name:"King's Mart East",
+        x:72,
+        y:72,
+        forSale:false
+      }
+
+    ]
+
+  },
+
+  properties:[
+
+    {
+      id:"p1",
+      name:"Old Bakery",
+      location:"Old Town",
+      x:20,
+      y:65,
+      price:7500,
+      owned:false
+    },
+
+    {
+      id:"p2",
+      name:"Empty Supermarket",
+      location:"North Road",
+      x:30,
+      y:25,
+      price:12000,
+      owned:false
+    },
+
+    {
+      id:"p3",
+      name:"Abandoned Cafe",
+      location:"Market Street",
+      x:45,
+      y:80,
+      price:18000,
+      owned:false
+    },
+
+    {
+      id:"p4",
+      name:"Old Warehouse",
+      location:"Industrial",
+      x:82,
+      y:40,
+      price:30000,
+      owned:false
+    },
+
+    {
+      id:"p5",
+      name:"Empty Store",
+      location:"West End",
+      x:12,
+      y:42,
+      price:22000,
+      owned:false
+    },
+
+    {
+      id:"p6",
+      name:"Shopping Unit",
+      location:"City Centre",
+      x:86,
+      y:85,
+      price:45000,
+      owned:false
+    }
+
+  ],
+
+  achievements:{
+
+    firstShop:false,
+    tenThousand:false,
+    fiveShops:false,
+    rivalPressure:false,
+    rivalSale:false,
+    hundredThousand:false,
+    million:false,
+    cityController:false
+
+  },
+
+  logs:[
+
+    "Welcome to the city.",
+
+    "Your first shop is ready for renovation.",
+
+    "King's Mart controls the market. Beat them."
+
+  ]
+
+};
+
+
+/* -------------------------
+   LOAD GAME
+------------------------- */
+
+let game = loadGame();
+
+
+function loadGame(){
+
+  try{
+
+    const saved =
+      localStorage.getItem("kingsMartTycoonSave");
+
+    if(saved){
+
+      const parsed = JSON.parse(saved);
+
+      return deepMerge(
+        JSON.parse(JSON.stringify(DEFAULT_GAME)),
+        parsed
+      );
+
+    }
+
+  }catch(error){
+
+    console.log("Save load error",error);
+
+  }
+
+  return JSON.parse(
+    JSON.stringify(DEFAULT_GAME)
+  );
+}
+
+
+function deepMerge(target,source){
+
+  for(const key in source){
+
+    if(
+      source[key] &&
+      typeof source[key] === "object" &&
+      !Array.isArray(source[key])
+    ){
+
+      if(!target[key])
+        target[key]={};
+
+      deepMerge(target[key],source[key]);
+
+    }else{
+
+      target[key]=source[key];
+
+    }
+
+  }
+
+  return target;
+}
+
+
+/* -------------------------
+   START GAME
+------------------------- */
+
+function init(){
+
+  if(!game.started){
+
+    document.getElementById("nameModal")
+      .classList.add("show");
+
+  }
+
+  render();
+
+  calculateOffline();
+
+}
+
+
+function startGame(){
+
+  const input =
+    document.getElementById("companyInput");
+
+  const name =
+    input.value.trim() || "Your Stores";
+
+  game.company=name;
+
+  game.started=true;
+
+  addLog(
+    "🏢 " +
+    name +
+    " has entered the retail market!"
+  );
+
+  saveGame();
+
+  document
+    .getElementById("nameModal")
+    .classList.remove("show");
+
+  render();
+
+}
+
+
+function renameCompany(){
+
+  const newName =
+    prompt(
+      "Enter your new company name:",
+      game.company
+    );
+
+  if(newName && newName.trim()){
+
+    game.company=
+      newName.trim().slice(0,30);
+
+    addLog(
+      "🏢 Company renamed to " +
+      game.company
+    );
+
+    saveGame();
+
+    render();
+
+  }
+
+}
+
+
+/* -------------------------
+   MONEY
+------------------------- */
+
+function money(value){
+
+  return "£" +
+    Math.floor(value)
+      .toLocaleString("en-GB");
+
+}
+
+
+/* -------------------------
+   NAVIGATION
+------------------------- */
+
+function showScreen(screen){
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(s=>{
+      s.classList.remove("active");
+    });
+
+  const target =
+    document.getElementById(screen);
+
+  if(target)
+    target.classList.add("active");
+
+  document
+    .querySelectorAll(".bottom-nav button")
+    .forEach(b=>{
+      b.classList.remove("active");
+    });
+
+  const nav =
+    document.getElementById(
+      "nav" +
+      screen.charAt(0).toUpperCase() +
+      screen.slice(1)
+    );
+
+  if(nav)
+    nav.classList.add("active");
+
+  render();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function openShop(id){
+
+  game.selectedShop=id;
+
+  renderShopDetail();
+
+  showScreen("shop");
+
+}
+
+
+/* -------------------------
+   SHOP ECONOMY
+------------------------- */
+
+function shopPower(shop){
+
+  let power=1;
+
+  power += shop.level * .18;
+
+  power += shop.condition / 100;
+
+  power += shop.quality / 250;
+
+  power += shop.advertising / 300;
+
+  power += shop.upgrades.shelves * .08;
+
+  power += shop.upgrades.fridges * .09;
+
+  power += shop.upgrades.lighting * .06;
+
+  power += shop.upgrades.security * .03;
+
+  power += shop.upgrades.checkout * .07;
+
+  power += shop.upgrades.expansion * .25;
+
+  const staff =
+    game.employees.filter(e=>
+      e.hired &&
+      shop.employees.includes(e.id)
+    );
+
+  staff.forEach(e=>{
+
+    power += e.customerService / 1000;
+
+    power += e.stock / 1000;
+
+    power += e.management / 1500;
+
+  });
+
+  return power;
+
+}
+
+
+function calculateShop(shop){
+
+  if(!shop.open || shop.condition<=0){
+
+    shop.customers=0;
+
+    shop.revenue=0;
+
+    shop.profit=0;
+
+    return;
+
+  }
+
+  let base=4;
+
+  base *= shopPower(shop);
+
+  const distanceFactor=1;
+
+  const priceFactor =
+    Math.max(
+      .45,
+      1.15 - (shop.price/100)
+    );
+
+  const repFactor =
+    .75 + (game.reputation/200);
+
+  let customers =
+    base *
+    priceFactor *
+    repFactor *
+    distanceFactor;
+
+  customers =
+    Math.max(
+      0,
+      Math.floor(customers)
+    );
+
+  shop.customers=customers;
+
+  shop.revenue=
+    Math.floor(
+      customers *
+      (shop.price/10)
+    );
+
+  const costs=
+    Math.floor(

@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0,
-maximum-scale=1.0, user-scalable=no,
-viewport-fit=cover">
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no,
+      viewport-fit=cover">
 
 <title>King's Mart Tycoon</title>
 
 <style>
 
 /* =========================================================
-   BASIC
+   CORE
 ========================================================= */
 
 *{
@@ -21,14 +21,13 @@ viewport-fit=cover">
     -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
-    margin:0;
+html,body{
     width:100%;
     height:100%;
+    margin:0;
     overflow:hidden;
     font-family:Arial,Helvetica,sans-serif;
-    background:#10151b;
+    background:#10161c;
     color:white;
 }
 
@@ -39,7 +38,6 @@ body{
 button{
     font-family:inherit;
     border:0;
-    cursor:pointer;
 }
 
 #game{
@@ -47,7 +45,7 @@ button{
     width:100vw;
     height:100vh;
     overflow:hidden;
-    background:#78a96a;
+    background:#79aa69;
 }
 
 
@@ -57,112 +55,105 @@ button{
 
 #topBar{
     position:absolute;
-    z-index:50;
+    z-index:100;
+
     top:0;
     left:0;
     right:0;
 
-    min-height:76px;
-
-    padding:8px;
+    height:76px;
 
     display:flex;
     align-items:center;
     gap:8px;
 
-    background:rgba(12,17,22,.96);
+    padding:8px;
 
-    border-bottom:2px solid #38434d;
+    background:rgba(11,16,21,.97);
+    border-bottom:2px solid #3c4852;
 }
 
 .brand{
-    min-width:175px;
-    padding:6px 10px;
+    width:185px;
+    min-width:185px;
+    padding:4px 9px;
 }
 
 .brandName{
+    color:#ffd447;
     font-size:20px;
     font-weight:900;
-    color:#ffd34d;
 
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
 
-.brandSmall{
-    color:#87939f;
-    font-size:10px;
+.brandSub{
+    color:#84909b;
+    font-size:9px;
     margin-top:2px;
+    font-weight:bold;
 }
 
 .stats{
+    flex:1;
+
     display:flex;
     gap:7px;
-    flex:1;
+
     overflow:hidden;
 }
 
 .stat{
-    min-width:88px;
+    min-width:85px;
 
     padding:7px 9px;
 
-    border-radius:10px;
+    border-radius:9px;
 
     background:#202a33;
     border:1px solid #3c4a55;
 }
 
 .statLabel{
-    color:#8d9aa5;
+    color:#8f9ca7;
     font-size:9px;
     text-transform:uppercase;
 }
 
 .statValue{
-    margin-top:2px;
-    font-size:16px;
+    margin-top:3px;
+    font-size:15px;
     font-weight:900;
 }
 
 .money{
-    color:#72e38a;
+    color:#6ee184;
 }
 
 
 /* =========================================================
-   CITY
+   WORLD
 ========================================================= */
 
 #world{
     position:absolute;
 
-    top:76px;
     left:0;
     right:0;
-    bottom:72px;
+    top:76px;
+    bottom:70px;
 
     overflow:hidden;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.04) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            rgba(255,255,255,.04) 1px,
-            transparent 1px
-        ),
-        #78a96a;
-
-    background-size:45px 45px;
+    background:#79aa69;
 }
 
 .city{
     position:absolute;
-    inset:0;
+    width:100%;
+    height:100%;
 }
 
 
@@ -172,70 +163,105 @@ button{
 
 .road{
     position:absolute;
-    background:#4b5156;
+    background:#50565b;
     box-shadow:
         inset 0 0 0 3px rgba(0,0,0,.12);
 }
 
-.road.horizontal{
+.horizontal{
     left:0;
     right:0;
-    height:80px;
+    height:72px;
 }
 
-.road.vertical{
+.vertical{
     top:0;
     bottom:0;
-    width:80px;
+    width:72px;
 }
 
-.road.h1{
-    top:31%;
+.h1{
+    top:32%;
 }
 
-.road.h2{
+.h2{
     top:69%;
 }
 
-.road.v1{
-    left:25%;
+.v1{
+    left:22%;
 }
 
-.road.v2{
-    left:73%;
+.v2{
+    left:78%;
 }
 
 .roadLine{
     position:absolute;
-    background:#e4c95d;
-}
-
-.road.horizontal .roadLine{
-    top:38px;
-    left:0;
-    right:0;
-    height:4px;
-
     background:
         repeating-linear-gradient(
             90deg,
-            #e6d16d 0 35px,
-            transparent 35px 65px
+            #e8d46d 0 32px,
+            transparent 32px 62px
         );
 }
 
-.road.vertical .roadLine{
-    left:38px;
+.horizontal .roadLine{
+    left:0;
+    right:0;
+    top:34px;
+    height:4px;
+}
+
+.vertical .roadLine{
     top:0;
     bottom:0;
+    left:34px;
     width:4px;
 
     background:
         repeating-linear-gradient(
             180deg,
-            #e6d16d 0 35px,
-            transparent 35px 65px
+            #e8d46d 0 32px,
+            transparent 32px 62px
         );
+}
+
+
+/* =========================================================
+   AREA LABELS
+========================================================= */
+
+.areaLabel{
+    position:absolute;
+    z-index:15;
+
+    padding:7px 11px;
+
+    border-radius:9px;
+
+    background:rgba(15,21,26,.82);
+    border:2px solid rgba(255,255,255,.2);
+
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.5px;
+
+    pointer-events:none;
+}
+
+.playerLabel{
+    left:3%;
+    top:3%;
+    color:#ffd447;
+    border-color:#c89e25;
+}
+
+.rivalLabel{
+    right:3%;
+    top:3%;
+    color:#ff6a6a;
+    border-color:#b94747;
 }
 
 
@@ -246,17 +272,16 @@ button{
 .building{
     position:absolute;
 
-    width:150px;
-    height:112px;
+    z-index:20;
 
-    border-radius:10px;
+    border-radius:9px;
 
     border:4px solid #222a30;
 
     overflow:hidden;
 
     box-shadow:
-        0 7px 0 rgba(0,0,0,.25),
+        0 7px 0 rgba(0,0,0,.22),
         0 12px 25px rgba(0,0,0,.22);
 
     transition:.15s;
@@ -266,39 +291,150 @@ button{
     transform:scale(.96);
 }
 
-.buildingRoof{
-    height:25px;
-    background:#202a32;
-    border-bottom:3px solid #12181c;
+
+/* =========================================================
+   PLAYER BUILDINGS
+========================================================= */
+
+.playerBuilding{
+    background:#e1d8bd;
 }
 
-.buildingFront{
+.playerBuilding .roof{
+    background:#30291e;
+}
+
+.playerBuilding .sign{
+    background:#ffd447;
+    color:#171717;
+}
+
+
+/* =========================================================
+   ABANDONED BUILDINGS
+========================================================= */
+
+.abandonedBuilding{
+    background:#777b7c;
+}
+
+.abandonedBuilding .roof{
+    background:#34383a;
+}
+
+.abandonedBuilding .sign{
+    background:#4b5052;
+    color:#e4e7e8;
+}
+
+
+/* =========================================================
+   KING'S MART MODERN BUILDING
+========================================================= */
+
+.rivalBuilding{
+    background:#d7dce1;
+
+    border-color:#20262c;
+
+    box-shadow:
+        0 9px 0 rgba(0,0,0,.28),
+        0 15px 35px rgba(0,0,0,.3);
+}
+
+.rivalBuilding .roof{
+    background:#101820;
+}
+
+.rivalBuilding .sign{
+    background:#d52f39;
+    color:white;
+    font-size:14px;
+    letter-spacing:1px;
+}
+
+.rivalBuilding .glass{
+    background:#63a9c2;
+    border-color:#273840;
+}
+
+.rivalBuilding .entrance{
+    width:40px;
+    height:58px;
+    background:#24343c;
+}
+
+
+/* =========================================================
+   BUILDING PARTS
+========================================================= */
+
+.roof{
     position:absolute;
 
+    top:0;
     left:0;
     right:0;
-    top:25px;
+
+    height:27px;
+
+    border-bottom:3px solid #1d252b;
+}
+
+.front{
+    position:absolute;
+
+    top:27px;
+    left:0;
+    right:0;
     bottom:0;
-
-    background:#ddd4bd;
 }
 
-.windowRow{
-    display:flex;
-    gap:6px;
-    padding:8px;
-}
+.sign{
+    position:absolute;
 
-.window{
-    flex:1;
+    top:30px;
+    left:8px;
+    right:8px;
+
     height:26px;
 
-    background:#73b6d0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    border:2px solid #24323b;
+    border-radius:4px;
+
+    font-size:9px;
+    font-weight:900;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-.shopDoor{
+.windows{
+    position:absolute;
+
+    top:62px;
+    left:8px;
+    right:8px;
+
+    display:flex;
+    gap:5px;
+}
+
+.glass{
+    flex:1;
+
+    height:29px;
+
+    background:#6fb3ca;
+
+    border:2px solid #293740;
+}
+
+.entrance{
     position:absolute;
 
     bottom:0;
@@ -307,96 +443,165 @@ button{
     transform:translateX(-50%);
 
     width:27px;
-    height:43px;
+    height:44px;
 
-    background:#4d6670;
+    background:#526b75;
 
-    border:3px solid #263038;
+    border:3px solid #29333a;
 }
 
-.shopSign{
+
+/* =========================================================
+   PLAYER BUILDING POSITIONS
+========================================================= */
+
+/* Main shop */
+.player1{
+    left:4%;
+    top:9%;
+
+    width:145px;
+    height:112px;
+}
+
+/* Purchased shops */
+.property1{
+    left:27%;
+    top:9%;
+
+    width:135px;
+    height:105px;
+}
+
+.property2{
+    left:4%;
+    top:48%;
+
+    width:135px;
+    height:105px;
+}
+
+.property3{
+    left:27%;
+    top:48%;
+
+    width:135px;
+    height:105px;
+}
+
+.property4{
+    left:27%;
+    top:78%;
+
+    width:135px;
+    height:105px;
+}
+
+
+/* =========================================================
+   KING'S MART POSITION
+========================================================= */
+
+.rivalMain{
+    right:4%;
+    top:8%;
+
+    width:230px;
+    height:175px;
+}
+
+.rivalSecond{
+    right:5%;
+    top:49%;
+
+    width:170px;
+    height:125px;
+}
+
+.rivalMain .roof{
+    height:35px;
+}
+
+.rivalMain .front{
+    top:35px;
+}
+
+.rivalMain .sign{
+    top:40px;
+    height:36px;
+}
+
+.rivalMain .windows{
+    top:86px;
+}
+
+.rivalMain .glass{
+    height:43px;
+}
+
+.rivalMain .entrance{
+    width:48px;
+    height:60px;
+}
+
+.rivalSecond .sign{
+    top:28px;
+}
+
+.rivalSecond .windows{
+    top:59px;
+}
+
+
+/* =========================================================
+   BUILDING LEVEL VISUALS
+========================================================= */
+
+.level2{
+    border-color:#d8a92f;
+}
+
+.level3{
+    border-color:#ffd447;
+    box-shadow:
+        0 8px 0 rgba(0,0,0,.25),
+        0 0 20px rgba(255,212,71,.28);
+}
+
+.level4{
+    border-color:#fff0a2;
+    box-shadow:
+        0 8px 0 rgba(0,0,0,.25),
+        0 0 28px rgba(255,212,71,.38);
+}
+
+
+/* =========================================================
+   PROPERTY SIGN
+========================================================= */
+
+.propertyBadge{
     position:absolute;
 
-    top:28px;
-    left:10px;
-    right:10px;
+    z-index:40;
 
-    height:25px;
+    top:-12px;
+    left:50%;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    transform:translateX(-50%);
 
-    border-radius:4px;
+    padding:4px 7px;
 
-    background:#ffd34d;
-    color:#151515;
+    background:#10161b;
 
-    font-size:11px;
+    border:2px solid #606b74;
+
+    border-radius:6px;
+
+    font-size:8px;
     font-weight:900;
 
-    overflow:hidden;
     white-space:nowrap;
-}
-
-.storeOwned .buildingFront{
-    background:#e7dfc9;
-}
-
-.storeRival .buildingFront{
-    background:#c9ccd0;
-}
-
-.storeRival .shopSign{
-    background:#d94b4b;
-    color:white;
-}
-
-.abandoned .buildingFront{
-    background:#777b7d;
-}
-
-.abandoned .shopSign{
-    background:#4d5255;
-    color:#e0e5e8;
-}
-
-
-/* BUILDING POSITIONS */
-
-.b1{
-    left:5%;
-    top:7%;
-}
-
-.b2{
-    left:39%;
-    top:7%;
-}
-
-.b3{
-    left:78%;
-    top:9%;
-}
-
-.b4{
-    left:5%;
-    top:48%;
-}
-
-.b5{
-    left:39%;
-    top:49%;
-}
-
-.b6{
-    left:78%;
-    top:48%;
-}
-
-.b7{
-    left:39%;
-    top:79%;
 }
 
 
@@ -407,19 +612,19 @@ button{
 .person{
     position:absolute;
 
-    width:11px;
-    height:11px;
+    z-index:30;
+
+    width:12px;
+    height:12px;
 
     border-radius:50%;
 
-    background:#f3c39b;
+    background:#f1bd94;
 
-    border:2px solid #222;
-
-    z-index:5;
+    border:2px solid #20262a;
 
     animation:
-        walk 4s linear infinite;
+        walk 5s linear infinite;
 }
 
 .person:after{
@@ -427,15 +632,15 @@ button{
 
     position:absolute;
 
-    width:7px;
-    height:9px;
-
     left:0;
-    top:8px;
+    top:9px;
 
-    border-radius:4px;
+    width:8px;
+    height:10px;
 
-    background:#3567a5;
+    border-radius:5px;
+
+    background:#3567a2;
 }
 
 @keyframes walk{
@@ -462,16 +667,16 @@ button{
 .car{
     position:absolute;
 
-    width:42px;
+    z-index:25;
+
+    width:44px;
     height:20px;
 
     border-radius:6px;
 
-    background:#d54c4c;
+    background:#d65353;
 
-    border:2px solid #202020;
-
-    z-index:4;
+    border:2px solid #222;
 
     animation:
         drive 9s linear infinite;
@@ -482,13 +687,13 @@ button{
 
     position:absolute;
 
-    width:16px;
-    height:9px;
-
     left:11px;
     top:2px;
 
-    background:#8ac0d2;
+    width:18px;
+    height:9px;
+
+    background:#8dc3d1;
 }
 
 @keyframes drive{
@@ -505,131 +710,123 @@ button{
 
 
 /* =========================================================
-   CITY LABELS
+   KING'S MART CUSTOMER CROWD
 ========================================================= */
 
-.marker{
+.rivalCustomer{
     position:absolute;
 
-    z-index:20;
+    z-index:31;
 
-    padding:5px 8px;
+    width:9px;
+    height:9px;
 
-    border-radius:7px;
+    border-radius:50%;
 
-    background:#111820;
+    background:#f1bd94;
 
-    border:2px solid #657381;
+    border:1px solid #222;
 
-    color:white;
-
-    font-size:10px;
-    font-weight:900;
-
-    box-shadow:
-        0 4px 8px #0006;
-
-    pointer-events:none;
+    transition:.5s;
 }
 
-.marker.player{
-    background:#a67b14;
-    border-color:#ffd34d;
-}
+.rivalCustomer:after{
+    content:"";
 
-.marker.rival{
-    background:#9c2d2d;
-    border-color:#f16b6b;
+    position:absolute;
+
+    top:7px;
+    left:1px;
+
+    width:6px;
+    height:7px;
+
+    background:#b73842;
+
+    border-radius:4px;
 }
 
 
 /* =========================================================
-   BOTTOM MENU
+   BOTTOM NAV
 ========================================================= */
 
 #bottomBar{
     position:absolute;
 
-    z-index:60;
+    z-index:100;
 
     left:0;
     right:0;
     bottom:0;
 
-    height:72px;
+    height:70px;
 
     display:flex;
     gap:6px;
 
     padding:7px;
 
-    background:rgba(12,17,22,.97);
+    background:rgba(11,16,21,.98);
 
-    border-top:2px solid #38434d;
+    border-top:2px solid #3c4852;
 }
 
 .navButton{
     flex:1;
 
-    min-width:0;
-
     border-radius:10px;
 
     background:#202a33;
 
-    color:#cbd4dc;
+    border:1px solid #3c4a55;
 
-    border:1px solid #3d4b56;
+    color:#c8d1d8;
 
-    font-weight:800;
-
-    font-size:11px;
+    font-size:10px;
+    font-weight:900;
 }
 
 .navButton span{
     display:block;
-
-    font-size:19px;
-
+    font-size:18px;
     margin-bottom:2px;
 }
 
-.navButton.active{
-    background:#ffd34d;
-    color:#171717;
-    border-color:#ffd34d;
+.navButton:active{
+    transform:scale(.96);
 }
 
 
 /* =========================================================
-   MANAGEMENT PANEL
+   PANEL
 ========================================================= */
 
 #panel{
     position:absolute;
 
-    z-index:100;
+    z-index:200;
+
+    display:none;
 
     top:90px;
     right:12px;
 
-    width:min(400px,94vw);
+    width:min(410px,94vw);
 
     max-height:
         calc(100vh - 175px);
 
     overflow:auto;
 
-    display:none;
-
     background:#151c23;
 
-    border:2px solid #52606d;
+    border:2px solid #566470;
 
-    border-radius:16px;
+    border-radius:15px;
 
     box-shadow:
-        0 15px 50px #000b;
+        0 15px 55px rgba(0,0,0,.7);
 }
 
 .panelHeader{
@@ -637,19 +834,18 @@ button{
 
     top:0;
 
-    z-index:2;
+    z-index:5;
 
     display:flex;
 
+    justify-content:space-between;
     align-items:center;
 
-    justify-content:space-between;
+    padding:13px;
 
-    padding:13px 15px;
+    background:#202a33;
 
-    background:#1e2831;
-
-    border-bottom:1px solid #394650;
+    border-bottom:1px solid #3b4750;
 }
 
 .panelTitle{
@@ -663,15 +859,15 @@ button{
 
     border-radius:8px;
 
-    background:#3a4650;
+    background:#414d57;
 
     color:white;
 
-    font-size:18px;
+    font-size:20px;
 }
 
 .panelBody{
-    padding:14px;
+    padding:13px;
 }
 
 
@@ -680,15 +876,15 @@ button{
 ========================================================= */
 
 .card{
-    background:#202a33;
-
-    border:1px solid #3b4853;
-
-    border-radius:12px;
+    margin-bottom:10px;
 
     padding:12px;
 
-    margin-bottom:10px;
+    background:#202a33;
+
+    border:1px solid #3d4b56;
+
+    border-radius:11px;
 }
 
 .cardTitle{
@@ -699,7 +895,7 @@ button{
 }
 
 .cardText{
-    color:#aeb9c3;
+    color:#adb8c1;
 
     font-size:12px;
 
@@ -709,35 +905,37 @@ button{
 .action{
     width:100%;
 
-    padding:12px;
-
     margin-top:8px;
 
-    border-radius:9px;
+    padding:11px;
 
-    background:#ffd34d;
+    border-radius:8px;
+
+    background:#ffd447;
 
     color:#151515;
 
     font-weight:900;
+
+    font-size:12px;
 }
 
 .action.green{
-    background:#65d77e;
+    background:#68db7d;
 }
 
 .action.red{
-    background:#dc5656;
+    background:#dc5555;
     color:white;
 }
 
 .action.blue{
-    background:#5da6e0;
+    background:#5ca6dd;
     color:white;
 }
 
 .action.gray{
-    background:#4a5660;
+    background:#4b5660;
     color:white;
 }
 
@@ -753,18 +951,21 @@ button{
 .progress{
     height:9px;
 
-    margin-top:9px;
+    margin-top:8px;
+
+    background:#0e1419;
 
     border-radius:20px;
-
-    background:#0f1419;
 
     overflow:hidden;
 }
 
 .progressFill{
     height:100%;
-    background:#65d77e;
+
+    background:#67d97c;
+
+    transition:.3s;
 }
 
 
@@ -778,29 +979,30 @@ button{
     z-index:500;
 
     left:50%;
-    bottom:88px;
+    bottom:83px;
 
     transform:
         translateX(-50%)
         translateY(20px);
 
-    min-width:220px;
+    width:max-content;
     max-width:90%;
 
-    padding:12px 16px;
+    padding:11px 16px;
 
     border-radius:10px;
 
     background:#10161c;
 
-    border:2px solid #52606d;
+    border:2px solid #566470;
 
     box-shadow:
-        0 8px 30px #0008;
+        0 8px 30px rgba(0,0,0,.6);
 
     text-align:center;
 
-    font-weight:800;
+    font-size:12px;
+    font-weight:900;
 
     opacity:0;
 
@@ -819,68 +1021,67 @@ button{
 
 
 /* =========================================================
-   EVENT BOX
+   EVENT
 ========================================================= */
 
 #eventBox{
     position:absolute;
 
-    z-index:80;
+    z-index:150;
 
     left:12px;
-    bottom:84px;
+    bottom:82px;
 
     width:min(330px,calc(100vw - 24px));
+
+    display:none;
+
+    padding:12px;
 
     background:#182129;
 
     border:2px solid #596875;
 
-    border-radius:12px;
-
-    padding:12px;
-
-    display:none;
+    border-radius:11px;
 
     box-shadow:
-        0 10px 30px #0009;
+        0 10px 30px rgba(0,0,0,.65);
 }
 
 .eventTitle{
+    color:#ffd447;
     font-weight:900;
-    color:#ffd34d;
-
     margin-bottom:4px;
 }
 
 .eventText{
-    color:#c5cdd4;
-
-    font-size:12px;
+    color:#c4cdd4;
+    font-size:11px;
+    line-height:1.4;
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   MOBILE
 ========================================================= */
 
 @media(max-width:800px){
 
     #topBar{
-        min-height:62px;
+        height:61px;
         padding:5px;
     }
 
     .brand{
+        width:115px;
         min-width:115px;
-        padding:5px;
     }
 
     .brandName{
-        font-size:14px;
+        font-size:13px;
     }
 
-    .brandSmall{
+    .brandSub{
         display:none;
     }
 
@@ -889,190 +1090,213 @@ button{
     }
 
     .stat{
-        min-width:68px;
+        min-width:65px;
         padding:5px;
     }
 
     .statLabel{
-        font-size:8px;
+        font-size:7px;
     }
 
     .statValue{
-        font-size:12px;
+        font-size:11px;
     }
 
     #world{
-        top:62px;
-        bottom:65px;
+        top:61px;
+        bottom:64px;
     }
 
     #bottomBar{
+        height:64px;
+    }
+
+    .navButton{
+        font-size:8px;
+    }
+
+    .navButton span{
+        font-size:16px;
+    }
+
+    .player1{
+        width:105px;
+        height:82px;
+    }
+
+    .property1,
+    .property2,
+    .property3,
+    .property4{
+        width:100px;
+        height:78px;
+    }
+
+    .rivalMain{
+        width:155px;
+        height:118px;
+    }
+
+    .rivalSecond{
+        width:120px;
+        height:92px;
+    }
+
+    .roof{
+        height:19px;
+    }
+
+    .front{
+        top:19px;
+    }
+
+    .sign{
+        top:21px;
+        height:18px;
+        font-size:6px;
+    }
+
+    .windows{
+        top:44px;
+        left:5px;
+        right:5px;
+        gap:3px;
+    }
+
+    .glass{
+        height:18px;
+    }
+
+    .entrance{
+        width:20px;
+        height:29px;
+    }
+
+    .rivalMain .roof{
+        height:25px;
+    }
+
+    .rivalMain .front{
+        top:25px;
+    }
+
+    .rivalMain .sign{
+        top:29px;
+        height:25px;
+        font-size:9px;
+    }
+
+    .rivalMain .windows{
+        top:61px;
+    }
+
+    .rivalMain .glass{
+        height:27px;
+    }
+
+    .rivalMain .entrance{
+        width:30px;
+        height:36px;
+    }
+
+    #panel{
+        top:68px;
+        right:6px;
+
+        width:min(360px,94vw);
+
+        max-height:
+            calc(100vh - 136px);
+    }
+
+    #toast{
+        bottom:72px;
+    }
+
+    #eventBox{
+        bottom:72px;
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .stat:nth-child(4),
+    .stat:nth-child(5){
+        display:none;
+    }
+
+    .brand{
+        width:90px;
+        min-width:90px;
+    }
+
+    .brandName{
+        font-size:11px;
+    }
+
+    .player1{
+        width:82px;
         height:65px;
+    }
+
+    .property1,
+    .property2,
+    .property3,
+    .property4{
+        width:78px;
+        height:62px;
+    }
+
+    .rivalMain{
+        width:125px;
+        height:95px;
+    }
+
+    .rivalSecond{
+        width:100px;
+        height:75px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL LANDSCAPE
+========================================================= */
+
+@media(max-height:500px)
+and (orientation:landscape){
+
+    #topBar{
+        height:53px;
+    }
+
+    #world{
+        top:53px;
+        bottom:55px;
+    }
+
+    #bottomBar{
+        height:55px;
+    }
+
+    .navButton span{
+        display:inline;
+        font-size:14px;
     }
 
     .navButton{
         font-size:9px;
     }
 
-    .navButton span{
-        font-size:17px;
-    }
-
-    .building{
-        width:105px;
-        height:82px;
-        border-width:3px;
-    }
-
-    .buildingRoof{
-        height:18px;
-    }
-
-    .buildingFront{
-        top:18px;
-    }
-
-    .shopSign{
-        top:20px;
-        height:18px;
-        font-size:8px;
-
-        left:5px;
-        right:5px;
-    }
-
-    .windowRow{
-        padding:5px;
-        gap:3px;
-    }
-
-    .window{
-        height:18px;
-    }
-
-    .shopDoor{
-        width:20px;
-        height:30px;
-    }
-
     #panel{
-        top:70px;
-        right:7px;
-
-        width:min(360px,94vw);
-
+        top:58px;
         max-height:
-            calc(100vh - 140px);
+            calc(100vh - 108px);
     }
 
-    #toast{
-        bottom:76px;
-    }
-
-    #eventBox{
-        bottom:76px;
-    }
-}
-
-
-@media(max-width:480px){
-
-    .stat:nth-child(4){
-        display:none;
-    }
-
-    .stat:nth-child(5){
-        display:none;
-    }
-
-    .brand{
-        min-width:90px;
-    }
-
-    .brandName{
-        font-size:12px;
-    }
-
-    .building{
-        width:82px;
-        height:65px;
-    }
-
-    .buildingRoof{
-        height:14px;
-    }
-
-    .buildingFront{
-        top:14px;
-    }
-
-    .shopSign{
-        top:16px;
-        height:14px;
-        font-size:6px;
-    }
-
-    .window{
-        height:13px;
-    }
-
-    .shopDoor{
-        width:16px;
-        height:24px;
-    }
-
-    .road.horizontal{
-        height:58px;
-    }
-
-    .road.horizontal .roadLine{
-        top:27px;
-    }
-
-    .road.vertical{
-        width:58px;
-    }
-
-    .road.vertical .roadLine{
-        left:27px;
-    }
-}
-
-
-/* LANDSCAPE SMALL HEIGHT */
-
-@media(max-height:500px)
-and (orientation:landscape){
-
-    #topBar{
-        min-height:54px;
-    }
-
-    #world{
-        top:54px;
-        bottom:57px;
-    }
-
-    #bottomBar{
-        height:57px;
-    }
-
-    .navButton span{
-        display:inline;
-        font-size:15px;
-        margin-right:3px;
-    }
-
-    .navButton{
-        font-size:10px;
-    }
-
-    #panel{
-        top:60px;
-
-        max-height:
-            calc(100vh - 115px);
-    }
 }
 
 </style>
@@ -1080,7 +1304,6 @@ and (orientation:landscape){
 
 
 <body>
-
 
 <div id="game">
 
@@ -1100,8 +1323,8 @@ and (orientation:landscape){
             MY MART
         </div>
 
-        <div class="brandSmall">
-            CITY TYCOON
+        <div class="brandSub">
+            BUILD YOUR CITY EMPIRE
         </div>
 
     </div>
@@ -1194,7 +1417,7 @@ and (orientation:landscape){
 
 
 <!-- =====================================================
-     CITY WORLD
+     WORLD
 ===================================================== -->
 
 <div id="world">
@@ -1221,257 +1444,318 @@ and (orientation:landscape){
 </div>
 
 
-<!-- YOUR SHOP -->
+<!-- AREA LABELS -->
+
+<div class="areaLabel playerLabel">
+    🏙️ YOUR CITY
+</div>
+
+<div class="areaLabel rivalLabel">
+    👑 KING'S MART DISTRICT
+</div>
+
+
+<!-- =====================================================
+     YOUR MAIN SHOP
+===================================================== -->
 
 <div
-    class="building storeOwned b1"
+    id="building0"
+    class="building playerBuilding player1"
     onclick="openShop(0)"
 >
 
-    <div class="buildingRoof"></div>
+    <div class="roof"></div>
 
-    <div class="buildingFront">
-
-        <div class="windowRow">
-
-            <div class="window"></div>
-            <div class="window"></div>
-            <div class="window"></div>
-
-        </div>
+    <div class="front">
 
         <div
-            class="shopSign"
+            class="sign"
             id="storeSign0"
         >
-            YOUR SHOP
+            MY MART
         </div>
 
-        <div class="shopDoor"></div>
+        <div class="windows">
+
+            <div class="glass"></div>
+            <div class="glass"></div>
+            <div class="glass"></div>
+
+        </div>
+
+        <div class="entrance"></div>
 
     </div>
 
 </div>
 
 
-<!-- KING'S MART -->
+<!-- =====================================================
+     PLAYER PROPERTY 1
+===================================================== -->
 
 <div
-    class="building storeRival b2"
-    onclick="openRival()"
+    id="propertyBuilding0"
+    class="building abandonedBuilding property1"
+    onclick="propertyClicked(0)"
 >
 
-    <div class="buildingRoof"></div>
-
-    <div class="buildingFront">
-
-        <div class="windowRow">
-
-            <div class="window"></div>
-            <div class="window"></div>
-            <div class="window"></div>
-
-        </div>
-
-        <div class="shopSign">
-            KING'S MART
-        </div>
-
-        <div class="shopDoor"></div>
-
+    <div
+        class="propertyBadge"
+        id="propertyBadge0"
+    >
+        FOR SALE
     </div>
 
-</div>
+    <div class="roof"></div>
 
+    <div class="front">
 
-<!-- PROPERTY 1 -->
-
-<div
-    class="building abandoned b3"
-    onclick="buyProperty(2)"
->
-
-    <div class="buildingRoof"></div>
-
-    <div class="buildingFront">
-
-        <div class="windowRow">
-
-            <div class="window"></div>
-            <div class="window"></div>
-
-        </div>
-
-        <div class="shopSign">
-            FOR SALE
-        </div>
-
-        <div class="shopDoor"></div>
-
-    </div>
-
-</div>
-
-
-<!-- PROPERTY 2 -->
-
-<div
-    class="building abandoned b4"
-    onclick="buyProperty(0)"
->
-
-    <div class="buildingRoof"></div>
-
-    <div class="buildingFront">
-
-        <div class="windowRow">
-
-            <div class="window"></div>
-            <div class="window"></div>
-
-        </div>
-
-        <div class="shopSign">
+        <div
+            class="sign"
+            id="propertySign0"
+        >
             ABANDONED
         </div>
 
-        <div class="shopDoor"></div>
+        <div class="windows">
+
+            <div class="glass"></div>
+            <div class="glass"></div>
+
+        </div>
+
+        <div class="entrance"></div>
 
     </div>
 
 </div>
 
 
-<!-- PROPERTY 3 -->
+<!-- =====================================================
+     PLAYER PROPERTY 2
+===================================================== -->
 
 <div
-    class="building abandoned b5"
-    onclick="buyProperty(1)"
+    id="propertyBuilding1"
+    class="building abandonedBuilding property2"
+    onclick="propertyClicked(1)"
 >
 
-    <div class="buildingRoof"></div>
+    <div
+        class="propertyBadge"
+        id="propertyBadge1"
+    >
+        FOR SALE
+    </div>
 
-    <div class="buildingFront">
+    <div class="roof"></div>
 
-        <div class="windowRow">
+    <div class="front">
 
-            <div class="window"></div>
-            <div class="window"></div>
-
-        </div>
-
-        <div class="shopSign">
+        <div
+            class="sign"
+            id="propertySign1"
+        >
             FOR SALE
         </div>
 
-        <div class="shopDoor"></div>
+        <div class="windows">
+
+            <div class="glass"></div>
+            <div class="glass"></div>
+
+        </div>
+
+        <div class="entrance"></div>
 
     </div>
 
 </div>
 
 
-<!-- SECOND KING'S MART -->
+<!-- =====================================================
+     PLAYER PROPERTY 3
+===================================================== -->
 
 <div
-    class="building storeRival b6"
+    id="propertyBuilding2"
+    class="building abandonedBuilding property3"
+    onclick="propertyClicked(2)"
+>
+
+    <div
+        class="propertyBadge"
+        id="propertyBadge2"
+    >
+        FOR SALE
+    </div>
+
+    <div class="roof"></div>
+
+    <div class="front">
+
+        <div
+            class="sign"
+            id="propertySign2"
+        >
+            FOR SALE
+        </div>
+
+        <div class="windows">
+
+            <div class="glass"></div>
+            <div class="glass"></div>
+
+        </div>
+
+        <div class="entrance"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PLAYER PROPERTY 4
+===================================================== -->
+
+<div
+    id="propertyBuilding3"
+    class="building abandonedBuilding property4"
+    onclick="propertyClicked(3)"
+>
+
+    <div
+        class="propertyBadge"
+        id="propertyBadge3"
+    >
+        FOR SALE
+    </div>
+
+    <div class="roof"></div>
+
+    <div class="front">
+
+        <div
+            class="sign"
+            id="propertySign3"
+        >
+            FOR SALE
+        </div>
+
+        <div class="windows">
+
+            <div class="glass"></div>
+            <div class="glass"></div>
+
+        </div>
+
+        <div class="entrance"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     KING'S MART BIG MODERN STORE
+===================================================== -->
+
+<div
+    class="building rivalBuilding rivalMain"
     onclick="openRival()"
 >
 
-    <div class="buildingRoof"></div>
+    <div class="roof"></div>
 
-    <div class="buildingFront">
+    <div class="front">
 
-        <div class="windowRow">
-
-            <div class="window"></div>
-            <div class="window"></div>
-            <div class="window"></div>
-
-        </div>
-
-        <div class="shopSign">
+        <div class="sign">
             KING'S MART
         </div>
 
-        <div class="shopDoor"></div>
+        <div class="windows">
+
+            <div class="glass"></div>
+            <div class="glass"></div>
+            <div class="glass"></div>
+            <div class="glass"></div>
+
+        </div>
+
+        <div class="entrance"></div>
 
     </div>
 
 </div>
 
 
-<!-- PROPERTY 4 -->
+<!-- =====================================================
+     KING'S MART SECOND STORE
+===================================================== -->
 
 <div
-    class="building abandoned b7"
-    onclick="buyProperty(1)"
+    class="building rivalBuilding rivalSecond"
+    onclick="openRival()"
 >
 
-    <div class="buildingRoof"></div>
+    <div class="roof"></div>
 
-    <div class="buildingFront">
+    <div class="front">
 
-        <div class="windowRow">
+        <div class="sign">
+            KING'S MART
+        </div>
 
-            <div class="window"></div>
-            <div class="window"></div>
+        <div class="windows">
+
+            <div class="glass"></div>
+            <div class="glass"></div>
+            <div class="glass"></div>
 
         </div>
 
-        <div class="shopSign">
-            ABANDONED
-        </div>
-
-        <div class="shopDoor"></div>
+        <div class="entrance"></div>
 
     </div>
 
 </div>
 
 
-<!-- LABELS -->
-
-<div
-    class="marker player"
-    style="left:8%;top:4%;"
->
-    YOUR SHOP
-</div>
-
-<div
-    class="marker rival"
-    style="left:42%;top:4%;"
->
-    KING'S MART
-</div>
-
-
-<!-- PEOPLE -->
+<!-- =====================================================
+     PEOPLE
+===================================================== -->
 
 <div
     class="person"
-    style="left:10%;top:31%;animation-delay:0s"
+    style="left:7%;top:34%;animation-delay:0s"
 ></div>
 
 <div
     class="person"
-    style="left:28%;top:68%;animation-delay:1s"
+    style="left:16%;top:71%;animation-delay:1s"
 ></div>
 
 <div
     class="person"
-    style="left:58%;top:31%;animation-delay:2s"
+    style="left:31%;top:34%;animation-delay:2s"
 ></div>
 
 <div
     class="person"
-    style="left:75%;top:69%;animation-delay:3s"
+    style="left:48%;top:72%;animation-delay:3s"
 ></div>
 
 <div
     class="person"
-    style="left:48%;top:89%;animation-delay:1.5s"
+    style="left:61%;top:35%;animation-delay:1.5s"
+></div>
+
+<div
+    class="person"
+    style="left:70%;top:72%;animation-delay:2.5s"
 ></div>
 
 
@@ -1479,7 +1763,7 @@ and (orientation:landscape){
 
 <div
     class="car"
-    style="top:34%;animation-delay:0s"
+    style="top:35%;animation-delay:0s"
 ></div>
 
 <div
@@ -1488,24 +1772,32 @@ and (orientation:landscape){
 ></div>
 
 
+<!-- =====================================================
+     KING'S MART CUSTOMER CROWD
+===================================================== -->
+
+<div
+    id="rivalCustomers"
+></div>
+
+
 </div>
 </div>
 
 
 <!-- =====================================================
-     BOTTOM MENU
+     BOTTOM NAV
 ===================================================== -->
 
 <div id="bottomBar">
 
     <button
-        class="navButton active"
+        class="navButton"
         onclick="showCity()"
     >
         <span>🏙️</span>
         City
     </button>
-
 
     <button
         class="navButton"
@@ -1515,7 +1807,6 @@ and (orientation:landscape){
         Shops
     </button>
 
-
     <button
         class="navButton"
         onclick="openStaff()"
@@ -1524,15 +1815,13 @@ and (orientation:landscape){
         Staff
     </button>
 
-
     <button
         class="navButton"
         onclick="openUpgrades()"
     >
         <span>⬆️</span>
-        Upgrades
+        Upgrade
     </button>
-
 
     <button
         class="navButton"
@@ -1541,7 +1830,6 @@ and (orientation:landscape){
         <span>⚔️</span>
         Rival
     </button>
-
 
     <button
         class="navButton"
@@ -1554,9 +1842,7 @@ and (orientation:landscape){
 </div>
 
 
-<!-- =====================================================
-     PANEL
-===================================================== -->
+<!-- PANEL -->
 
 <div id="panel">
 
@@ -1614,11 +1900,11 @@ and (orientation:landscape){
 <script>
 
 /* =========================================================
-   GAME DATA
+   GAME STATE
 ========================================================= */
 
 const SAVE_KEY =
-    "kings_mart_tycoon_v5";
+    "kings_mart_tycoon_city_v6";
 
 
 let game = {
@@ -1635,8 +1921,6 @@ let game = {
 
     totalEarned:0,
 
-    totalStores:1,
-
     selectedShop:0,
 
     lastSave:Date.now(),
@@ -1644,12 +1928,11 @@ let game = {
     stores:[
 
         {
-
             name:"Main Street Mart",
 
             level:1,
 
-            condition:55,
+            condition:65,
 
             baseIncome:12,
 
@@ -1668,114 +1951,84 @@ let game = {
             staffRoom:0,
 
             expansion:0
-
         }
 
     ],
+
 
     properties:[
 
         {
-
-            bought:false,
-
+            name:"Old Corner Shop",
             price:2200,
-
-            name:"Old Corner Shop"
-
+            bought:false,
+            storeIndex:null
         },
 
         {
-
-            bought:false,
-
+            name:"Empty High Street",
             price:3500,
-
-            name:"Empty High Street Unit"
-
+            bought:false,
+            storeIndex:null
         },
 
         {
-
-            bought:false,
-
+            name:"Abandoned Supermarket",
             price:4800,
+            bought:false,
+            storeIndex:null
+        },
 
-            name:"Abandoned Supermarket"
-
+        {
+            name:"Old Warehouse Shop",
+            price:6500,
+            bought:false,
+            storeIndex:null
         }
 
     ],
+
 
     staff:[
 
         {
-
             name:"Adam",
-
             age:18,
-
             intelligence:100,
-
             management:95,
-
             stocking:65,
-
             service:72,
-
             problemSolving:100,
-
             role:"Natural Manager",
-
             hired:true
-
         },
 
         {
-
             name:"Sarah",
-
             age:24,
-
             intelligence:72,
-
             management:62,
-
             stocking:82,
-
             service:91,
-
             problemSolving:70,
-
             role:"Customer Specialist",
-
             hired:true
-
         },
 
         {
-
             name:"Jack",
-
             age:31,
-
             intelligence:61,
-
             management:48,
-
             stocking:94,
-
             service:63,
-
             problemSolving:61,
-
             role:"Stock Specialist",
-
             hired:true
-
         }
 
     ],
+
 
     rival:{
 
@@ -1785,11 +2038,11 @@ let game = {
 
         health:100,
 
-        customers:160,
+        customers:220,
 
         marketShare:32,
 
-        income:72,
+        income:95,
 
         stage:"HEALTHY"
 
@@ -1799,7 +2052,7 @@ let game = {
 
 
 /* =========================================================
-   LOAD GAME
+   LOAD
 ========================================================= */
 
 function loadGame(){
@@ -1833,10 +2086,7 @@ function loadGame(){
     }
     catch(error){
 
-        console.log(
-            "Could not load save.",
-            error
-        );
+        console.log(error);
 
         render();
 
@@ -1863,7 +2113,7 @@ function saveGame(){
 
 
 /* =========================================================
-   OFFLINE EARNINGS
+   OFFLINE
 ========================================================= */
 
 function calculateOffline(){
@@ -1871,26 +2121,24 @@ function calculateOffline(){
     const seconds =
         Math.min(
             (Date.now()-game.lastSave)/1000,
-            8*60*60
+            28800
         );
 
-    if(seconds < 10){
+    if(seconds<10){
         return;
     }
 
-    const income =
-        getIncomePerSecond();
-
     const earned =
         Math.floor(
-            income*seconds
+            getIncomePerSecond()*
+            seconds
         );
 
     if(earned>0){
 
-        game.cash += earned;
+        game.cash+=earned;
 
-        game.totalEarned += earned;
+        game.totalEarned+=earned;
 
         setTimeout(()=>{
 
@@ -1902,201 +2150,6 @@ function calculateOffline(){
         },500);
 
     }
-
-}
-
-
-/* =========================================================
-   COMPANY
-========================================================= */
-
-function openCompany(){
-
-    panel(
-        "Your Company",
-
-        `
-
-        <div class="card">
-
-            <div class="cardTitle">
-                🏢 Company Name
-            </div>
-
-            <div class="cardText">
-                Your company currently operates
-                ${game.totalStores} store(s).
-            </div>
-
-            <input
-                id="companyNameInput"
-                value="${escapeHtml(game.company)}"
-                maxlength="24"
-                style="
-                    width:100%;
-                    margin-top:10px;
-                    padding:12px;
-                    border-radius:8px;
-                    border:2px solid #4b5965;
-                    background:#111820;
-                    color:white;
-                    font-size:16px;
-                    outline:none;
-                "
-            >
-
-            <button
-                class="action"
-                onclick="changeCompanyName()"
-            >
-                Save Company Name
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                📊 Company Statistics
-            </div>
-
-            <div class="cardText">
-
-                Stores:
-                ${game.totalStores}<br>
-
-                Total Money Earned:
-                £${formatMoney(game.totalEarned)}<br>
-
-                Market Share:
-                ${game.marketShare.toFixed(1)}%<br>
-
-                Reputation:
-                ${Math.floor(game.reputation)}
-
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                💾 Save Game
-            </div>
-
-            <div class="cardText">
-                Your progress is automatically saved
-                every few seconds.
-            </div>
-
-            <button
-                class="action green"
-                onclick="saveGame();toast('Game saved!')"
-            >
-                SAVE NOW
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                ⚠️ Reset Game
-            </div>
-
-            <div class="cardText">
-                This deletes your current empire
-                from this device.
-            </div>
-
-            <button
-                class="action red"
-                onclick="resetGame()"
-            >
-                RESET GAME
-            </button>
-
-        </div>
-
-        `
-    );
-
-}
-
-
-function changeCompanyName(){
-
-    const input =
-        document.getElementById(
-            "companyNameInput"
-        );
-
-    if(!input){
-        return;
-    }
-
-    const name =
-        input.value.trim();
-
-    if(!name){
-
-        toast(
-            "Enter a company name first."
-        );
-
-        return;
-    }
-
-    game.company =
-        name.substring(0,24);
-
-    saveGame();
-
-    render();
-
-    toast(
-        "Company renamed to "+
-        game.company
-    );
-
-}
-
-
-function resetGame(){
-
-    const answer =
-        confirm(
-            "Are you sure you want to delete your empire?"
-        );
-
-    if(!answer){
-        return;
-    }
-
-    localStorage.removeItem(
-        SAVE_KEY
-    );
-
-    location.reload();
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHtml(text){
-
-    return String(text)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
 
 }
 
@@ -2114,12 +2167,28 @@ function formatMoney(value){
 
 
 /* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHtml(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
    SHOP POWER
 ========================================================= */
 
 function shopPower(shop){
 
-    let power = 1;
+    let power=1;
 
     power +=
         shop.shelves*.12;
@@ -2144,8 +2213,7 @@ function shopPower(shop){
 
 
     for(
-        const person
-        of game.staff
+        const person of game.staff
     ){
 
         if(person.hired){
@@ -2155,7 +2223,7 @@ function shopPower(shop){
                     person.management+
                     person.service+
                     person.stocking
-                )/900;
+                )/1000;
 
         }
 
@@ -2175,14 +2243,13 @@ function getIncomePerSecond(){
     let total=0;
 
     for(
-        const shop
-        of game.stores
+        const shop of game.stores
     ){
 
         total +=
-            shop.baseIncome *
-            shop.level *
-            shopPower(shop) *
+            shop.baseIncome*
+            shop.level*
+            shopPower(shop)*
             Math.max(
                 .2,
                 shop.condition/100
@@ -2196,27 +2263,32 @@ function getIncomePerSecond(){
 
 
 /* =========================================================
-   GAME LOOP
+   CUSTOMER COUNT
 ========================================================= */
 
-setInterval(()=>{
+function updateCustomers(){
 
-    const income =
-        getIncomePerSecond();
+    let total=0;
 
-    game.cash += income;
+    for(
+        const shop of game.stores
+    ){
 
-    game.totalEarned += income;
+        total +=
+            shop.customers+
+            shop.level*4+
+            shop.shelves*2+
+            shop.checkout*3;
 
-    rivalAI();
+    }
 
-    randomEvent();
+    game.customers =
+        Math.max(
+            0,
+            Math.floor(total)
+        );
 
-    render();
-
-    saveGame();
-
-},1000);
+}
 
 
 /* =========================================================
@@ -2225,12 +2297,14 @@ setInterval(()=>{
 
 function rivalAI(){
 
-    const pressure =
-        game.marketShare*.08+
-        game.reputation*.025;
+    /* Our market pressure slowly hurts King's Mart */
+
+    const passivePressure =
+        game.marketShare*.018;
 
     game.rival.health -=
-        pressure/100;
+        passivePressure/100;
+
 
     game.rival.health =
         Math.max(
@@ -2242,33 +2316,54 @@ function rivalAI(){
         );
 
 
+    /* Rival customers follow their health */
+
+    const targetCustomers =
+        Math.max(
+            0,
+            Math.floor(
+                220*
+                (game.rival.health/100)
+            )
+        );
+
+    game.rival.customers =
+        Math.max(
+            0,
+            Math.min(
+                game.rival.customers,
+                targetCustomers
+            )
+        );
+
+
     if(game.rival.health>75){
 
-        game.rival.stage=
+        game.rival.stage =
             "HEALTHY";
 
     }
     else if(game.rival.health>50){
 
-        game.rival.stage=
+        game.rival.stage =
             "UNDER PRESSURE";
 
     }
     else if(game.rival.health>30){
 
-        game.rival.stage=
+        game.rival.stage =
             "STRUGGLING";
 
     }
     else if(game.rival.health>10){
 
-        game.rival.stage=
+        game.rival.stage =
             "DISTRESSED";
 
     }
     else{
 
-        game.rival.stage=
+        game.rival.stage =
             "FOR SALE";
 
     }
@@ -2277,313 +2372,449 @@ function rivalAI(){
 
 
 /* =========================================================
-   SHOP PANEL
+   MAIN GAME LOOP
+========================================================= */
+
+setInterval(()=>{
+
+    const income =
+        getIncomePerSecond();
+
+    game.cash+=income;
+
+    game.totalEarned+=income;
+
+
+    updateCustomers();
+
+    rivalAI();
+
+    renderRivalCustomers();
+
+    randomEvent();
+
+    render();
+
+    saveGame();
+
+},1000);
+
+
+/* =========================================================
+   CITY
+========================================================= */
+
+function showCity(){
+
+    closePanel();
+
+}
+
+
+/* =========================================================
+   COMPANY
+========================================================= */
+
+function openCompany(){
+
+    panel(
+
+        "Your Company",
+
+        `
+
+        <div class="card">
+
+            <div class="cardTitle">
+                🏢 Company Name
+            </div>
+
+            <div class="cardText">
+                Rename your company whenever
+                you want.
+            </div>
+
+            <input
+                id="companyInput"
+                maxlength="24"
+                value="${escapeHtml(game.company)}"
+                style="
+                    width:100%;
+                    margin-top:10px;
+                    padding:12px;
+                    border-radius:8px;
+                    border:2px solid #4b5965;
+                    background:#111820;
+                    color:white;
+                    font-size:16px;
+                    outline:none;
+                "
+            >
+
+            <button
+                class="action"
+                onclick="changeCompanyName()"
+            >
+                SAVE COMPANY NAME
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardTitle">
+                📊 Company Statistics
+            </div>
+
+            <div class="cardText">
+
+                Stores:
+                ${game.stores.length}<br>
+
+                Total Earned:
+                £${formatMoney(game.totalEarned)}<br>
+
+                Market Share:
+                ${game.marketShare.toFixed(1)}%<br>
+
+                Reputation:
+                ${Math.floor(game.reputation)}
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardTitle">
+                💾 Save
+            </div>
+
+            <button
+                class="action green"
+                onclick="
+                    saveGame();
+                    toast('Game saved!');
+                "
+            >
+                SAVE GAME
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardTitle">
+                ⚠️ Reset
+            </div>
+
+            <div class="cardText">
+                Delete your current empire and
+                start again.
+            </div>
+
+            <button
+                class="action red"
+                onclick="resetGame()"
+            >
+                RESET GAME
+            </button>
+
+        </div>
+
+        `
+    );
+
+}
+
+
+function changeCompanyName(){
+
+    const input =
+        document.getElementById(
+            "companyInput"
+        );
+
+    if(!input){
+        return;
+    }
+
+    const name =
+        input.value.trim();
+
+    if(!name){
+
+        toast(
+            "Enter a company name."
+        );
+
+        return;
+    }
+
+    game.company =
+        name.substring(0,24);
+
+    saveGame();
+
+    render();
+
+    toast(
+        "Company renamed!"
+    );
+
+}
+
+
+function resetGame(){
+
+    if(
+        !confirm(
+            "Delete your current empire?"
+        )
+    ){
+        return;
+    }
+
+    localStorage.removeItem(
+        SAVE_KEY
+    );
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   OPEN SHOP
 ========================================================= */
 
 function openShop(index){
 
-    if(!game.stores[index]){
+    const shop =
+        game.stores[index];
+
+    if(!shop){
         return;
     }
 
     game.selectedShop =
         index;
 
-    const shop =
-        game.stores[index];
 
     panel(
 
-        shop.name,
+        escapeHtml(shop.name),
 
-        `
+        shopPanelHTML(
+            shop,
+            index
+        )
 
-        <div class="card">
-
-            <div class="cardTitle">
-                🏪 Store Level ${shop.level}
-            </div>
-
-            <div class="cardText">
-
-                Condition:
-                ${Math.floor(shop.condition)}%<br>
-
-                Customers:
-                ${Math.floor(shop.customers)}<br>
-
-                Income:
-                £${formatMoney(
-                    shop.baseIncome*
-                    shop.level*
-                    shopPower(shop)
-                )}/s
-
-            </div>
-
-            <div class="progress">
-
-                <div
-                    class="progressFill"
-                    style="
-                        width:${shop.condition}%
-                    "
-                ></div>
-
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                🛠 Store Management
-            </div>
-
-            <button
-                class="action"
-                onclick="renovate(${index})"
-            >
-                Renovate — £500
-            </button>
-
-            <button
-                class="action green"
-                onclick="advertise(${index})"
-            >
-                Advertise — £300
-            </button>
-
-            <button
-                class="action blue"
-                onclick="pricePush(${index})"
-            >
-                Competitive Pricing — £250
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                📈 Store Stats
-            </div>
-
-            <div class="cardText">
-
-                Shelves:
-                ${shop.shelves}<br>
-
-                Fridges:
-                ${shop.fridges}<br>
-
-                Lighting:
-                ${shop.lighting}<br>
-
-                Security:
-                ${shop.security}<br>
-
-                Checkout:
-                ${shop.checkout}<br>
-
-                Staff Room:
-                ${shop.staffRoom}<br>
-
-                Expansion:
-                ${shop.expansion}
-
-            </div>
-
-        </div>
-
-        `
     );
 
 }
 
 
 /* =========================================================
-   SHOPS
+   SHOP PANEL
 ========================================================= */
 
-function openShops(){
+function shopPanelHTML(shop,index){
 
-    let html="";
-
-
-    game.stores.forEach(
-        (shop,index)=>{
-
-            html += `
-
-            <div class="card">
-
-                <div class="cardTitle">
-                    🏪
-                    ${escapeHtml(shop.name)}
-                </div>
-
-                <div class="cardText">
-
-                    Level ${shop.level}<br>
-
-                    Condition:
-                    ${Math.floor(shop.condition)}%<br>
-
-                    Income:
-                    £${formatMoney(
-                        shop.baseIncome*
-                        shop.level*
-                        shopPower(shop)
-                    )}/s
-
-                </div>
-
-                <button
-                    class="action"
-                    onclick="openShop(${index})"
-                >
-                    MANAGE SHOP
-                </button>
-
-            </div>
-
-            `;
-
-        }
-    );
+    const income =
+        shop.baseIncome*
+        shop.level*
+        shopPower(shop);
 
 
-    html += `
+    return `
 
     <div class="card">
 
         <div class="cardTitle">
-            🏗️ Expand Your Empire
+            🏪 ${escapeHtml(shop.name)}
         </div>
 
         <div class="cardText">
-            Buy abandoned buildings around
-            the city and convert them into stores.
+
+            Level:
+            ${shop.level}<br>
+
+            Condition:
+            ${Math.floor(shop.condition)}%<br>
+
+            Customers:
+            ${Math.floor(shop.customers)}<br>
+
+            Income:
+            £${formatMoney(income)}/s
+
+        </div>
+
+        <div class="progress">
+
+            <div
+                class="progressFill"
+                style="width:${shop.condition}%"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="cardTitle">
+            🛠️ Improve Building
+        </div>
+
+        <div class="cardText">
+            Renovating improves the condition
+            of the building and attracts customers.
         </div>
 
         <button
             class="action"
-            onclick="openProperties()"
+            onclick="renovate(${index})"
         >
-            VIEW PROPERTIES
+            RENOVATE — £500
+        </button>
+
+        <button
+            class="action green"
+            onclick="advertise(${index})"
+        >
+            ADVERTISE — £300
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="cardTitle">
+            🏗️ Building Level
+        </div>
+
+        <div class="cardText">
+            Upgrade this specific building to
+            make it bigger and more profitable.
+        </div>
+
+        <button
+            class="action"
+            onclick="upgradeBuilding(${index})"
+        >
+            UPGRADE BUILDING —
+            £${formatMoney(
+                getBuildingUpgradeCost(shop)
+            )}
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="cardTitle">
+            📦 Store Equipment
+        </div>
+
+        <button
+            class="action"
+            onclick="upgrade(${index},'shelves',250)"
+        >
+            📚 Shelves — £250
+        </button>
+
+        <button
+            class="action"
+            onclick="upgrade(${index},'fridges',400)"
+        >
+            🧊 Fridges — £400
+        </button>
+
+        <button
+            class="action"
+            onclick="upgrade(${index},'lighting',350)"
+        >
+            💡 Lighting — £350
+        </button>
+
+        <button
+            class="action"
+            onclick="upgrade(${index},'security',450)"
+        >
+            🔐 Security — £450
+        </button>
+
+        <button
+            class="action"
+            onclick="upgrade(${index},'checkout',500)"
+        >
+            🧾 Checkout — £500
+        </button>
+
+        <button
+            class="action"
+            onclick="upgrade(${index},'staffRoom',650)"
+        >
+            👥 Staff Room — £650
+        </button>
+
+        <button
+            class="action"
+            onclick="upgrade(${index},'expansion',1200)"
+        >
+            🏢 Expansion — £1,200
         </button>
 
     </div>
 
     `;
 
-
-    panel(
-        "Your Shops",
-        html
-    );
-
 }
 
 
 /* =========================================================
-   PROPERTIES
+   BUILDING UPGRADE
 ========================================================= */
 
-function openProperties(){
+function getBuildingUpgradeCost(shop){
 
-    let html="";
-
-
-    game.properties.forEach(
-        (property,index)=>{
-
-            html += `
-
-            <div class="card">
-
-                <div class="cardTitle">
-                    🏚️
-                    ${escapeHtml(property.name)}
-                </div>
-
-                <div class="cardText">
-
-                    Purchase Price:
-                    £${formatMoney(property.price)}
-
-                </div>
-
-
-                ${
-                    property.bought
-
-                    ?
-
-                    `
-                    <button
-                        class="action gray"
-                    >
-                        OWNED
-                    </button>
-                    `
-
-                    :
-
-                    `
-                    <button
-                        class="action"
-                        onclick="buyProperty(${index})"
-                    >
-                        BUY PROPERTY
-                    </button>
-                    `
-
-                }
-
-            </div>
-
-            `;
-
-        }
-    );
-
-
-    panel(
-        "City Properties",
-        html
+    return (
+        shop.level*
+        shop.level*
+        1200
     );
 
 }
 
 
-function buyProperty(index){
+function upgradeBuilding(index){
 
-    const property =
-        game.properties[index];
+    const shop =
+        game.stores[index];
 
-    if(!property){
+    if(!shop){
         return;
     }
 
-    if(property.bought){
 
-        toast(
-            "You already own this property."
-        );
+    const cost =
+        getBuildingUpgradeCost(shop);
 
-        return;
-    }
 
-    if(game.cash < property.price){
+    if(game.cash<cost){
 
         toast(
             "You need £"+
             formatMoney(
-                property.price-game.cash
+                cost-game.cash
             )+
             " more."
         );
@@ -2592,51 +2823,37 @@ function buyProperty(index){
     }
 
 
-    game.cash -=
-        property.price;
+    game.cash-=cost;
 
-    property.bought=true;
+    shop.level++;
 
+    shop.condition =
+        Math.min(
+            100,
+            shop.condition+10
+        );
 
-    game.stores.push({
+    shop.baseIncome+=
+        5;
 
-        name:property.name,
+    shop.customers+=
+        10;
 
-        level:1,
+    game.reputation+=2;
 
-        condition:40,
-
-        baseIncome:15,
-
-        customers:10,
-
-        shelves:0,
-
-        fridges:0,
-
-        lighting:0,
-
-        security:0,
-
-        checkout:0,
-
-        staffRoom:0,
-
-        expansion:0
-
-    });
-
-
-    game.totalStores++;
+    game.marketShare+=.4;
 
 
     toast(
-        "New store acquired!"
+        shop.name+
+        " upgraded to Level "+
+        shop.level+"!"
     );
 
-    closePanel();
 
     render();
+
+    openShop(index);
 
 }
 
@@ -2668,17 +2885,18 @@ function renovate(index){
             shop.condition+20
         );
 
-    shop.customers+=8;
+    shop.customers+=10;
 
     game.reputation+=2;
 
 
     toast(
-        shop.name+
-        " has been renovated!"
+        "Building renovated!"
     );
 
     render();
+
+    openShop(index);
 
 }
 
@@ -2705,31 +2923,40 @@ function advertise(index){
     const shop =
         game.stores[index];
 
-    shop.customers+=12;
+    shop.customers+=15;
 
-    game.customers+=12;
+    game.marketShare+=.5;
 
     game.reputation+=1;
 
-    game.marketShare+=.4;
-
 
     toast(
-        "Advertising brought new customers!"
+        "Advertising brought customers!"
     );
 
+
     render();
+
+    openShop(index);
 
 }
 
 
 /* =========================================================
-   PRICE WAR
+   STORE EQUIPMENT
 ========================================================= */
 
-function pricePush(index){
+function upgrade(index,type,cost){
 
-    if(game.cash<250){
+    const shop =
+        game.stores[index];
+
+    if(!shop){
+        return;
+    }
+
+
+    if(game.cash<cost){
 
         toast(
             "Not enough cash."
@@ -2739,26 +2966,347 @@ function pricePush(index){
     }
 
 
-    game.cash-=250;
+    game.cash-=cost;
+
+    shop[type]++;
 
 
-    const shop =
-        game.stores[index];
+    if(type==="security"){
+        game.reputation+=1;
+    }
 
-    shop.customers+=7;
+    if(type==="checkout"){
+        shop.customers+=5;
+    }
 
-    game.customers+=7;
-
-    game.marketShare+=.25;
-
-    game.rival.health-=2;
+    if(type==="expansion"){
+        shop.baseIncome+=5;
+    }
 
 
     toast(
-        "Your prices are hurting King's Mart!"
+        "Upgrade installed!"
     );
 
+
     render();
+
+    openShop(index);
+
+}
+
+
+/* =========================================================
+   SHOPS MENU
+========================================================= */
+
+function openShops(){
+
+    let html="";
+
+
+    game.stores.forEach(
+        (shop,index)=>{
+
+            html+=`
+
+            <div class="card">
+
+                <div class="cardTitle">
+                    🏪
+                    ${escapeHtml(shop.name)}
+                </div>
+
+                <div class="cardText">
+
+                    Level ${shop.level}<br>
+
+                    Condition:
+                    ${Math.floor(shop.condition)}%<br>
+
+                    Income:
+                    £${formatMoney(
+                        shop.baseIncome*
+                        shop.level*
+                        shopPower(shop)
+                    )}/s
+
+                </div>
+
+                <button
+                    class="action"
+                    onclick="openShop(${index})"
+                >
+                    MANAGE THIS BUILDING
+                </button>
+
+            </div>
+
+            `;
+
+        }
+    );
+
+
+    html+=`
+
+    <div class="card">
+
+        <div class="cardTitle">
+            🏗️ Expand Your City
+        </div>
+
+        <div class="cardText">
+            Buy abandoned buildings and turn
+            them into your own stores.
+        </div>
+
+        <button
+            class="action"
+            onclick="openProperties()"
+        >
+            BUY CITY PROPERTIES
+        </button>
+
+    </div>
+
+    `;
+
+
+    panel(
+        "Your City",
+        html
+    );
+
+}
+
+
+/* =========================================================
+   PROPERTIES
+========================================================= */
+
+function openProperties(){
+
+    let html="";
+
+
+    game.properties.forEach(
+        (property,index)=>{
+
+            html+=`
+
+            <div class="card">
+
+                <div class="cardTitle">
+                    🏚️
+                    ${escapeHtml(property.name)}
+                </div>
+
+                <div class="cardText">
+
+                    Price:
+                    £${formatMoney(property.price)}
+
+                    ${
+                        property.bought
+
+                        ?
+
+                        `
+                        <br>
+                        <strong>
+                            OWNED
+                        </strong>
+                        `
+
+                        :
+
+                        ""
+                    }
+
+                </div>
+
+
+                ${
+                    property.bought
+
+                    ?
+
+                    `
+                    <button
+                        class="action green"
+                        onclick="
+                            openShop(
+                                ${property.storeIndex}
+                            )
+                        "
+                    >
+                        MANAGE BUILDING
+                    </button>
+                    `
+
+                    :
+
+                    `
+                    <button
+                        class="action"
+                        onclick="
+                            buyProperty(
+                                ${index}
+                            )
+                        "
+                    >
+                        BUY & RENOVATE
+                    </button>
+                    `
+
+                }
+
+            </div>
+
+            `;
+
+        }
+    );
+
+
+    panel(
+        "City Properties",
+        html
+    );
+
+}
+
+
+/* =========================================================
+   PROPERTY CLICK
+========================================================= */
+
+function propertyClicked(index){
+
+    const property =
+        game.properties[index];
+
+    if(!property){
+        return;
+    }
+
+
+    if(property.bought){
+
+        openShop(
+            property.storeIndex
+        );
+
+    }
+    else{
+
+        openProperties();
+
+    }
+
+}
+
+
+/* =========================================================
+   BUY PROPERTY
+========================================================= */
+
+function buyProperty(index){
+
+    const property =
+        game.properties[index];
+
+    if(!property){
+        return;
+    }
+
+
+    if(property.bought){
+
+        openShop(
+            property.storeIndex
+        );
+
+        return;
+    }
+
+
+    if(game.cash<property.price){
+
+        toast(
+            "You need £"+
+            formatMoney(
+                property.price-game.cash
+            )+
+            " more."
+        );
+
+        return;
+    }
+
+
+    game.cash -=
+        property.price;
+
+
+    property.bought =
+        true;
+
+
+    const newStore = {
+
+        name:
+            property.name+
+            " Mart",
+
+        level:1,
+
+        condition:55,
+
+        baseIncome:15,
+
+        customers:15,
+
+        shelves:0,
+
+        fridges:0,
+
+        lighting:0,
+
+        security:0,
+
+        checkout:0,
+
+        staffRoom:0,
+
+        expansion:0
+
+    };
+
+
+    game.stores.push(
+        newStore
+    );
+
+
+    property.storeIndex =
+        game.stores.length-1;
+
+
+    game.reputation+=2;
+
+    game.marketShare+=.7;
+
+
+    toast(
+        "BUILDING PURCHASED! It is now YOUR shop."
+    );
+
+
+    render();
+
+    closePanel();
 
 }
 
@@ -2775,7 +3323,7 @@ function openStaff(){
     game.staff.forEach(
         (person,index)=>{
 
-            html += `
+            html+=`
 
             <div class="card">
 
@@ -2827,7 +3375,9 @@ function openStaff(){
                     `
                     <button
                         class="action"
-                        onclick="hireStaff(${index})"
+                        onclick="
+                            hireStaff(${index})
+                        "
                     >
                         HIRE — £400
                     </button>
@@ -2889,251 +3439,39 @@ function hireStaff(index){
 
     toast(
         person.name+
-        " has joined your company!"
+        " joined your company!"
     );
 
+
     render();
+
+    openStaff();
 
 }
 
 
 /* =========================================================
-   UPGRADES
+   UPGRADES MENU
 ========================================================= */
 
 function openUpgrades(){
 
-    let index =
-        game.selectedShop;
+    const index =
+        game.selectedShop || 0;
 
     if(!game.stores[index]){
-        index=0;
+        game.selectedShop=0;
     }
 
-    const shop =
-        game.stores[index];
-
-
-    panel(
-
-        "Shop Upgrades",
-
-        `
-
-        <div class="card">
-
-            <div class="cardTitle">
-                🏪 ${escapeHtml(shop.name)}
-            </div>
-
-            <div class="cardText">
-                Make your shop bigger,
-                faster and more profitable.
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                📚 Shelves
-            </div>
-
-            <div class="cardText">
-                More products.
-                Current: ${shop.shelves}
-            </div>
-
-            <button
-                class="action"
-                onclick="upgrade(${index},'shelves',250)"
-            >
-                UPGRADE — £250
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                🧊 Fridges
-            </div>
-
-            <div class="cardText">
-                Increase food and drink sales.
-                Current: ${shop.fridges}
-            </div>
-
-            <button
-                class="action"
-                onclick="upgrade(${index},'fridges',400)"
-            >
-                UPGRADE — £400
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                💡 Lighting
-            </div>
-
-            <div class="cardText">
-                Modern lighting improves
-                customer experience.
-            </div>
-
-            <button
-                class="action"
-                onclick="upgrade(${index},'lighting',350)"
-            >
-                UPGRADE — £350
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                🔐 Security
-            </div>
-
-            <div class="cardText">
-                Protect your business.
-            </div>
-
-            <button
-                class="action"
-                onclick="upgrade(${index},'security',450)"
-            >
-                UPGRADE — £450
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                🧾 Checkout
-            </div>
-
-            <div class="cardText">
-                Faster checkouts mean
-                more customers served.
-            </div>
-
-            <button
-                class="action"
-                onclick="upgrade(${index},'checkout',500)"
-            >
-                UPGRADE — £500
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                👥 Staff Room
-            </div>
-
-            <div class="cardText">
-                Improves employee performance.
-            </div>
-
-            <button
-                class="action"
-                onclick="upgrade(${index},'staffRoom',650)"
-            >
-                UPGRADE — £650
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                🏢 Expansion
-            </div>
-
-            <div class="cardText">
-                Make the store physically larger
-                and dramatically increase income.
-            </div>
-
-            <button
-                class="action"
-                onclick="upgrade(${index},'expansion',1200)"
-            >
-                EXPAND — £1,200
-            </button>
-
-        </div>
-
-        `
+    openShop(
+        game.selectedShop
     );
-
-}
-
-
-function upgrade(index,type,cost){
-
-    const shop =
-        game.stores[index];
-
-    if(!shop){
-        return;
-    }
-
-
-    if(game.cash<cost){
-
-        toast(
-            "Not enough cash."
-        );
-
-        return;
-    }
-
-
-    game.cash-=cost;
-
-    shop[type]++;
-
-
-    if(type==="security"){
-
-        game.reputation+=1;
-
-    }
-
-
-    if(type==="expansion"){
-
-        shop.baseIncome+=5;
-
-    }
-
-
-    toast(
-        "Upgrade installed!"
-    );
-
-    render();
 
 }
 
 
 /* =========================================================
-   RIVAL
+   RIVAL PANEL
 ========================================================= */
 
 function openRival(){
@@ -3141,35 +3479,46 @@ function openRival(){
     const rival =
         game.rival;
 
-    const buyCost =
-        9000;
+
+    const customerPercent =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                rival.customers/220*100
+            )
+        );
 
 
     panel(
 
-        "King's Mart",
+        "👑 King's Mart",
 
         `
 
         <div class="card">
 
             <div class="cardTitle">
-                👑 King's Mart
+                🏢 KING'S MART
             </div>
 
             <div class="cardText">
+
+                A huge modern supermarket
+                dominating the other side of the city.
+
+                <br><br>
 
                 Stores:
                 ${rival.stores}<br>
 
                 Customers:
-                ${Math.floor(rival.customers)}<br>
+                <strong>
+                    ${Math.floor(rival.customers)}
+                </strong><br>
 
                 Market Share:
                 ${rival.marketShare.toFixed(1)}%<br>
-
-                Income:
-                £${formatMoney(rival.income)}/s<br><br>
 
                 Status:
                 <strong>
@@ -3178,6 +3527,14 @@ function openRival(){
 
             </div>
 
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardTitle">
+                ❤️ Rival Health
+            </div>
 
             <div class="progress">
 
@@ -3190,25 +3547,67 @@ function openRival(){
 
             </div>
 
+            <div class="cardText"
+                 style="margin-top:6px">
+
+                ${rival.health.toFixed(1)}% remaining
+
+            </div>
+
         </div>
 
 
         <div class="card">
 
             <div class="cardTitle">
-                ⚔️ Compete
+                👥 King's Mart Customers
             </div>
 
             <div class="cardText">
-                Attack King's Mart and steal
-                customers from them.
+
+                Current:
+                ${Math.floor(rival.customers)}
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    class="progressFill"
+                    style="
+                        width:${customerPercent}%
+                    "
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardTitle">
+                ⚔️ Attack King's Mart
+            </div>
+
+            <div class="cardText">
+
+                Spend money on a competitive
+                campaign.
+
+                <br><br>
+
+                This will directly steal customers
+                from King's Mart and increase
+                your market share.
+
             </div>
 
             <button
                 class="action red"
                 onclick="attackRival()"
             >
-                ATTACK RIVAL — £500
+                ATTACK — £500
             </button>
 
         </div>
@@ -3224,12 +3623,18 @@ function openRival(){
             <div class="card">
 
                 <div class="cardTitle">
-                    🏢 Buy King's Mart
+                    🏆 Buy King's Mart
                 </div>
 
                 <div class="cardText">
+
                     King's Mart has collapsed.
-                    You can now buy the business.
+
+                    <br><br>
+
+                    Purchase their entire chain
+                    for £9,000.
+
                 </div>
 
                 <button
@@ -3237,7 +3642,7 @@ function openRival(){
                     onclick="buyRival()"
                 >
                     BUY KING'S MART —
-                    £${formatMoney(buyCost)}
+                    £9,000
                 </button>
 
             </div>
@@ -3251,12 +3656,14 @@ function openRival(){
             <div class="card">
 
                 <div class="cardTitle">
-                    🔒 King's Mart Is Still Operating
+                    🔒 Not For Sale
                 </div>
 
                 <div class="cardText">
-                    Keep competing until their
-                    health reaches zero.
+
+                    Keep attacking their business
+                    until they become distressed.
+
                 </div>
 
             </div>
@@ -3270,12 +3677,16 @@ function openRival(){
 }
 
 
+/* =========================================================
+   ATTACK RIVAL
+========================================================= */
+
 function attackRival(){
 
     if(game.cash<500){
 
         toast(
-            "Not enough cash."
+            "You need £500."
         );
 
         return;
@@ -3284,32 +3695,93 @@ function attackRival(){
 
     game.cash-=500;
 
-    game.rival.health-=7;
+
+    /*
+       BIG CUSTOMER HIT
+    */
+
+    const customerLoss =
+        Math.floor(
+            10+
+            Math.random()*8
+        );
+
 
     game.rival.customers =
         Math.max(
             0,
-            game.rival.customers-8
+            game.rival.customers-
+            customerLoss
         );
 
-    game.marketShare+=.5;
 
-    game.customers+=5;
+    /*
+       HEALTH HIT
+    */
+
+    game.rival.health =
+        Math.max(
+            0,
+            game.rival.health-7
+        );
+
+
+    /*
+       MARKET SHARE MOVES
+    */
+
+    game.marketShare +=
+        .45;
+
+
+    game.rival.marketShare =
+        Math.max(
+            0,
+            game.rival.marketShare-
+            .55
+        );
+
+
+    game.customers +=
+        Math.floor(
+            customerLoss*.7
+        );
+
 
     game.reputation+=1;
 
 
     rivalAI();
 
-
-    toast(
-        "King's Mart lost customers!"
-    );
+    renderRivalCustomers();
 
     render();
 
+
+    toast(
+        "⚔️ King's Mart lost "+
+        customerLoss+
+        " customers!"
+    );
+
+
+    /*
+       Re-open the rival panel so the player
+       immediately sees the damage.
+    */
+
+    setTimeout(()=>{
+
+        openRival();
+
+    },400);
+
 }
 
+
+/* =========================================================
+   BUY KING'S MART
+========================================================= */
 
 function buyRival(){
 
@@ -3343,7 +3815,7 @@ function buyRival(){
     game.cash-=cost;
 
 
-    game.totalStores +=
+    const acquired =
         game.rival.stores;
 
 
@@ -3353,18 +3825,113 @@ function buyRival(){
 
     game.rival.income=0;
 
-    game.marketShare+=20;
+    game.rival.marketShare=0;
 
-    game.reputation+=8;
+
+    game.totalEarned+=0;
+
+
+    /*
+       Give the player a big market share boost.
+    */
+
+    game.marketShare +=
+        acquired*4;
+
+
+    game.reputation+=10;
 
 
     toast(
-        "YOU BOUGHT KING'S MART!"
+        "🏆 YOU BOUGHT KING'S MART!"
     );
+
 
     closePanel();
 
     render();
+
+}
+
+
+/* =========================================================
+   RIVAL CUSTOMER VISUALS
+========================================================= */
+
+function renderRivalCustomers(){
+
+    const box =
+        document.getElementById(
+            "rivalCustomers"
+        );
+
+    if(!box){
+        return;
+    }
+
+
+    box.innerHTML="";
+
+
+    /*
+       Fewer visible people as King's Mart
+       loses customers.
+    */
+
+    const count =
+        Math.max(
+            4,
+            Math.min(
+                24,
+                Math.floor(
+                    game.rival.customers/10
+                )
+            )
+        );
+
+
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
+
+        const customer =
+            document.createElement(
+                "div"
+            );
+
+
+        customer.className =
+            "rivalCustomer";
+
+
+        /*
+           Keep customers around the
+           King's Mart building.
+        */
+
+        const x =
+            79+
+            Math.random()*17;
+
+        const y =
+            28+
+            Math.random()*55;
+
+
+        customer.style.left =
+            x+"%";
+
+        customer.style.top =
+            y+"%";
+
+
+        box.appendChild(
+            customer
+        );
+
+    }
 
 }
 
@@ -3381,13 +3948,13 @@ function randomEvent(){
 
     if(
         Date.now()-lastEvent
-        <30000
+        <35000
     ){
         return;
     }
 
 
-    if(Math.random()>.08){
+    if(Math.random()>.07){
         return;
     }
 
@@ -3403,7 +3970,7 @@ function randomEvent(){
             title:"🛒 Shopping Rush",
 
             text:
-                "A local event brought extra customers.",
+                "A busy weekend brought extra shoppers to your city.",
 
             effect:()=>{
 
@@ -3417,25 +3984,10 @@ function randomEvent(){
 
         {
 
-            title:"📦 Supplier Discount",
+            title:"📱 Viral Advertisement",
 
             text:
-                "A supplier gave you a surprise discount.",
-
-            effect:()=>{
-
-                game.cash+=450;
-
-            }
-
-        },
-
-        {
-
-            title:"📱 Viral Post",
-
-            text:
-                "Your company went viral online!",
+                "Your company suddenly went viral!",
 
             effect:()=>{
 
@@ -3451,10 +4003,50 @@ function randomEvent(){
 
         {
 
+            title:"📦 Supplier Discount",
+
+            text:
+                "A supplier gave your company a special discount.",
+
+            effect:()=>{
+
+                game.cash+=450;
+
+            }
+
+        },
+
+        {
+
+            title:"👑 King's Mart Mistake",
+
+            text:
+                "King's Mart made a pricing mistake and lost customers.",
+
+            effect:()=>{
+
+                game.rival.customers =
+                    Math.max(
+                        0,
+                        game.rival.customers-15
+                    );
+
+                game.rival.health =
+                    Math.max(
+                        0,
+                        game.rival.health-3
+                    );
+
+            }
+
+        },
+
+        {
+
             title:"💡 Power Problem",
 
             text:
-                "One of your stores suffered a power problem.",
+                "One of your stores had a temporary power problem.",
 
             effect:()=>{
 
@@ -3474,7 +4066,8 @@ function randomEvent(){
     const event =
         events[
             Math.floor(
-                Math.random()*events.length
+                Math.random()*
+                events.length
             )
         ];
 
@@ -3548,13 +4141,6 @@ function closePanel(){
 }
 
 
-function showCity(){
-
-    closePanel();
-
-}
-
-
 /* =========================================================
    TOAST
 ========================================================= */
@@ -3592,6 +4178,203 @@ function toast(message){
             );
 
         },3000);
+
+}
+
+
+/* =========================================================
+   RENDER BUILDINGS
+========================================================= */
+
+function renderBuildings(){
+
+    game.stores.forEach(
+        (shop,index)=>{
+
+            /*
+               Main store is already present.
+               Purchased properties are mapped
+               onto the property buildings.
+            */
+
+        }
+    );
+
+
+    game.properties.forEach(
+        (property,index)=>{
+
+            const building =
+                document.getElementById(
+                    "propertyBuilding"+
+                    index
+                );
+
+            const sign =
+                document.getElementById(
+                    "propertySign"+
+                    index
+                );
+
+            const badge =
+                document.getElementById(
+                    "propertyBadge"+
+                    index
+                );
+
+
+            if(!building){
+                return;
+            }
+
+
+            if(property.bought){
+
+                const shop =
+                    game.stores[
+                        property.storeIndex
+                    ];
+
+
+                building.classList.remove(
+                    "abandonedBuilding"
+                );
+
+                building.classList.add(
+                    "playerBuilding"
+                );
+
+
+                if(shop){
+
+                    if(shop.level>=2){
+
+                        building.classList.add(
+                            "level2"
+                        );
+
+                    }
+
+                    if(shop.level>=3){
+
+                        building.classList.add(
+                            "level3"
+                        );
+
+                    }
+
+                    if(shop.level>=4){
+
+                        building.classList.add(
+                            "level4"
+                        );
+
+                    }
+
+
+                    sign.textContent =
+                        shop.name
+                            .toUpperCase();
+
+
+                    badge.textContent =
+                        "YOUR SHOP • LV "+
+                        shop.level;
+
+                    badge.style.borderColor =
+                        "#ffd447";
+
+                    badge.style.color =
+                        "#ffd447";
+
+                }
+
+            }
+            else{
+
+                building.classList.remove(
+                    "playerBuilding",
+                    "level2",
+                    "level3",
+                    "level4"
+                );
+
+                building.classList.add(
+                    "abandonedBuilding"
+                );
+
+
+                sign.textContent =
+                    index===0
+                    ?
+                    "ABANDONED"
+                    :
+                    "FOR SALE";
+
+
+                badge.textContent =
+                    "FOR SALE";
+
+                badge.style.borderColor =
+                    "#606b74";
+
+                badge.style.color =
+                    "white";
+
+            }
+
+        }
+    );
+
+
+    /*
+       Main store visual upgrade.
+    */
+
+    const main =
+        game.stores[0];
+
+
+    const mainBuilding =
+        document.getElementById(
+            "building0"
+        );
+
+
+    if(mainBuilding && main){
+
+        mainBuilding.classList.remove(
+            "level2",
+            "level3",
+            "level4"
+        );
+
+
+        if(main.level>=2){
+
+            mainBuilding.classList.add(
+                "level2"
+            );
+
+        }
+
+        if(main.level>=3){
+
+            mainBuilding.classList.add(
+                "level3"
+            );
+
+        }
+
+        if(main.level>=4){
+
+            mainBuilding.classList.add(
+                "level4"
+            );
+
+        }
+
+    }
 
 }
 
@@ -3659,14 +4442,21 @@ function render(){
 
     }
 
+
+    renderBuildings();
+
 }
 
 
 /* =========================================================
-   START STRAIGHT INTO GAME
+   START GAME
 ========================================================= */
 
 loadGame();
+
+updateCustomers();
+
+renderRivalCustomers();
 
 render();
 

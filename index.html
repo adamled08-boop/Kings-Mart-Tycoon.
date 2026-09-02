@@ -2,19 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0, user-scalable=no,
-      viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 <title>King's Mart Tycoon</title>
 
 <style>
-
-/* =========================================================
-   CORE
-========================================================= */
 
 *{
     box-sizing:border-box;
@@ -27,7 +19,7 @@ html,body{
     margin:0;
     overflow:hidden;
     font-family:Arial,Helvetica,sans-serif;
-    background:#10161c;
+    background:#111820;
     color:white;
 }
 
@@ -38,52 +30,48 @@ body{
 button{
     font-family:inherit;
     border:0;
+    cursor:pointer;
 }
 
 #game{
-    position:relative;
     width:100vw;
     height:100vh;
+    position:relative;
     overflow:hidden;
-    background:#79aa69;
 }
 
 
-/* =========================================================
-   TOP HUD
-========================================================= */
+/* =====================================================
+   TOP BAR
+===================================================== */
 
 #topBar{
     position:absolute;
     z-index:100;
-
-    top:0;
     left:0;
     right:0;
-
-    height:76px;
+    top:0;
+    height:72px;
 
     display:flex;
     align-items:center;
     gap:8px;
 
-    padding:8px;
+    padding:7px;
 
-    background:rgba(11,16,21,.97);
-    border-bottom:2px solid #3c4852;
+    background:rgba(10,15,20,.97);
+    border-bottom:2px solid #394651;
 }
 
 .brand{
     width:185px;
     min-width:185px;
-    padding:4px 9px;
 }
 
 .brandName{
     color:#ffd447;
     font-size:20px;
     font-weight:900;
-
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -92,40 +80,36 @@ button{
 .brandSub{
     color:#84909b;
     font-size:9px;
-    margin-top:2px;
     font-weight:bold;
+    margin-top:3px;
 }
 
 .stats{
-    flex:1;
-
     display:flex;
-    gap:7px;
-
+    flex:1;
+    gap:6px;
     overflow:hidden;
 }
 
 .stat{
-    min-width:85px;
-
-    padding:7px 9px;
-
-    border-radius:9px;
-
+    min-width:82px;
+    padding:7px 8px;
     background:#202a33;
-    border:1px solid #3c4a55;
+    border:1px solid #3d4a54;
+    border-radius:9px;
 }
 
 .statLabel{
     color:#8f9ca7;
-    font-size:9px;
+    font-size:8px;
     text-transform:uppercase;
+    font-weight:bold;
 }
 
 .statValue{
-    margin-top:3px;
-    font-size:15px;
+    font-size:14px;
     font-weight:900;
+    margin-top:3px;
 }
 
 .money{
@@ -133,21 +117,18 @@ button{
 }
 
 
-/* =========================================================
+/* =====================================================
    WORLD
-========================================================= */
+===================================================== */
 
 #world{
     position:absolute;
-
+    top:72px;
     left:0;
     right:0;
-    top:76px;
-    bottom:70px;
-
+    bottom:67px;
     overflow:hidden;
-
-    background:#79aa69;
+    background:#76a967;
 }
 
 .city{
@@ -157,35 +138,48 @@ button{
 }
 
 
-/* =========================================================
+/* =====================================================
+   GRASS DETAILS
+===================================================== */
+
+.grassPatch{
+    position:absolute;
+    width:110px;
+    height:60px;
+    background:rgba(255,255,255,.035);
+    border-radius:50%;
+}
+
+
+/* =====================================================
    ROADS
-========================================================= */
+===================================================== */
 
 .road{
     position:absolute;
-    background:#50565b;
-    box-shadow:
-        inset 0 0 0 3px rgba(0,0,0,.12);
+    background:#50565a;
+    box-shadow:inset 0 0 0 3px rgba(0,0,0,.12);
+    z-index:4;
 }
 
 .horizontal{
     left:0;
     right:0;
-    height:72px;
+    height:65px;
 }
 
 .vertical{
     top:0;
     bottom:0;
-    width:72px;
+    width:65px;
 }
 
 .h1{
-    top:32%;
+    top:35%;
 }
 
 .h2{
-    top:69%;
+    top:70%;
 }
 
 .v1{
@@ -198,91 +192,270 @@ button{
 
 .roadLine{
     position:absolute;
-    background:
-        repeating-linear-gradient(
-            90deg,
-            #e8d46d 0 32px,
-            transparent 32px 62px
-        );
+    background:#e4d16b;
 }
 
 .horizontal .roadLine{
     left:0;
     right:0;
-    top:34px;
+    top:30px;
     height:4px;
 }
 
 .vertical .roadLine{
     top:0;
     bottom:0;
-    left:34px;
+    left:30px;
     width:4px;
+}
+
+
+/* =====================================================
+   RIVER
+===================================================== */
+
+#river{
+    position:absolute;
+
+    z-index:8;
+
+    top:0;
+    bottom:0;
+
+    left:56%;
+    width:12%;
 
     background:
         repeating-linear-gradient(
             180deg,
-            #e8d46d 0 32px,
-            transparent 32px 62px
+            #4f9fc2 0px,
+            #4f9fc2 35px,
+            #65b4d1 36px,
+            #65b4d1 42px
         );
+
+    border-left:7px solid #397d9c;
+    border-right:7px solid #397d9c;
+
+    box-shadow:
+        inset 10px 0 20px rgba(0,0,0,.08),
+        inset -10px 0 20px rgba(0,0,0,.08);
+}
+
+.riverLabel{
+    position:absolute;
+
+    z-index:12;
+
+    left:50%;
+    top:45%;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(-90deg);
+
+    padding:7px 18px;
+
+    border-radius:20px;
+
+    background:rgba(21,83,108,.8);
+
+    color:#d9f4ff;
+
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:2px;
+
+    white-space:nowrap;
 }
 
 
-/* =========================================================
+/* =====================================================
+   BRIDGES
+===================================================== */
+
+.bridge{
+    position:absolute;
+
+    z-index:14;
+
+    left:52%;
+    width:20%;
+    height:78px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #9a7044 0 16px,
+            #b38450 16px 22px
+        );
+
+    border-top:5px solid #59412c;
+    border-bottom:5px solid #59412c;
+
+    box-shadow:
+        0 4px 8px rgba(0,0,0,.3);
+}
+
+.bridge1{
+    top:35%;
+}
+
+.bridge2{
+    top:70%;
+}
+
+.bridgeSign{
+    position:absolute;
+
+    top:5px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    padding:3px 8px;
+
+    background:#2a2118;
+
+    border-radius:5px;
+
+    color:#ffe0a5;
+
+    font-size:7px;
+    font-weight:900;
+}
+
+
+/* =====================================================
    AREA LABELS
-========================================================= */
+===================================================== */
 
 .areaLabel{
     position:absolute;
-    z-index:15;
+    z-index:16;
 
     padding:7px 11px;
 
     border-radius:9px;
 
-    background:rgba(15,21,26,.82);
-    border:2px solid rgba(255,255,255,.2);
+    background:rgba(12,18,23,.87);
 
-    font-size:11px;
+    font-size:10px;
     font-weight:900;
-    letter-spacing:.5px;
 
     pointer-events:none;
 }
 
-.playerLabel{
+.yourArea{
     left:3%;
     top:3%;
+
     color:#ffd447;
-    border-color:#c89e25;
+
+    border:2px solid #c99d24;
 }
 
-.rivalLabel{
+.kingsArea{
     right:3%;
     top:3%;
-    color:#ff6a6a;
-    border-color:#b94747;
+
+    color:#ff7777;
+
+    border:2px solid #a83f45;
 }
 
 
-/* =========================================================
+/* =====================================================
+   BUILDING NAME SIGN
+===================================================== */
+
+.buildingNameSign{
+    position:absolute;
+
+    z-index:35;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    top:-34px;
+
+    width:calc(100% + 20px);
+
+    min-height:29px;
+
+    padding:6px 8px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#ffd447;
+
+    color:#171717;
+
+    border:3px solid #382f1b;
+
+    border-radius:7px 7px 3px 3px;
+
+    box-shadow:
+        0 4px 0 rgba(0,0,0,.25),
+        0 5px 12px rgba(0,0,0,.2);
+
+    font-size:10px;
+    font-weight:1000;
+
+    white-space:nowrap;
+    overflow:visible;
+    text-overflow:clip;
+
+    text-align:center;
+}
+
+.buildingNameSign.small{
+    font-size:8px;
+}
+
+.buildingNameSign.rivalSign{
+    top:-43px;
+
+    min-height:38px;
+
+    width:calc(100% + 32px);
+
+    background:#d93642;
+    color:white;
+
+    border-color:#241b1d;
+
+    font-size:16px;
+
+    letter-spacing:1px;
+
+    box-shadow:
+        0 5px 0 rgba(0,0,0,.3),
+        0 0 16px rgba(217,54,66,.25);
+}
+
+
+/* =====================================================
    BUILDINGS
-========================================================= */
+===================================================== */
 
 .building{
     position:absolute;
 
-    z-index:20;
+    z-index:25;
+
+    border:4px solid #242b30;
 
     border-radius:9px;
 
-    border:4px solid #222a30;
-
-    overflow:hidden;
+    overflow:visible;
 
     box-shadow:
-        0 7px 0 rgba(0,0,0,.22),
-        0 12px 25px rgba(0,0,0,.22);
+        0 7px 0 rgba(0,0,0,.23),
+        0 12px 24px rgba(0,0,0,.18);
 
     transition:.15s;
 }
@@ -292,50 +465,46 @@ button{
 }
 
 
-/* =========================================================
-   PLAYER BUILDINGS
-========================================================= */
+/* =====================================================
+   YOUR BUILDINGS
+===================================================== */
 
 .playerBuilding{
-    background:#e1d8bd;
+    background:#ded3b5;
 }
 
 .playerBuilding .roof{
-    background:#30291e;
-}
-
-.playerBuilding .sign{
-    background:#ffd447;
-    color:#171717;
+    background:#30291f;
 }
 
 
-/* =========================================================
-   ABANDONED BUILDINGS
-========================================================= */
+/* =====================================================
+   ABANDONED
+===================================================== */
 
 .abandonedBuilding{
-    background:#777b7c;
+    background:#737779;
 }
 
 .abandonedBuilding .roof{
-    background:#34383a;
+    background:#363a3c;
 }
 
-.abandonedBuilding .sign{
-    background:#4b5052;
-    color:#e4e7e8;
+.abandonedBuilding .buildingNameSign{
+    background:#505557;
+    color:#e9ebec;
+    border-color:#303436;
 }
 
 
-/* =========================================================
-   KING'S MART MODERN BUILDING
-========================================================= */
+/* =====================================================
+   MODERN KING'S MART
+===================================================== */
 
 .rivalBuilding{
-    background:#d7dce1;
+    background:#d9e0e5;
 
-    border-color:#20262c;
+    border-color:#20272d;
 
     box-shadow:
         0 9px 0 rgba(0,0,0,.28),
@@ -346,77 +515,40 @@ button{
     background:#101820;
 }
 
-.rivalBuilding .sign{
-    background:#d52f39;
-    color:white;
-    font-size:14px;
-    letter-spacing:1px;
-}
-
 .rivalBuilding .glass{
-    background:#63a9c2;
-    border-color:#273840;
-}
-
-.rivalBuilding .entrance{
-    width:40px;
-    height:58px;
-    background:#24343c;
+    background:#62a9c3;
+    border-color:#25363e;
 }
 
 
-/* =========================================================
+/* =====================================================
    BUILDING PARTS
-========================================================= */
+===================================================== */
 
 .roof{
     position:absolute;
-
     top:0;
     left:0;
     right:0;
+    height:28px;
 
-    height:27px;
+    border-bottom:3px solid #1e252a;
 
-    border-bottom:3px solid #1d252b;
+    border-radius:5px 5px 0 0;
 }
 
 .front{
     position:absolute;
-
-    top:27px;
+    top:28px;
     left:0;
     right:0;
     bottom:0;
 }
 
-.sign{
-    position:absolute;
-
-    top:30px;
-    left:8px;
-    right:8px;
-
-    height:26px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:4px;
-
-    font-size:9px;
-    font-weight:900;
-
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
 .windows{
     position:absolute;
 
-    top:62px;
+    top:17px;
     left:8px;
     right:8px;
 
@@ -426,12 +558,11 @@ button{
 
 .glass{
     flex:1;
-
     height:29px;
 
-    background:#6fb3ca;
+    background:#69afc6;
 
-    border:2px solid #293740;
+    border:2px solid #293840;
 }
 
 .entrance{
@@ -442,143 +573,130 @@ button{
 
     transform:translateX(-50%);
 
-    width:27px;
+    width:28px;
     height:44px;
 
-    background:#526b75;
+    background:#4c626b;
 
-    border:3px solid #29333a;
+    border:3px solid #273239;
 }
 
 
-/* =========================================================
-   PLAYER BUILDING POSITIONS
-========================================================= */
+/* =====================================================
+   YOUR BUILDING POSITIONS
+===================================================== */
 
-/* Main shop */
-.player1{
-    left:4%;
-    top:9%;
+.mainShop{
+    left:5%;
+    top:13%;
 
     width:145px;
-    height:112px;
+    height:110px;
 }
 
-/* Purchased shops */
-.property1{
+.property0{
     left:27%;
-    top:9%;
+    top:13%;
 
     width:135px;
-    height:105px;
+    height:103px;
+}
+
+.property1{
+    left:5%;
+    top:51%;
+
+    width:135px;
+    height:103px;
 }
 
 .property2{
-    left:4%;
-    top:48%;
+    left:27%;
+    top:51%;
 
     width:135px;
-    height:105px;
+    height:103px;
 }
 
 .property3{
-    left:27%;
-    top:48%;
+    left:39%;
+    top:77%;
 
     width:135px;
-    height:105px;
-}
-
-.property4{
-    left:27%;
-    top:78%;
-
-    width:135px;
-    height:105px;
+    height:103px;
 }
 
 
-/* =========================================================
-   KING'S MART POSITION
-========================================================= */
+/* =====================================================
+   KING'S MART BIG BUILDING
+===================================================== */
 
-.rivalMain{
+.kingsMain{
     right:4%;
-    top:8%;
+    top:14%;
 
-    width:230px;
+    width:235px;
     height:175px;
 }
 
-.rivalSecond{
-    right:5%;
-    top:49%;
+.kingsSecond{
+    right:7%;
+    top:56%;
 
-    width:170px;
-    height:125px;
+    width:165px;
+    height:120px;
 }
 
-.rivalMain .roof{
-    height:35px;
+.kingsMain .roof{
+    height:37px;
 }
 
-.rivalMain .front{
-    top:35px;
+.kingsMain .front{
+    top:37px;
 }
 
-.rivalMain .sign{
-    top:40px;
-    height:36px;
+.kingsMain .windows{
+    top:23px;
 }
 
-.rivalMain .windows{
-    top:86px;
+.kingsMain .glass{
+    height:45px;
 }
 
-.rivalMain .glass{
-    height:43px;
-}
-
-.rivalMain .entrance{
-    width:48px;
-    height:60px;
-}
-
-.rivalSecond .sign{
-    top:28px;
-}
-
-.rivalSecond .windows{
-    top:59px;
+.kingsMain .entrance{
+    width:50px;
+    height:61px;
 }
 
 
-/* =========================================================
-   BUILDING LEVEL VISUALS
-========================================================= */
+/* =====================================================
+   BUILDING UPGRADE VISUALS
+===================================================== */
 
 .level2{
-    border-color:#d8a92f;
+    border-color:#d5a52e;
 }
 
 .level3{
     border-color:#ffd447;
+
     box-shadow:
         0 8px 0 rgba(0,0,0,.25),
-        0 0 20px rgba(255,212,71,.28);
+        0 0 18px rgba(255,212,71,.25);
 }
 
 .level4{
-    border-color:#fff0a2;
+    border-color:#fff1a5;
+
     box-shadow:
         0 8px 0 rgba(0,0,0,.25),
-        0 0 28px rgba(255,212,71,.38);
+        0 0 28px rgba(255,212,71,.4);
 }
 
 
-/* =========================================================
-   PROPERTY SIGN
-========================================================= */
+/* =====================================================
+   PROPERTY BADGE
+===================================================== */
 
 .propertyBadge{
     position:absolute;
@@ -592,26 +710,25 @@ button{
 
     padding:4px 7px;
 
-    background:#10161b;
+    background:#111820;
 
-    border:2px solid #606b74;
+    border:2px solid #69737b;
 
     border-radius:6px;
 
-    font-size:8px;
+    font-size:7px;
     font-weight:900;
 
     white-space:nowrap;
 }
 
 
-/* =========================================================
+/* =====================================================
    PEOPLE
-========================================================= */
+===================================================== */
 
 .person{
     position:absolute;
-
     z-index:30;
 
     width:12px;
@@ -619,12 +736,11 @@ button{
 
     border-radius:50%;
 
-    background:#f1bd94;
+    background:#f0bc91;
 
-    border:2px solid #20262a;
+    border:2px solid #252b2e;
 
-    animation:
-        walk 5s linear infinite;
+    animation:walk 5s linear infinite;
 }
 
 .person:after{
@@ -660,74 +776,22 @@ button{
 }
 
 
-/* =========================================================
-   CARS
-========================================================= */
-
-.car{
-    position:absolute;
-
-    z-index:25;
-
-    width:44px;
-    height:20px;
-
-    border-radius:6px;
-
-    background:#d65353;
-
-    border:2px solid #222;
-
-    animation:
-        drive 9s linear infinite;
-}
-
-.car:before{
-    content:"";
-
-    position:absolute;
-
-    left:11px;
-    top:2px;
-
-    width:18px;
-    height:9px;
-
-    background:#8dc3d1;
-}
-
-@keyframes drive{
-
-    from{
-        left:-60px;
-    }
-
-    to{
-        left:110%;
-    }
-
-}
-
-
-/* =========================================================
-   KING'S MART CUSTOMER CROWD
-========================================================= */
+/* =====================================================
+   KING'S MART CUSTOMERS
+===================================================== */
 
 .rivalCustomer{
     position:absolute;
+    z-index:38;
 
-    z-index:31;
-
-    width:9px;
-    height:9px;
+    width:10px;
+    height:10px;
 
     border-radius:50%;
 
-    background:#f1bd94;
+    background:#f0bc91;
 
-    border:1px solid #222;
-
-    transition:.5s;
+    border:1px solid #252b2e;
 }
 
 .rivalCustomer:after{
@@ -741,15 +805,45 @@ button{
     width:6px;
     height:7px;
 
-    background:#b73842;
-
     border-radius:4px;
+
+    background:#b93843;
 }
 
 
-/* =========================================================
-   BOTTOM NAV
-========================================================= */
+/* =====================================================
+   RIVAL CUSTOMER COUNTER
+===================================================== */
+
+.rivalCustomerCounter{
+    position:absolute;
+
+    z-index:50;
+
+    right:4%;
+    top:42%;
+
+    padding:7px 11px;
+
+    background:rgba(20,25,29,.94);
+
+    border:2px solid #c4474d;
+
+    border-radius:9px;
+
+    color:#fff;
+
+    font-size:11px;
+    font-weight:900;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,.35);
+}
+
+
+/* =====================================================
+   BOTTOM BAR
+===================================================== */
 
 #bottomBar{
     position:absolute;
@@ -760,36 +854,36 @@ button{
     right:0;
     bottom:0;
 
-    height:70px;
+    height:67px;
 
     display:flex;
     gap:6px;
 
-    padding:7px;
+    padding:6px;
 
-    background:rgba(11,16,21,.98);
+    background:rgba(10,15,20,.98);
 
-    border-top:2px solid #3c4852;
+    border-top:2px solid #394651;
 }
 
 .navButton{
     flex:1;
 
-    border-radius:10px;
+    border-radius:9px;
 
     background:#202a33;
 
     border:1px solid #3c4a55;
 
-    color:#c8d1d8;
+    color:#d0d7dc;
 
-    font-size:10px;
+    font-size:9px;
     font-weight:900;
 }
 
 .navButton span{
     display:block;
-    font-size:18px;
+    font-size:17px;
     margin-bottom:2px;
 }
 
@@ -798,9 +892,9 @@ button{
 }
 
 
-/* =========================================================
+/* =====================================================
    PANEL
-========================================================= */
+===================================================== */
 
 #panel{
     position:absolute;
@@ -809,13 +903,12 @@ button{
 
     display:none;
 
-    top:90px;
+    top:85px;
     right:12px;
 
     width:min(410px,94vw);
 
-    max-height:
-        calc(100vh - 175px);
+    max-height:calc(100vh - 160px);
 
     overflow:auto;
 
@@ -831,17 +924,14 @@ button{
 
 .panelHeader{
     position:sticky;
-
     top:0;
-
     z-index:5;
 
     display:flex;
-
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
 
-    padding:13px;
+    padding:12px;
 
     background:#202a33;
 
@@ -849,7 +939,7 @@ button{
 }
 
 .panelTitle{
-    font-size:18px;
+    font-size:17px;
     font-weight:900;
 }
 
@@ -857,23 +947,23 @@ button{
     width:32px;
     height:32px;
 
-    border-radius:8px;
-
     background:#414d57;
 
     color:white;
+
+    border-radius:8px;
 
     font-size:20px;
 }
 
 .panelBody{
-    padding:13px;
+    padding:12px;
 }
 
 
-/* =========================================================
+/* =====================================================
    CARDS
-========================================================= */
+===================================================== */
 
 .card{
     margin-bottom:10px;
@@ -890,15 +980,12 @@ button{
 .cardTitle{
     font-size:15px;
     font-weight:900;
-
     margin-bottom:6px;
 }
 
 .cardText{
     color:#adb8c1;
-
     font-size:12px;
-
     line-height:1.5;
 }
 
@@ -915,9 +1002,8 @@ button{
 
     color:#151515;
 
+    font-size:11px;
     font-weight:900;
-
-    font-size:12px;
 }
 
 .action.green{
@@ -934,19 +1020,9 @@ button{
     color:white;
 }
 
-.action.gray{
-    background:#4b5660;
-    color:white;
-}
-
 .action:active{
     transform:scale(.98);
 }
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
 
 .progress{
     height:9px;
@@ -962,16 +1038,14 @@ button{
 
 .progressFill{
     height:100%;
-
     background:#67d97c;
-
     transition:.3s;
 }
 
 
-/* =========================================================
+/* =====================================================
    TOAST
-========================================================= */
+===================================================== */
 
 #toast{
     position:absolute;
@@ -979,25 +1053,23 @@ button{
     z-index:500;
 
     left:50%;
-    bottom:83px;
+    bottom:80px;
 
     transform:
         translateX(-50%)
         translateY(20px);
 
-    width:max-content;
     max-width:90%;
 
     padding:11px 16px;
-
-    border-radius:10px;
 
     background:#10161c;
 
     border:2px solid #566470;
 
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.6);
+    border-radius:10px;
+
+    box-shadow:0 8px 30px rgba(0,0,0,.6);
 
     text-align:center;
 
@@ -1020,9 +1092,9 @@ button{
 }
 
 
-/* =========================================================
+/* =====================================================
    EVENT
-========================================================= */
+===================================================== */
 
 #eventBox{
     position:absolute;
@@ -1030,7 +1102,7 @@ button{
     z-index:150;
 
     left:12px;
-    bottom:82px;
+    bottom:80px;
 
     width:min(330px,calc(100vw - 24px));
 
@@ -1044,8 +1116,7 @@ button{
 
     border-radius:11px;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.65);
+    box-shadow:0 10px 30px rgba(0,0,0,.65);
 }
 
 .eventTitle{
@@ -1061,15 +1132,24 @@ button{
 }
 
 
-/* =========================================================
-   MOBILE
-========================================================= */
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
 @media(max-width:800px){
 
     #topBar{
-        height:61px;
+        height:59px;
         padding:5px;
+    }
+
+    #world{
+        top:59px;
+        bottom:61px;
+    }
+
+    #bottomBar{
+        height:61px;
     }
 
     .brand{
@@ -1085,10 +1165,6 @@ button{
         display:none;
     }
 
-    .stats{
-        gap:4px;
-    }
-
     .stat{
         min-width:65px;
         padding:5px;
@@ -1099,122 +1175,114 @@ button{
     }
 
     .statValue{
-        font-size:11px;
+        font-size:10px;
     }
 
-    #world{
-        top:61px;
-        bottom:64px;
-    }
-
-    #bottomBar{
-        height:64px;
-    }
-
-    .navButton{
-        font-size:8px;
-    }
-
-    .navButton span{
-        font-size:16px;
-    }
-
-    .player1{
+    .mainShop{
         width:105px;
         height:82px;
     }
 
+    .property0,
     .property1,
     .property2,
-    .property3,
-    .property4{
+    .property3{
         width:100px;
-        height:78px;
+        height:77px;
     }
 
-    .rivalMain{
-        width:155px;
-        height:118px;
+    .kingsMain{
+        width:160px;
+        height:120px;
     }
 
-    .rivalSecond{
-        width:120px;
+    .kingsSecond{
+        width:125px;
         height:92px;
     }
 
+    .buildingNameSign{
+        top:-28px;
+        min-height:24px;
+        font-size:7px;
+    }
+
+    .buildingNameSign.rivalSign{
+        top:-34px;
+        min-height:31px;
+        font-size:10px;
+    }
+
     .roof{
-        height:19px;
+        height:20px;
     }
 
     .front{
-        top:19px;
-    }
-
-    .sign{
-        top:21px;
-        height:18px;
-        font-size:6px;
+        top:20px;
     }
 
     .windows{
-        top:44px;
-        left:5px;
-        right:5px;
-        gap:3px;
+        top:12px;
     }
 
     .glass{
-        height:18px;
+        height:21px;
     }
 
     .entrance{
-        width:20px;
-        height:29px;
+        width:21px;
+        height:31px;
     }
 
-    .rivalMain .roof{
-        height:25px;
+    .kingsMain .roof{
+        height:26px;
     }
 
-    .rivalMain .front{
-        top:25px;
+    .kingsMain .front{
+        top:26px;
     }
 
-    .rivalMain .sign{
-        top:29px;
-        height:25px;
-        font-size:9px;
+    .kingsMain .windows{
+        top:16px;
     }
 
-    .rivalMain .windows{
-        top:61px;
+    .kingsMain .glass{
+        height:28px;
     }
 
-    .rivalMain .glass{
-        height:27px;
+    .kingsMain .entrance{
+        width:32px;
+        height:39px;
     }
 
-    .rivalMain .entrance{
-        width:30px;
-        height:36px;
+    .rivalCustomerCounter{
+        right:3%;
+        top:43%;
+        font-size:8px;
+        padding:5px 7px;
+    }
+
+    #river{
+        left:56%;
+        width:12%;
+    }
+
+    .bridge{
+        height:55px;
     }
 
     #panel{
-        top:68px;
+        top:66px;
         right:6px;
-
-        width:min(360px,94vw);
-
-        max-height:
-            calc(100vh - 136px);
+        max-height:calc(100vh - 130px);
     }
 
     #toast{
-        bottom:72px;
+        bottom:67px;
     }
 
     #eventBox{
-        bottom:72px;
+        bottom:67px;
     }
 
 }
@@ -1222,79 +1290,59 @@ button{
 
 @media(max-width:480px){
 
-    .stat:nth-child(4),
-    .stat:nth-child(5){
+    .stats .stat:nth-child(4),
+    .stats .stat:nth-child(5){
         display:none;
     }
 
     .brand{
-        width:90px;
-        min-width:90px;
+        width:88px;
+        min-width:88px;
     }
 
     .brandName{
         font-size:11px;
     }
 
-    .player1{
+    .mainShop{
         width:82px;
         height:65px;
     }
 
+    .property0,
     .property1,
     .property2,
-    .property3,
-    .property4{
-        width:78px;
-        height:62px;
+    .property3{
+        width:77px;
+        height:61px;
     }
 
-    .rivalMain{
+    .kingsMain{
         width:125px;
         height:95px;
     }
 
-    .rivalSecond{
+    .kingsSecond{
         width:100px;
         height:75px;
     }
 
-}
-
-
-/* =========================================================
-   SMALL LANDSCAPE
-========================================================= */
-
-@media(max-height:500px)
-and (orientation:landscape){
-
-    #topBar{
-        height:53px;
+    .buildingNameSign{
+        top:-23px;
+        min-height:20px;
+        width:calc(100% + 12px);
+        padding:3px;
+        font-size:5px;
     }
 
-    #world{
-        top:53px;
-        bottom:55px;
+    .buildingNameSign.rivalSign{
+        top:-28px;
+        min-height:25px;
+        font-size:7px;
     }
 
-    #bottomBar{
-        height:55px;
-    }
-
-    .navButton span{
-        display:inline;
-        font-size:14px;
-    }
-
-    .navButton{
-        font-size:9px;
-    }
-
-    #panel{
-        top:58px;
-        max-height:
-            calc(100vh - 108px);
+    .rivalCustomerCounter{
+        font-size:7px;
     }
 
 }
@@ -1425,7 +1473,32 @@ and (orientation:landscape){
 <div class="city">
 
 
-<!-- ROADS -->
+<!-- GRASS -->
+
+<div
+    class="grassPatch"
+    style="left:8%;top:26%"
+></div>
+
+<div
+    class="grassPatch"
+    style="left:34%;top:30%"
+></div>
+
+<div
+    class="grassPatch"
+    style="left:75%;top:30%"
+></div>
+
+<div
+    class="grassPatch"
+    style="left:87%;top:77%"
+></div>
+
+
+<!-- =====================================================
+     ROADS
+===================================================== -->
 
 <div class="road horizontal h1">
     <div class="roadLine"></div>
@@ -1444,37 +1517,65 @@ and (orientation:landscape){
 </div>
 
 
+<!-- =====================================================
+     RIVER
+===================================================== -->
+
+<div id="river">
+
+    <div class="riverLabel">
+        THE CITY RIVER
+    </div>
+
+</div>
+
+
+<!-- BRIDGES -->
+
+<div class="bridge bridge1">
+    <div class="bridgeSign">
+        CITY BRIDGE
+    </div>
+</div>
+
+<div class="bridge bridge2">
+    <div class="bridgeSign">
+        CITY BRIDGE
+    </div>
+</div>
+
+
 <!-- AREA LABELS -->
 
-<div class="areaLabel playerLabel">
+<div class="areaLabel yourArea">
     🏙️ YOUR CITY
 </div>
 
-<div class="areaLabel rivalLabel">
+<div class="areaLabel kingsArea">
     👑 KING'S MART DISTRICT
 </div>
 
 
 <!-- =====================================================
-     YOUR MAIN SHOP
+     MAIN PLAYER SHOP
 ===================================================== -->
 
 <div
     id="building0"
-    class="building playerBuilding player1"
+    class="building playerBuilding mainShop"
     onclick="openShop(0)"
 >
+
+    <div
+        class="buildingNameSign"
+        id="storeSign0"
+    >
+        MY MART
+    </div>
 
     <div class="roof"></div>
 
     <div class="front">
-
-        <div
-            class="sign"
-            id="storeSign0"
-        >
-            MY MART
-        </div>
 
         <div class="windows">
 
@@ -1492,12 +1593,12 @@ and (orientation:landscape){
 
 
 <!-- =====================================================
-     PLAYER PROPERTY 1
+     PROPERTY 1
 ===================================================== -->
 
 <div
     id="propertyBuilding0"
-    class="building abandonedBuilding property1"
+    class="building abandonedBuilding property0"
     onclick="propertyClicked(0)"
 >
 
@@ -1508,16 +1609,16 @@ and (orientation:landscape){
         FOR SALE
     </div>
 
+    <div
+        class="buildingNameSign"
+        id="propertySign0"
+    >
+        ABANDONED
+    </div>
+
     <div class="roof"></div>
 
     <div class="front">
-
-        <div
-            class="sign"
-            id="propertySign0"
-        >
-            ABANDONED
-        </div>
 
         <div class="windows">
 
@@ -1534,12 +1635,12 @@ and (orientation:landscape){
 
 
 <!-- =====================================================
-     PLAYER PROPERTY 2
+     PROPERTY 2
 ===================================================== -->
 
 <div
     id="propertyBuilding1"
-    class="building abandonedBuilding property2"
+    class="building abandonedBuilding property1"
     onclick="propertyClicked(1)"
 >
 
@@ -1550,16 +1651,16 @@ and (orientation:landscape){
         FOR SALE
     </div>
 
+    <div
+        class="buildingNameSign"
+        id="propertySign1"
+    >
+        FOR SALE
+    </div>
+
     <div class="roof"></div>
 
     <div class="front">
-
-        <div
-            class="sign"
-            id="propertySign1"
-        >
-            FOR SALE
-        </div>
 
         <div class="windows">
 
@@ -1576,12 +1677,12 @@ and (orientation:landscape){
 
 
 <!-- =====================================================
-     PLAYER PROPERTY 3
+     PROPERTY 3
 ===================================================== -->
 
 <div
     id="propertyBuilding2"
-    class="building abandonedBuilding property3"
+    class="building abandonedBuilding property2"
     onclick="propertyClicked(2)"
 >
 
@@ -1592,16 +1693,16 @@ and (orientation:landscape){
         FOR SALE
     </div>
 
+    <div
+        class="buildingNameSign"
+        id="propertySign2"
+    >
+        FOR SALE
+    </div>
+
     <div class="roof"></div>
 
     <div class="front">
-
-        <div
-            class="sign"
-            id="propertySign2"
-        >
-            FOR SALE
-        </div>
 
         <div class="windows">
 
@@ -1618,12 +1719,12 @@ and (orientation:landscape){
 
 
 <!-- =====================================================
-     PLAYER PROPERTY 4
+     PROPERTY 4
 ===================================================== -->
 
 <div
     id="propertyBuilding3"
-    class="building abandonedBuilding property4"
+    class="building abandonedBuilding property3"
     onclick="propertyClicked(3)"
 >
 
@@ -1634,16 +1735,16 @@ and (orientation:landscape){
         FOR SALE
     </div>
 
+    <div
+        class="buildingNameSign"
+        id="propertySign3"
+    >
+        FOR SALE
+    </div>
+
     <div class="roof"></div>
 
     <div class="front">
-
-        <div
-            class="sign"
-            id="propertySign3"
-        >
-            FOR SALE
-        </div>
 
         <div class="windows">
 
@@ -1660,21 +1761,21 @@ and (orientation:landscape){
 
 
 <!-- =====================================================
-     KING'S MART BIG MODERN STORE
+     KING'S MART FLAGSHIP
 ===================================================== -->
 
 <div
-    class="building rivalBuilding rivalMain"
+    class="building rivalBuilding kingsMain"
     onclick="openRival()"
 >
+
+    <div class="buildingNameSign rivalSign">
+        👑 KING'S MART
+    </div>
 
     <div class="roof"></div>
 
     <div class="front">
-
-        <div class="sign">
-            KING'S MART
-        </div>
 
         <div class="windows">
 
@@ -1697,17 +1798,17 @@ and (orientation:landscape){
 ===================================================== -->
 
 <div
-    class="building rivalBuilding rivalSecond"
+    class="building rivalBuilding kingsSecond"
     onclick="openRival()"
 >
+
+    <div class="buildingNameSign rivalSign">
+        KING'S MART
+    </div>
 
     <div class="roof"></div>
 
     <div class="front">
-
-        <div class="sign">
-            KING'S MART
-        </div>
 
         <div class="windows">
 
@@ -1725,63 +1826,61 @@ and (orientation:landscape){
 
 
 <!-- =====================================================
+     RIVAL CUSTOMER COUNTER
+===================================================== -->
+
+<div
+    class="rivalCustomerCounter"
+    id="rivalCustomerCounter"
+>
+    👥 KING'S MART: 220 CUSTOMERS
+</div>
+
+
+<!-- =====================================================
+     RIVAL CUSTOMERS
+===================================================== -->
+
+<div id="rivalCustomers"></div>
+
+
+<!-- =====================================================
      PEOPLE
 ===================================================== -->
 
 <div
     class="person"
-    style="left:7%;top:34%;animation-delay:0s"
+    style="left:7%;top:35%;animation-delay:0s"
 ></div>
 
 <div
     class="person"
-    style="left:16%;top:71%;animation-delay:1s"
+    style="left:17%;top:72%;animation-delay:1s"
 ></div>
 
 <div
     class="person"
-    style="left:31%;top:34%;animation-delay:2s"
+    style="left:32%;top:35%;animation-delay:2s"
 ></div>
 
 <div
     class="person"
-    style="left:48%;top:72%;animation-delay:3s"
+    style="left:45%;top:72%;animation-delay:3s"
 ></div>
 
 <div
     class="person"
-    style="left:61%;top:35%;animation-delay:1.5s"
+    style="left:72%;top:36%;animation-delay:1.5s"
 ></div>
 
 <div
     class="person"
-    style="left:70%;top:72%;animation-delay:2.5s"
-></div>
-
-
-<!-- CARS -->
-
-<div
-    class="car"
-    style="top:35%;animation-delay:0s"
-></div>
-
-<div
-    class="car"
-    style="top:72%;animation-delay:4s"
-></div>
-
-
-<!-- =====================================================
-     KING'S MART CUSTOMER CROWD
-===================================================== -->
-
-<div
-    id="rivalCustomers"
+    style="left:88%;top:72%;animation-delay:2.5s"
 ></div>
 
 
 </div>
+
 </div>
 
 
@@ -1842,7 +1941,9 @@ and (orientation:landscape){
 </div>
 
 
-<!-- PANEL -->
+<!-- =====================================================
+     PANEL
+===================================================== -->
 
 <div id="panel">
 
@@ -1894,20 +1995,21 @@ and (orientation:landscape){
 <div id="toast"></div>
 
 
-</div>
-
-
 <script>
 
-/* =========================================================
-   GAME STATE
-========================================================= */
+/* =====================================================
+   SAVE KEY
+===================================================== */
 
 const SAVE_KEY =
-    "kings_mart_tycoon_city_v6";
+    "kings_mart_tycoon_city_v7";
 
 
-let game = {
+/* =====================================================
+   DEFAULT GAME
+===================================================== */
+
+let game={
 
     company:"My Mart",
 
@@ -1925,31 +2027,22 @@ let game = {
 
     lastSave:Date.now(),
 
+
     stores:[
 
         {
-            name:"Main Street Mart",
-
+            name:"My Mart",
             level:1,
-
             condition:65,
-
             baseIncome:12,
-
             customers:42,
 
             shelves:1,
-
             fridges:0,
-
             lighting:0,
-
             security:0,
-
             checkout:0,
-
             staffRoom:0,
-
             expansion:0
         }
 
@@ -2051,13 +2144,13 @@ let game = {
 };
 
 
-/* =========================================================
+/* =====================================================
    LOAD
-========================================================= */
+===================================================== */
 
 function loadGame(){
 
-    const saved =
+    const saved=
         localStorage.getItem(SAVE_KEY);
 
     if(!saved){
@@ -2070,10 +2163,10 @@ function loadGame(){
 
     try{
 
-        const data =
+        const data=
             JSON.parse(saved);
 
-        game =
+        game=
             Object.assign(
                 game,
                 data
@@ -2081,27 +2174,141 @@ function loadGame(){
 
         calculateOffline();
 
-        render();
-
     }
     catch(error){
 
         console.log(error);
 
-        render();
-
     }
+
+    normaliseGame();
+
+    render();
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   NORMALISE
+===================================================== */
+
+function normaliseGame(){
+
+    if(!Array.isArray(game.stores)){
+        game.stores=[];
+    }
+
+    if(!Array.isArray(game.properties)){
+        game.properties=[];
+    }
+
+    if(!Array.isArray(game.staff)){
+        game.staff=[];
+    }
+
+    if(!game.rival){
+        game.rival={
+            name:"King's Mart",
+            stores:4,
+            health:100,
+            customers:220,
+            marketShare:32,
+            income:95,
+            stage:"HEALTHY"
+        };
+    }
+
+    /*
+       Make sure old saves receive the new
+       property fields.
+    */
+
+    const defaultProperties=[
+        {
+            name:"Old Corner Shop",
+            price:2200
+        },
+        {
+            name:"Empty High Street",
+            price:3500
+        },
+        {
+            name:"Abandoned Supermarket",
+            price:4800
+        },
+        {
+            name:"Old Warehouse Shop",
+            price:6500
+        }
+    ];
+
+    for(
+        let i=0;
+        i<defaultProperties.length;
+        i++
+    ){
+
+        if(!game.properties[i]){
+
+            game.properties[i]={
+                ...defaultProperties[i],
+                bought:false,
+                storeIndex:null
+            };
+
+        }
+
+    }
+
+
+    game.properties.forEach(
+        property=>{
+
+            if(
+                typeof property.bought!=="boolean"
+            ){
+                property.bought=false;
+            }
+
+            if(
+                property.storeIndex===undefined
+            ){
+                property.storeIndex=null;
+            }
+
+        }
+    );
+
+
+    game.stores.forEach(
+        shop=>{
+
+            shop.level ??=1;
+            shop.condition ??=60;
+            shop.baseIncome ??=12;
+            shop.customers ??=15;
+
+            shop.shelves ??=0;
+            shop.fridges ??=0;
+            shop.lighting ??=0;
+            shop.security ??=0;
+            shop.checkout ??=0;
+            shop.staffRoom ??=0;
+            shop.expansion ??=0;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
    SAVE
-========================================================= */
+===================================================== */
 
 function saveGame(){
 
-    game.lastSave =
+    game.lastSave=
         Date.now();
 
     localStorage.setItem(
@@ -2112,13 +2319,13 @@ function saveGame(){
 }
 
 
-/* =========================================================
+/* =====================================================
    OFFLINE
-========================================================= */
+===================================================== */
 
 function calculateOffline(){
 
-    const seconds =
+    const seconds=
         Math.min(
             (Date.now()-game.lastSave)/1000,
             28800
@@ -2128,7 +2335,7 @@ function calculateOffline(){
         return;
     }
 
-    const earned =
+    const earned=
         Math.floor(
             getIncomePerSecond()*
             seconds
@@ -2147,16 +2354,16 @@ function calculateOffline(){
                 formatMoney(earned)
             );
 
-        },500);
+        },700);
 
     }
 
 }
 
 
-/* =========================================================
+/* =====================================================
    MONEY
-========================================================= */
+===================================================== */
 
 function formatMoney(value){
 
@@ -2166,9 +2373,9 @@ function formatMoney(value){
 }
 
 
-/* =========================================================
-   HTML ESCAPE
-========================================================= */
+/* =====================================================
+   ESCAPE
+===================================================== */
 
 function escapeHtml(text){
 
@@ -2182,34 +2389,21 @@ function escapeHtml(text){
 }
 
 
-/* =========================================================
+/* =====================================================
    SHOP POWER
-========================================================= */
+===================================================== */
 
 function shopPower(shop){
 
     let power=1;
 
-    power +=
-        shop.shelves*.12;
-
-    power +=
-        shop.fridges*.15;
-
-    power +=
-        shop.lighting*.10;
-
-    power +=
-        shop.security*.08;
-
-    power +=
-        shop.checkout*.15;
-
-    power +=
-        shop.staffRoom*.10;
-
-    power +=
-        shop.expansion*.30;
+    power+=shop.shelves*.12;
+    power+=shop.fridges*.15;
+    power+=shop.lighting*.10;
+    power+=shop.security*.08;
+    power+=shop.checkout*.15;
+    power+=shop.staffRoom*.10;
+    power+=shop.expansion*.30;
 
 
     for(
@@ -2218,7 +2412,7 @@ function shopPower(shop){
 
         if(person.hired){
 
-            power +=
+            power+=
                 (
                     person.management+
                     person.service+
@@ -2234,9 +2428,9 @@ function shopPower(shop){
 }
 
 
-/* =========================================================
+/* =====================================================
    INCOME
-========================================================= */
+===================================================== */
 
 function getIncomePerSecond(){
 
@@ -2246,7 +2440,7 @@ function getIncomePerSecond(){
         const shop of game.stores
     ){
 
-        total +=
+        total+=
             shop.baseIncome*
             shop.level*
             shopPower(shop)*
@@ -2262,9 +2456,9 @@ function getIncomePerSecond(){
 }
 
 
-/* =========================================================
-   CUSTOMER COUNT
-========================================================= */
+/* =====================================================
+   CUSTOMERS
+===================================================== */
 
 function updateCustomers(){
 
@@ -2274,7 +2468,7 @@ function updateCustomers(){
         const shop of game.stores
     ){
 
-        total +=
+        total+=
             shop.customers+
             shop.level*4+
             shop.shelves*2+
@@ -2282,7 +2476,7 @@ function updateCustomers(){
 
     }
 
-    game.customers =
+    game.customers=
         Math.max(
             0,
             Math.floor(total)
@@ -2291,118 +2485,105 @@ function updateCustomers(){
 }
 
 
-/* =========================================================
+/* =====================================================
    RIVAL AI
-========================================================= */
+===================================================== */
 
 function rivalAI(){
 
-    /* Our market pressure slowly hurts King's Mart */
+    /*
+       Rival gets weaker as your empire grows.
+    */
 
-    const passivePressure =
-        game.marketShare*.018;
+    const pressure=
+        game.marketShare*.012;
 
-    game.rival.health -=
-        passivePressure/100;
-
-
-    game.rival.health =
+    game.rival.health=
         Math.max(
             0,
-            Math.min(
-                100,
-                game.rival.health
-            )
+            game.rival.health-pressure/100
         );
 
 
-    /* Rival customers follow their health */
+    /*
+       Customer count naturally follows health,
+       but NEVER jumps back up.
+    */
 
-    const targetCustomers =
-        Math.max(
-            0,
-            Math.floor(
-                220*
-                (game.rival.health/100)
+    const maximumCustomers=
+        Math.floor(
+            220*
+            Math.max(
+                0,
+                game.rival.health/100
             )
         );
 
-    game.rival.customers =
-        Math.max(
-            0,
-            Math.min(
-                game.rival.customers,
-                targetCustomers
-            )
+    game.rival.customers=
+        Math.min(
+            game.rival.customers,
+            maximumCustomers
         );
 
 
     if(game.rival.health>75){
 
-        game.rival.stage =
-            "HEALTHY";
+        game.rival.stage="HEALTHY";
 
     }
     else if(game.rival.health>50){
 
-        game.rival.stage =
-            "UNDER PRESSURE";
+        game.rival.stage="UNDER PRESSURE";
 
     }
     else if(game.rival.health>30){
 
-        game.rival.stage =
-            "STRUGGLING";
+        game.rival.stage="STRUGGLING";
 
     }
     else if(game.rival.health>10){
 
-        game.rival.stage =
-            "DISTRESSED";
+        game.rival.stage="DISTRESSED";
 
     }
     else{
 
-        game.rival.stage =
-            "FOR SALE";
+        game.rival.stage="FOR SALE";
 
     }
 
 }
 
 
-/* =========================================================
-   MAIN GAME LOOP
-========================================================= */
+/* =====================================================
+   GAME LOOP
+===================================================== */
 
 setInterval(()=>{
 
-    const income =
+    const income=
         getIncomePerSecond();
 
     game.cash+=income;
 
     game.totalEarned+=income;
 
-
     updateCustomers();
 
     rivalAI();
 
-    renderRivalCustomers();
-
-    randomEvent();
-
     render();
+
+    renderRivalCustomers();
 
     saveGame();
 
 },1000);
 
 
-/* =========================================================
+/* =====================================================
    CITY
-========================================================= */
+===================================================== */
 
 function showCity(){
 
@@ -2411,16 +2592,14 @@ function showCity(){
 }
 
 
-/* =========================================================
+/* =====================================================
    COMPANY
-========================================================= */
+===================================================== */
 
 function openCompany(){
 
     panel(
-
         "Your Company",
-
         `
 
         <div class="card">
@@ -2470,13 +2649,19 @@ function openCompany(){
             <div class="cardText">
 
                 Stores:
-                ${game.stores.length}<br>
+                ${game.stores.length}
+
+                <br>
 
                 Total Earned:
-                £${formatMoney(game.totalEarned)}<br>
+                £${formatMoney(game.totalEarned)}
+
+                <br>
 
                 Market Share:
-                ${game.marketShare.toFixed(1)}%<br>
+                ${game.marketShare.toFixed(1)}%
+
+                <br>
 
                 Reputation:
                 ${Math.floor(game.reputation)}
@@ -2488,10 +2673,6 @@ function openCompany(){
 
         <div class="card">
 
-            <div class="cardTitle">
-                💾 Save
-            </div>
-
             <button
                 class="action green"
                 onclick="
@@ -2499,28 +2680,7 @@ function openCompany(){
                     toast('Game saved!');
                 "
             >
-                SAVE GAME
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                ⚠️ Reset
-            </div>
-
-            <div class="cardText">
-                Delete your current empire and
-                start again.
-            </div>
-
-            <button
-                class="action red"
-                onclick="resetGame()"
-            >
-                RESET GAME
+                💾 SAVE GAME
             </button>
 
         </div>
@@ -2533,7 +2693,7 @@ function openCompany(){
 
 function changeCompanyName(){
 
-    const input =
+    const input=
         document.getElementById(
             "companyInput"
         );
@@ -2542,7 +2702,7 @@ function changeCompanyName(){
         return;
     }
 
-    const name =
+    const name=
         input.value.trim();
 
     if(!name){
@@ -2554,8 +2714,11 @@ function changeCompanyName(){
         return;
     }
 
-    game.company =
+    game.company=
         name.substring(0,24);
+
+    game.stores[0].name=
+        game.company;
 
     saveGame();
 
@@ -2568,63 +2731,33 @@ function changeCompanyName(){
 }
 
 
-function resetGame(){
-
-    if(
-        !confirm(
-            "Delete your current empire?"
-        )
-    ){
-        return;
-    }
-
-    localStorage.removeItem(
-        SAVE_KEY
-    );
-
-    location.reload();
-
-}
-
-
-/* =========================================================
-   OPEN SHOP
-========================================================= */
+/* =====================================================
+   SHOP
+===================================================== */
 
 function openShop(index){
 
-    const shop =
+    const shop=
         game.stores[index];
 
     if(!shop){
         return;
     }
 
-    game.selectedShop =
+    game.selectedShop=
         index;
 
-
     panel(
-
-        escapeHtml(shop.name),
-
-        shopPanelHTML(
-            shop,
-            index
-        )
-
+        shop.name,
+        shopPanelHTML(shop,index)
     );
 
 }
 
 
-/* =========================================================
-   SHOP PANEL
-========================================================= */
-
 function shopPanelHTML(shop,index){
 
-    const income =
+    const income=
         shop.baseIncome*
         shop.level*
         shopPower(shop);
@@ -2641,13 +2774,19 @@ function shopPanelHTML(shop,index){
         <div class="cardText">
 
             Level:
-            ${shop.level}<br>
+            ${shop.level}
+
+            <br>
 
             Condition:
-            ${Math.floor(shop.condition)}%<br>
+            ${Math.floor(shop.condition)}%
+
+            <br>
 
             Customers:
-            ${Math.floor(shop.customers)}<br>
+            ${Math.floor(shop.customers)}
+
+            <br>
 
             Income:
             £${formatMoney(income)}/s
@@ -2658,7 +2797,9 @@ function shopPanelHTML(shop,index){
 
             <div
                 class="progressFill"
-                style="width:${shop.condition}%"
+                style="
+                    width:${shop.condition}%
+                "
             ></div>
 
         </div>
@@ -2669,47 +2810,23 @@ function shopPanelHTML(shop,index){
     <div class="card">
 
         <div class="cardTitle">
-            🛠️ Improve Building
+            🏗️ Upgrade This Building
         </div>
 
         <div class="cardText">
-            Renovating improves the condition
-            of the building and attracts customers.
+            Upgrade this exact shop.
+            Higher levels increase income,
+            customers and the appearance
+            of the building.
         </div>
 
         <button
             class="action"
-            onclick="renovate(${index})"
+            onclick="
+                upgradeBuilding(${index})
+            "
         >
-            RENOVATE — £500
-        </button>
-
-        <button
-            class="action green"
-            onclick="advertise(${index})"
-        >
-            ADVERTISE — £300
-        </button>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="cardTitle">
-            🏗️ Building Level
-        </div>
-
-        <div class="cardText">
-            Upgrade this specific building to
-            make it bigger and more profitable.
-        </div>
-
-        <button
-            class="action"
-            onclick="upgradeBuilding(${index})"
-        >
-            UPGRADE BUILDING —
+            ⬆️ UPGRADE BUILDING —
             £${formatMoney(
                 getBuildingUpgradeCost(shop)
             )}
@@ -2721,54 +2838,91 @@ function shopPanelHTML(shop,index){
     <div class="card">
 
         <div class="cardTitle">
-            📦 Store Equipment
+            🛠️ Renovation
         </div>
 
         <button
             class="action"
-            onclick="upgrade(${index},'shelves',250)"
+            onclick="renovate(${index})"
+        >
+            🔨 RENOVATE — £500
+        </button>
+
+        <button
+            class="action green"
+            onclick="advertise(${index})"
+        >
+            📣 ADVERTISE — £300
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="cardTitle">
+            📦 Equipment
+        </div>
+
+        <button
+            class="action"
+            onclick="
+                upgrade(${index},'shelves',250)
+            "
         >
             📚 Shelves — £250
         </button>
 
         <button
             class="action"
-            onclick="upgrade(${index},'fridges',400)"
+            onclick="
+                upgrade(${index},'fridges',400)
+            "
         >
             🧊 Fridges — £400
         </button>
 
         <button
             class="action"
-            onclick="upgrade(${index},'lighting',350)"
+            onclick="
+                upgrade(${index},'lighting',350)
+            "
         >
             💡 Lighting — £350
         </button>
 
         <button
             class="action"
-            onclick="upgrade(${index},'security',450)"
+            onclick="
+                upgrade(${index},'security',450)
+            "
         >
             🔐 Security — £450
         </button>
 
         <button
             class="action"
-            onclick="upgrade(${index},'checkout',500)"
+            onclick="
+                upgrade(${index},'checkout',500)
+            "
         >
             🧾 Checkout — £500
         </button>
 
         <button
             class="action"
-            onclick="upgrade(${index},'staffRoom',650)"
+            onclick="
+                upgrade(${index},'staffRoom',650)
+            "
         >
             👥 Staff Room — £650
         </button>
 
         <button
             class="action"
-            onclick="upgrade(${index},'expansion',1200)"
+            onclick="
+                upgrade(${index},'expansion',1200)
+            "
         >
             🏢 Expansion — £1,200
         </button>
@@ -2780,9 +2934,9 @@ function shopPanelHTML(shop,index){
 }
 
 
-/* =========================================================
+/* =====================================================
    BUILDING UPGRADE
-========================================================= */
+===================================================== */
 
 function getBuildingUpgradeCost(shop){
 
@@ -2797,17 +2951,15 @@ function getBuildingUpgradeCost(shop){
 
 function upgradeBuilding(index){
 
-    const shop =
+    const shop=
         game.stores[index];
 
     if(!shop){
         return;
     }
 
-
-    const cost =
+    const cost=
         getBuildingUpgradeCost(shop);
-
 
     if(game.cash<cost){
 
@@ -2822,27 +2974,27 @@ function upgradeBuilding(index){
         return;
     }
 
-
     game.cash-=cost;
 
     shop.level++;
 
-    shop.condition =
+    shop.condition=
         Math.min(
             100,
             shop.condition+10
         );
 
-    shop.baseIncome+=
-        5;
+    shop.baseIncome+=5;
 
-    shop.customers+=
-        10;
+    shop.customers+=10;
 
     game.reputation+=2;
 
     game.marketShare+=.4;
 
+    saveGame();
+
+    render();
 
     toast(
         shop.name+
@@ -2850,21 +3002,22 @@ function upgradeBuilding(index){
         shop.level+"!"
     );
 
+    setTimeout(()=>{
 
-    render();
+        openShop(index);
 
-    openShop(index);
+    },350);
 
 }
 
 
-/* =========================================================
+/* =====================================================
    RENOVATE
-========================================================= */
+===================================================== */
 
 function renovate(index){
 
-    const shop =
+    const shop=
         game.stores[index];
 
     if(game.cash<500){
@@ -2876,10 +3029,9 @@ function renovate(index){
         return;
     }
 
-
     game.cash-=500;
 
-    shop.condition =
+    shop.condition=
         Math.min(
             100,
             shop.condition+20
@@ -2889,10 +3041,7 @@ function renovate(index){
 
     game.reputation+=2;
 
-
-    toast(
-        "Building renovated!"
-    );
+    saveGame();
 
     render();
 
@@ -2901,9 +3050,9 @@ function renovate(index){
 }
 
 
-/* =========================================================
+/* =====================================================
    ADVERTISE
-========================================================= */
+===================================================== */
 
 function advertise(index){
 
@@ -2916,11 +3065,9 @@ function advertise(index){
         return;
     }
 
-
     game.cash-=300;
 
-
-    const shop =
+    const shop=
         game.stores[index];
 
     shop.customers+=15;
@@ -2929,32 +3076,31 @@ function advertise(index){
 
     game.reputation+=1;
 
+    saveGame();
+
+    render();
 
     toast(
         "Advertising brought customers!"
     );
-
-
-    render();
 
     openShop(index);
 
 }
 
 
-/* =========================================================
-   STORE EQUIPMENT
-========================================================= */
+/* =====================================================
+   EQUIPMENT
+===================================================== */
 
 function upgrade(index,type,cost){
 
-    const shop =
+    const shop=
         game.stores[index];
 
     if(!shop){
         return;
     }
-
 
     if(game.cash<cost){
 
@@ -2965,14 +3111,12 @@ function upgrade(index,type,cost){
         return;
     }
 
-
     game.cash-=cost;
 
     shop[type]++;
 
-
     if(type==="security"){
-        game.reputation+=1;
+        game.reputation++;
     }
 
     if(type==="checkout"){
@@ -2983,22 +3127,22 @@ function upgrade(index,type,cost){
         shop.baseIncome+=5;
     }
 
+    saveGame();
+
+    render();
 
     toast(
         "Upgrade installed!"
     );
-
-
-    render();
 
     openShop(index);
 
 }
 
 
-/* =========================================================
-   SHOPS MENU
-========================================================= */
+/* =====================================================
+   SHOPS
+===================================================== */
 
 function openShops(){
 
@@ -3019,10 +3163,14 @@ function openShops(){
 
                 <div class="cardText">
 
-                    Level ${shop.level}<br>
+                    Level ${shop.level}
+
+                    <br>
 
                     Condition:
-                    ${Math.floor(shop.condition)}%<br>
+                    ${Math.floor(shop.condition)}%
+
+                    <br>
 
                     Income:
                     £${formatMoney(
@@ -3035,9 +3183,11 @@ function openShops(){
 
                 <button
                     class="action"
-                    onclick="openShop(${index})"
+                    onclick="
+                        openShop(${index})
+                    "
                 >
-                    MANAGE THIS BUILDING
+                    MANAGE THIS SHOP
                 </button>
 
             </div>
@@ -3053,19 +3203,20 @@ function openShops(){
     <div class="card">
 
         <div class="cardTitle">
-            🏗️ Expand Your City
+            🏙️ Expand Your City
         </div>
 
         <div class="cardText">
-            Buy abandoned buildings and turn
-            them into your own stores.
+            Buy abandoned buildings on your
+            side of the river and turn them
+            into your own stores.
         </div>
 
         <button
             class="action"
             onclick="openProperties()"
         >
-            BUY CITY PROPERTIES
+            🏚️ BUY PROPERTIES
         </button>
 
     </div>
@@ -3074,16 +3225,16 @@ function openShops(){
 
 
     panel(
-        "Your City",
+        "Your Shops",
         html
     );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    PROPERTIES
-========================================================= */
+===================================================== */
 
 function openProperties(){
 
@@ -3109,18 +3260,9 @@ function openProperties(){
 
                     ${
                         property.bought
-
                         ?
-
-                        `
-                        <br>
-                        <strong>
-                            OWNED
-                        </strong>
-                        `
-
+                        "<br><strong>OWNED</strong>"
                         :
-
                         ""
                     }
 
@@ -3133,6 +3275,7 @@ function openProperties(){
                     ?
 
                     `
+
                     <button
                         class="action green"
                         onclick="
@@ -3143,21 +3286,23 @@ function openProperties(){
                     >
                         MANAGE BUILDING
                     </button>
+
                     `
 
                     :
 
                     `
+
                     <button
                         class="action"
                         onclick="
-                            buyProperty(
-                                ${index}
-                            )
+                            buyProperty(${index})
                         "
                     >
-                        BUY & RENOVATE
+                        BUY BUILDING —
+                        £${formatMoney(property.price)}
                     </button>
+
                     `
 
                 }
@@ -3178,19 +3323,14 @@ function openProperties(){
 }
 
 
-/* =========================================================
-   PROPERTY CLICK
-========================================================= */
-
 function propertyClicked(index){
 
-    const property =
+    const property=
         game.properties[index];
 
     if(!property){
         return;
     }
-
 
     if(property.bought){
 
@@ -3208,19 +3348,18 @@ function propertyClicked(index){
 }
 
 
-/* =========================================================
+/* =====================================================
    BUY PROPERTY
-========================================================= */
+===================================================== */
 
 function buyProperty(index){
 
-    const property =
+    const property=
         game.properties[index];
 
     if(!property){
         return;
     }
-
 
     if(property.bought){
 
@@ -3230,7 +3369,6 @@ function buyProperty(index){
 
         return;
     }
-
 
     if(game.cash<property.price){
 
@@ -3245,16 +3383,13 @@ function buyProperty(index){
         return;
     }
 
-
-    game.cash -=
+    game.cash-=
         property.price;
 
-
-    property.bought =
-        true;
+    property.bought=true;
 
 
-    const newStore = {
+    const newStore={
 
         name:
             property.name+
@@ -3269,17 +3404,11 @@ function buyProperty(index){
         customers:15,
 
         shelves:0,
-
         fridges:0,
-
         lighting:0,
-
         security:0,
-
         checkout:0,
-
         staffRoom:0,
-
         expansion:0
 
     };
@@ -3290,7 +3419,7 @@ function buyProperty(index){
     );
 
 
-    property.storeIndex =
+    property.storeIndex=
         game.stores.length-1;
 
 
@@ -3299,21 +3428,22 @@ function buyProperty(index){
     game.marketShare+=.7;
 
 
-    toast(
-        "BUILDING PURCHASED! It is now YOUR shop."
-    );
-
+    saveGame();
 
     render();
+
+    toast(
+        "🏪 BUILDING PURCHASED! It is now YOUR shop."
+    );
 
     closePanel();
 
 }
 
 
-/* =========================================================
+/* =====================================================
    STAFF
-========================================================= */
+===================================================== */
 
 function openStaff(){
 
@@ -3334,22 +3464,34 @@ function openStaff(){
                 <div class="cardText">
 
                     Age:
-                    ${person.age}<br>
+                    ${person.age}
+
+                    <br>
 
                     Role:
-                    ${person.role}<br><br>
+                    ${person.role}
+
+                    <br><br>
 
                     Intelligence:
-                    ${person.intelligence}/100<br>
+                    ${person.intelligence}/100
+
+                    <br>
 
                     Management:
-                    ${person.management}/100<br>
+                    ${person.management}/100
+
+                    <br>
 
                     Stocking:
-                    ${person.stocking}/100<br>
+                    ${person.stocking}/100
+
+                    <br>
 
                     Customer Service:
-                    ${person.service}/100<br>
+                    ${person.service}/100
+
+                    <br>
 
                     Problem Solving:
                     ${person.problemSolving}/100
@@ -3403,13 +3545,12 @@ function openStaff(){
 
 function hireStaff(index){
 
-    const person =
+    const person=
         game.staff[index];
 
     if(!person){
         return;
     }
-
 
     if(person.hired){
 
@@ -3421,7 +3562,6 @@ function hireStaff(index){
         return;
     }
 
-
     if(game.cash<400){
 
         toast(
@@ -3431,63 +3571,45 @@ function hireStaff(index){
         return;
     }
 
-
     game.cash-=400;
 
     person.hired=true;
 
+    saveGame();
+
+    render();
 
     toast(
         person.name+
         " joined your company!"
     );
 
-
-    render();
-
     openStaff();
 
 }
 
 
-/* =========================================================
-   UPGRADES MENU
-========================================================= */
+/* =====================================================
+   UPGRADES
+===================================================== */
 
 function openUpgrades(){
 
-    const index =
-        game.selectedShop || 0;
-
-    if(!game.stores[index]){
-        game.selectedShop=0;
-    }
-
     openShop(
-        game.selectedShop
+        game.selectedShop||0
     );
 
 }
 
 
-/* =========================================================
-   RIVAL PANEL
-========================================================= */
+/* =====================================================
+   RIVAL
+===================================================== */
 
 function openRival(){
 
-    const rival =
+    const rival=
         game.rival;
-
-
-    const customerPercent =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                rival.customers/220*100
-            )
-        );
 
 
     panel(
@@ -3499,26 +3621,32 @@ function openRival(){
         <div class="card">
 
             <div class="cardTitle">
-                🏢 KING'S MART
+                👑 KING'S MART
             </div>
 
             <div class="cardText">
 
                 A huge modern supermarket
-                dominating the other side of the city.
+                across the river.
 
                 <br><br>
 
                 Stores:
-                ${rival.stores}<br>
+                ${rival.stores}
+
+                <br>
 
                 Customers:
                 <strong>
                     ${Math.floor(rival.customers)}
-                </strong><br>
+                </strong>
+
+                <br>
 
                 Market Share:
-                ${rival.marketShare.toFixed(1)}%<br>
+                ${rival.marketShare.toFixed(1)}%
+
+                <br>
 
                 Status:
                 <strong>
@@ -3533,7 +3661,42 @@ function openRival(){
         <div class="card">
 
             <div class="cardTitle">
-                ❤️ Rival Health
+                👥 Customers
+            </div>
+
+            <div class="cardText">
+
+                King's Mart currently has
+
+                <strong>
+                    ${Math.floor(rival.customers)}
+                </strong>
+
+                customers.
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    class="progressFill"
+                    style="
+                        width:${Math.max(
+                            0,
+                            rival.customers/220*100
+                        )}%
+                    "
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardTitle">
+                ❤️ King's Mart Health
             </div>
 
             <div class="progress">
@@ -3550,7 +3713,7 @@ function openRival(){
             <div class="cardText"
                  style="margin-top:6px">
 
-                ${rival.health.toFixed(1)}% remaining
+                ${rival.health.toFixed(1)}%
 
             </div>
 
@@ -3560,46 +3723,19 @@ function openRival(){
         <div class="card">
 
             <div class="cardTitle">
-                👥 King's Mart Customers
+                ⚔️ Competitive Attack
             </div>
 
             <div class="cardText">
 
-                Current:
-                ${Math.floor(rival.customers)}
-
-            </div>
-
-            <div class="progress">
-
-                <div
-                    class="progressFill"
-                    style="
-                        width:${customerPercent}%
-                    "
-                ></div>
-
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="cardTitle">
-                ⚔️ Attack King's Mart
-            </div>
-
-            <div class="cardText">
-
-                Spend money on a competitive
-                campaign.
+                Steal customers from King's Mart
+                with an aggressive campaign.
 
                 <br><br>
 
-                This will directly steal customers
-                from King's Mart and increase
-                your market share.
+                Each attack removes customers,
+                damages their business and gives
+                you market share.
 
             </div>
 
@@ -3607,7 +3743,7 @@ function openRival(){
                 class="action red"
                 onclick="attackRival()"
             >
-                ATTACK — £500
+                ⚔️ ATTACK KING'S MART — £500
             </button>
 
         </div>
@@ -3623,17 +3759,17 @@ function openRival(){
             <div class="card">
 
                 <div class="cardTitle">
-                    🏆 Buy King's Mart
+                    🏆 King's Mart Is For Sale
                 </div>
 
                 <div class="cardText">
 
-                    King's Mart has collapsed.
+                    Their business has collapsed.
 
                     <br><br>
 
-                    Purchase their entire chain
-                    for £9,000.
+                    Buy the chain for
+                    £9,000.
 
                 </div>
 
@@ -3641,8 +3777,7 @@ function openRival(){
                     class="action green"
                     onclick="buyRival()"
                 >
-                    BUY KING'S MART —
-                    £9,000
+                    BUY KING'S MART — £9,000
                 </button>
 
             </div>
@@ -3651,35 +3786,20 @@ function openRival(){
 
             :
 
-            `
+            ""
 
-            <div class="card">
-
-                <div class="cardTitle">
-                    🔒 Not For Sale
-                </div>
-
-                <div class="cardText">
-
-                    Keep attacking their business
-                    until they become distressed.
-
-                </div>
-
-            </div>
-
-            `
         }
 
         `
+
     );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    ATTACK RIVAL
-========================================================= */
+===================================================== */
 
 function attackRival(){
 
@@ -3692,34 +3812,32 @@ function attackRival(){
         return;
     }
 
-
     game.cash-=500;
 
 
     /*
-       BIG CUSTOMER HIT
+       Random customer loss.
     */
 
-    const customerLoss =
+    const loss=
         Math.floor(
             10+
             Math.random()*8
         );
 
 
-    game.rival.customers =
+    game.rival.customers=
         Math.max(
             0,
-            game.rival.customers-
-            customerLoss
+            game.rival.customers-loss
         );
 
 
     /*
-       HEALTH HIT
+       Health loss.
     */
 
-    game.rival.health =
+    game.rival.health=
         Math.max(
             0,
             game.rival.health-7
@@ -3727,68 +3845,58 @@ function attackRival(){
 
 
     /*
-       MARKET SHARE MOVES
+       Market share.
     */
 
-    game.marketShare +=
-        .45;
+    game.marketShare+=.45;
 
-
-    game.rival.marketShare =
+    game.rival.marketShare=
         Math.max(
             0,
-            game.rival.marketShare-
-            .55
+            game.rival.marketShare-.55
         );
 
 
-    game.customers +=
-        Math.floor(
-            customerLoss*.7
-        );
-
+    game.customers+=
+        Math.floor(loss*.7);
 
     game.reputation+=1;
 
 
     rivalAI();
 
-    renderRivalCustomers();
+    saveGame();
 
     render();
+
+    renderRivalCustomers();
 
 
     toast(
         "⚔️ King's Mart lost "+
-        customerLoss+
+        loss+
         " customers!"
     );
 
-
-    /*
-       Re-open the rival panel so the player
-       immediately sees the damage.
-    */
 
     setTimeout(()=>{
 
         openRival();
 
-    },400);
+    },350);
 
 }
 
 
-/* =========================================================
+/* =====================================================
    BUY KING'S MART
-========================================================= */
+===================================================== */
 
 function buyRival(){
 
-    const cost=9000;
-
-
-    if(game.rival.stage!=="FOR SALE"){
+    if(
+        game.rival.stage!=="FOR SALE"
+    ){
 
         toast(
             "King's Mart is not for sale yet."
@@ -3798,12 +3906,12 @@ function buyRival(){
     }
 
 
-    if(game.cash<cost){
+    if(game.cash<9000){
 
         toast(
             "You need £"+
             formatMoney(
-                cost-game.cash
+                9000-game.cash
             )+
             " more."
         );
@@ -3812,10 +3920,10 @@ function buyRival(){
     }
 
 
-    game.cash-=cost;
+    game.cash-=9000;
 
 
-    const acquired =
+    const acquired=
         game.rival.stores;
 
 
@@ -3823,44 +3931,41 @@ function buyRival(){
 
     game.rival.customers=0;
 
+    game.rival.health=0;
+
     game.rival.income=0;
 
     game.rival.marketShare=0;
 
-
-    game.totalEarned+=0;
-
-
-    /*
-       Give the player a big market share boost.
-    */
-
-    game.marketShare +=
+    game.marketShare+=
         acquired*4;
 
-
     game.reputation+=10;
+
+
+    saveGame();
+
+    render();
+
+    renderRivalCustomers();
+
+    closePanel();
 
 
     toast(
         "🏆 YOU BOUGHT KING'S MART!"
     );
 
-
-    closePanel();
-
-    render();
-
 }
 
 
-/* =========================================================
-   RIVAL CUSTOMER VISUALS
-========================================================= */
+/* =====================================================
+   RIVAL CUSTOMERS
+===================================================== */
 
 function renderRivalCustomers(){
 
-    const box =
+    const box=
         document.getElementById(
             "rivalCustomers"
         );
@@ -3873,18 +3978,13 @@ function renderRivalCustomers(){
     box.innerHTML="";
 
 
-    /*
-       Fewer visible people as King's Mart
-       loses customers.
-    */
-
-    const count =
+    const count=
         Math.max(
-            4,
+            2,
             Math.min(
-                24,
+                25,
                 Math.floor(
-                    game.rival.customers/10
+                    game.rival.customers/9
                 )
             )
         );
@@ -3896,51 +3996,64 @@ function renderRivalCustomers(){
         i++
     ){
 
-        const customer =
+        const person=
             document.createElement(
                 "div"
             );
 
-
-        customer.className =
+        person.className=
             "rivalCustomer";
 
 
         /*
-           Keep customers around the
-           King's Mart building.
+           Keep customers on King's Mart's
+           side of the river.
         */
 
-        const x =
-            79+
-            Math.random()*17;
+        person.style.left=
+            (
+                70+
+                Math.random()*25
+            )+"%";
 
-        const y =
-            28+
-            Math.random()*55;
-
-
-        customer.style.left =
-            x+"%";
-
-        customer.style.top =
-            y+"%";
+        person.style.top=
+            (
+                29+
+                Math.random()*57
+            )+"%";
 
 
         box.appendChild(
-            customer
+            person
         );
+
+    }
+
+
+    const counter=
+        document.getElementById(
+            "rivalCustomerCounter"
+        );
+
+    if(counter){
+
+        counter.textContent=
+            "👥 KING'S MART: "+
+            Math.floor(
+                game.rival.customers
+            )+
+            " CUSTOMERS";
 
     }
 
 }
 
 
-/* =========================================================
+/* =====================================================
    RANDOM EVENTS
-========================================================= */
+===================================================== */
 
-let lastEvent =
+let lastEvent=
     Date.now();
 
 
@@ -3953,13 +4066,11 @@ function randomEvent(){
         return;
     }
 
-
     if(Math.random()>.07){
         return;
     }
 
-
-    lastEvent =
+    lastEvent=
         Date.now();
 
 
@@ -3975,7 +4086,6 @@ function randomEvent(){
             effect:()=>{
 
                 game.customers+=25;
-
                 game.cash+=300;
 
             }
@@ -3992,9 +4102,7 @@ function randomEvent(){
             effect:()=>{
 
                 game.reputation+=5;
-
                 game.marketShare+=1;
-
                 game.customers+=20;
 
             }
@@ -4025,13 +4133,13 @@ function randomEvent(){
 
             effect:()=>{
 
-                game.rival.customers =
+                game.rival.customers=
                     Math.max(
                         0,
                         game.rival.customers-15
                     );
 
-                game.rival.health =
+                game.rival.health=
                     Math.max(
                         0,
                         game.rival.health-3
@@ -4046,11 +4154,11 @@ function randomEvent(){
             title:"💡 Power Problem",
 
             text:
-                "One of your stores had a temporary power problem.",
+                "One of your shops had a temporary power problem.",
 
             effect:()=>{
 
-                game.cash =
+                game.cash=
                     Math.max(
                         0,
                         game.cash-250
@@ -4063,7 +4171,7 @@ function randomEvent(){
     ];
 
 
-    const event =
+    const event=
         events[
             Math.floor(
                 Math.random()*
@@ -4077,19 +4185,19 @@ function randomEvent(){
 
     document.getElementById(
         "eventTitle"
-    ).textContent =
+    ).textContent=
         event.title;
 
 
     document.getElementById(
         "eventText"
-    ).textContent =
+    ).textContent=
         event.text;
 
 
     document.getElementById(
         "eventBox"
-    ).style.display =
+    ).style.display=
         "block";
 
 
@@ -4097,7 +4205,7 @@ function randomEvent(){
 
         document.getElementById(
             "eventBox"
-        ).style.display =
+        ).style.display=
             "none";
 
     },6000);
@@ -4105,27 +4213,25 @@ function randomEvent(){
 }
 
 
-/* =========================================================
+/* =====================================================
    PANEL
-========================================================= */
+===================================================== */
 
 function panel(title,html){
 
     document.getElementById(
         "panelTitle"
-    ).textContent =
+    ).textContent=
         title;
-
 
     document.getElementById(
         "panelBody"
-    ).innerHTML =
+    ).innerHTML=
         html;
-
 
     document.getElementById(
         "panel"
-    ).style.display =
+    ).style.display=
         "block";
 
 }
@@ -4135,42 +4241,38 @@ function closePanel(){
 
     document.getElementById(
         "panel"
-    ).style.display =
+    ).style.display=
         "none";
 
 }
 
 
-/* =========================================================
+/* =====================================================
    TOAST
-========================================================= */
+===================================================== */
 
 let toastTimer;
 
 
 function toast(message){
 
-    const box =
+    const box=
         document.getElementById(
             "toast"
         );
 
-
-    box.textContent =
+    box.textContent=
         message;
-
 
     box.classList.add(
         "show"
     );
 
-
     clearTimeout(
         toastTimer
     );
 
-
-    toastTimer =
+    toastTimer=
         setTimeout(()=>{
 
             box.classList.remove(
@@ -4182,41 +4284,82 @@ function toast(message){
 }
 
 
-/* =========================================================
+/* =====================================================
    RENDER BUILDINGS
-========================================================= */
+===================================================== */
 
 function renderBuildings(){
 
-    game.stores.forEach(
-        (shop,index)=>{
+    /*
+       Main building.
+    */
 
-            /*
-               Main store is already present.
-               Purchased properties are mapped
-               onto the property buildings.
-            */
+    const main=
+        game.stores[0];
 
+    const mainBuilding=
+        document.getElementById(
+            "building0"
+        );
+
+
+    if(main && mainBuilding){
+
+        mainBuilding.classList.remove(
+            "level2",
+            "level3",
+            "level4"
+        );
+
+
+        if(main.level>=2){
+            mainBuilding.classList.add(
+                "level2"
+            );
         }
-    );
 
+        if(main.level>=3){
+            mainBuilding.classList.add(
+                "level3"
+            );
+        }
+
+        if(main.level>=4){
+            mainBuilding.classList.add(
+                "level4"
+            );
+        }
+
+
+        document.getElementById(
+            "storeSign0"
+        ).textContent=
+            main.name
+                .toUpperCase();
+
+    }
+
+
+    /*
+       Purchased abandoned buildings.
+    */
 
     game.properties.forEach(
         (property,index)=>{
 
-            const building =
+            const building=
                 document.getElementById(
                     "propertyBuilding"+
                     index
                 );
 
-            const sign =
+            const sign=
                 document.getElementById(
                     "propertySign"+
                     index
                 );
 
-            const badge =
+            const badge=
                 document.getElementById(
                     "propertyBadge"+
                     index
@@ -4228,13 +4371,14 @@ function renderBuildings(){
             }
 
 
+            building.classList.remove(
+                "level2",
+                "level3",
+                "level4"
+            );
+
+
             if(property.bought){
-
-                const shop =
-                    game.stores[
-                        property.storeIndex
-                    ];
-
 
                 building.classList.remove(
                     "abandonedBuilding"
@@ -4245,7 +4389,23 @@ function renderBuildings(){
                 );
 
 
+                const shop=
+                    game.stores[
+                        property.storeIndex
+                    ];
+
+
                 if(shop){
+
+                    sign.textContent=
+                        shop.name
+                            .toUpperCase();
+
+
+                    badge.textContent=
+                        "YOUR SHOP • LV "+
+                        shop.level;
+
 
                     if(shop.level>=2){
 
@@ -4271,32 +4431,13 @@ function renderBuildings(){
 
                     }
 
-
-                    sign.textContent =
-                        shop.name
-                            .toUpperCase();
-
-
-                    badge.textContent =
-                        "YOUR SHOP • LV "+
-                        shop.level;
-
-                    badge.style.borderColor =
-                        "#ffd447";
-
-                    badge.style.color =
-                        "#ffd447";
-
                 }
 
             }
             else{
 
                 building.classList.remove(
-                    "playerBuilding",
-                    "level2",
-                    "level3",
-                    "level4"
+                    "playerBuilding"
                 );
 
                 building.classList.add(
@@ -4304,103 +4445,44 @@ function renderBuildings(){
                 );
 
 
-                sign.textContent =
-                    index===0
-                    ?
-                    "ABANDONED"
-                    :
+                sign.textContent=
+                    property.name
+                        .toUpperCase();
+
+
+                badge.textContent=
                     "FOR SALE";
-
-
-                badge.textContent =
-                    "FOR SALE";
-
-                badge.style.borderColor =
-                    "#606b74";
-
-                badge.style.color =
-                    "white";
 
             }
 
         }
     );
 
-
-    /*
-       Main store visual upgrade.
-    */
-
-    const main =
-        game.stores[0];
-
-
-    const mainBuilding =
-        document.getElementById(
-            "building0"
-        );
-
-
-    if(mainBuilding && main){
-
-        mainBuilding.classList.remove(
-            "level2",
-            "level3",
-            "level4"
-        );
-
-
-        if(main.level>=2){
-
-            mainBuilding.classList.add(
-                "level2"
-            );
-
-        }
-
-        if(main.level>=3){
-
-            mainBuilding.classList.add(
-                "level3"
-            );
-
-        }
-
-        if(main.level>=4){
-
-            mainBuilding.classList.add(
-                "level4"
-            );
-
-        }
-
-    }
-
 }
 
 
-/* =========================================================
+/* =====================================================
    RENDER
-========================================================= */
+===================================================== */
 
 function render(){
 
     document.getElementById(
         "companyName"
-    ).textContent =
+    ).textContent=
         game.company;
 
 
     document.getElementById(
         "cash"
-    ).textContent =
+    ).textContent=
         "£"+
         formatMoney(game.cash);
 
 
     document.getElementById(
         "income"
-    ).textContent =
+    ).textContent=
         "£"+
         formatMoney(
             getIncomePerSecond()
@@ -4410,7 +4492,7 @@ function render(){
 
     document.getElementById(
         "customers"
-    ).textContent =
+    ).textContent=
         Math.floor(
             game.customers
         );
@@ -4418,7 +4500,7 @@ function render(){
 
     document.getElementById(
         "market"
-    ).textContent =
+    ).textContent=
         game.marketShare
             .toFixed(1)+
         "%";
@@ -4426,21 +4508,10 @@ function render(){
 
     document.getElementById(
         "reputation"
-    ).textContent =
+    ).textContent=
         Math.floor(
             game.reputation
         );
-
-
-    if(game.stores[0]){
-
-        document.getElementById(
-            "storeSign0"
-        ).textContent =
-            game.stores[0].name
-                .toUpperCase();
-
-    }
 
 
     renderBuildings();
@@ -4448,9 +4519,9 @@ function render(){
 }
 
 
-/* =========================================================
-   START GAME
-========================================================= */
+/* =====================================================
+   INITIALISE
+===================================================== */
 
 loadGame();
 

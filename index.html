@@ -2,1447 +2,862 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,
-           initial-scale=1.0,
-           maximum-scale=1.0,
-           user-scalable=no,
-           viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
 <title>King's Mart Tycoon</title>
 
 <style>
-
-/* =========================================================
-   KING'S MART TYCOON
-   LANDSCAPE GAME EDITION
-   NO ORIENTATION POPUP
-========================================================= */
-
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
+html,body{
     margin:0;
-    padding:0;
     width:100%;
     height:100%;
     overflow:hidden;
-    background:#0b1015;
-    color:#ffffff;
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-}
-
-body{
-    touch-action:manipulation;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#10151b;
+    color:white;
 }
 
 button{
     font-family:inherit;
-    color:inherit;
     border:0;
     cursor:pointer;
 }
 
-/* =========================================================
-   MAIN GAME
-========================================================= */
-
 #game{
-    position:relative;
     width:100vw;
     height:100vh;
+    position:relative;
     overflow:hidden;
-    background:#17231d;
+    background:#79a968;
 }
 
-/* =========================================================
-   TOP HUD
-========================================================= */
+/* =========================
+   START SCREEN
+========================= */
 
-#topBar{
-
+#startScreen{
     position:absolute;
-
-    left:0;
-    right:0;
-    top:0;
-
-    height:64px;
-
-    z-index:100;
-
+    inset:0;
+    z-index:1000;
     display:flex;
-
     align-items:center;
-
-    gap:8px;
-
-    padding:
-        7px
-        max(8px,env(safe-area-inset-right))
-        7px
-        max(8px,env(safe-area-inset-left));
-
+    justify-content:center;
     background:
-        linear-gradient(
-            #252f38,
-            #151b21
-        );
+        radial-gradient(circle at 50% 30%,#394b5d 0%,#18212a 45%,#080b0f 100%);
+}
 
-    border-bottom:
-        2px solid #3a4651;
-
-    box-shadow:
-        0 5px 20px #000a;
+.startBox{
+    width:min(92%,520px);
+    padding:30px;
+    text-align:center;
+    background:rgba(15,20,26,.96);
+    border:2px solid #586878;
+    border-radius:24px;
+    box-shadow:0 20px 60px #000;
 }
 
 .logo{
-
-    font-size:17px;
-
+    font-size:clamp(34px,7vw,64px);
     font-weight:900;
-
-    white-space:nowrap;
+    letter-spacing:-3px;
+    text-shadow:4px 4px 0 #000;
 }
 
 .logo span{
-
-    color:#e5ba42;
+    color:#ffd34d;
 }
 
-.companyName{
-
-    max-width:125px;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
-    white-space:nowrap;
-
-    color:#a2abb4;
-
-    font-size:10px;
+.startSub{
+    color:#aeb9c4;
+    margin:8px 0 25px;
+    font-size:16px;
 }
 
-.hudStats{
+.nameInput{
+    width:100%;
+    padding:15px;
+    border-radius:12px;
+    border:2px solid #536171;
+    background:#202a34;
+    color:white;
+    font-size:17px;
+    outline:none;
+    margin-bottom:12px;
+}
 
-    flex:1;
+.startButton{
+    width:100%;
+    padding:16px;
+    border-radius:12px;
+    background:#ffd34d;
+    color:#161616;
+    font-size:18px;
+    font-weight:900;
+    box-shadow:0 5px 0 #b88e18;
+}
 
+.startButton:active{
+    transform:translateY(4px);
+    box-shadow:0 1px 0 #b88e18;
+}
+
+/* =========================
+   HUD
+========================= */
+
+#topBar{
+    position:absolute;
+    z-index:50;
+    top:0;
+    left:0;
+    right:0;
+    min-height:76px;
+    padding:9px;
     display:flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(12,17,22,.94);
+    border-bottom:2px solid #38434d;
+}
 
-    gap:6px;
+.brand{
+    min-width:170px;
+    padding:8px 12px;
+}
 
+.brandName{
+    font-size:20px;
+    font-weight:900;
+    color:#ffd34d;
+    white-space:nowrap;
+}
+
+.brandSmall{
+    font-size:11px;
+    color:#87939f;
+}
+
+.stats{
+    display:flex;
+    flex:1;
+    gap:7px;
     overflow:hidden;
 }
 
 .stat{
-
-    min-width:76px;
-
-    padding:6px 8px;
-
-    background:#10161c;
-
-    border:
-        1px solid #303a45;
-
-    border-radius:9px;
-}
-
-.statValue{
-
-    font-size:13px;
-
-    font-weight:900;
+    min-width:92px;
+    background:#202a33;
+    border:1px solid #394752;
+    border-radius:10px;
+    padding:7px 9px;
 }
 
 .statLabel{
-
-    margin-top:3px;
-
-    color:#84909c;
-
-    font-size:8px;
-
+    font-size:10px;
+    color:#8f9ca7;
     text-transform:uppercase;
 }
 
-.speedButton{
-
-    padding:9px 11px;
-
-    background:#2c3742;
-
-    border:
-        1px solid #485563;
-
-    border-radius:9px;
-
-    font-size:11px;
-
+.statValue{
+    font-size:17px;
     font-weight:900;
+    margin-top:2px;
 }
 
-/* =========================================================
-   GAME WORLD
-========================================================= */
+.money{
+    color:#72e38a;
+}
+
+/* =========================
+   CITY WORLD
+========================= */
 
 #world{
-
     position:absolute;
-
-    left:0;
-    right:0;
-
-    top:64px;
-    bottom:62px;
-
+    inset:76px 0 72px 0;
     overflow:hidden;
-
-    background:#657458;
-}
-
-#cityGround{
-
-    position:absolute;
-
-    left:-10%;
-    top:-10%;
-
-    width:120%;
-    height:120%;
-
     background:
-
+        linear-gradient(90deg,
+            rgba(255,255,255,.05) 1px,
+            transparent 1px),
         linear-gradient(
-            24deg,
-            transparent 0 18%,
-            #414849 18% 22%,
-            transparent 22% 47%,
-            #4f5656 47% 51%,
-            transparent 51% 77%,
-            #414849 77% 81%,
-            transparent 81%
-        ),
-
-        linear-gradient(
-            102deg,
-            transparent 0 23%,
-            #4b5252 23% 27%,
-            transparent 27% 57%,
-            #555b5b 57% 61%,
-            transparent 61% 88%
-        ),
-
-        #667458;
+            rgba(255,255,255,.05) 1px,
+            transparent 1px),
+        #76a967;
+    background-size:45px 45px;
 }
 
-/* =========================================================
-   ROADS
-========================================================= */
+.city{
+    position:absolute;
+    inset:0;
+}
+
+/* roads */
 
 .road{
-
     position:absolute;
-
-    background:#353b3c;
-
-    box-shadow:
-        inset 0 3px #ffffff10,
-        inset 0 -3px #00000022;
+    background:#4b5156;
+    box-shadow:inset 0 0 0 3px rgba(0,0,0,.12);
 }
 
-.road1{
-
-    width:120%;
-
-    height:84px;
-
-    left:-10%;
-
-    top:40%;
-
-    transform:rotate(-4deg);
-}
-
-.road2{
-
-    width:84px;
-
-    height:130%;
-
-    left:45%;
-
-    top:-15%;
-
-    transform:rotate(6deg);
-}
-
-.road3{
-
-    width:120%;
-
-    height:60px;
-
-    left:-10%;
-
-    top:72%;
-}
-
-.road::after{
-
-    content:"";
-
-    position:absolute;
-
+.road.horizontal{
+    height:82px;
     left:0;
     right:0;
-
-    top:50%;
-
-    height:3px;
-
-    background:
-        repeating-linear-gradient(
-            90deg,
-            #e4d36e 0 28px,
-            transparent 28px 55px
-        );
-
-    opacity:.7;
 }
 
-/* =========================================================
-   BACKGROUND BUILDINGS
-========================================================= */
-
-.backgroundBuilding{
-
-    position:absolute;
-
-    width:95px;
-    height:65px;
-
-    border:
-        2px solid #343a3b;
-
-    border-radius:7px;
-
-    box-shadow:
-        7px 9px 0 #0003;
-}
-
-.backgroundBuilding::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:10px;
-
-    background:
-        repeating-linear-gradient(
-            90deg,
-            #abb0ac 0 12px,
-            #d5d5ca 12px 18px
-        );
-
-    opacity:.5;
-
-    border-radius:3px;
-}
-
-.bg1{
-
-    left:7%;
-    top:13%;
-
-    background:#766f66;
-}
-
-.bg2{
-
-    right:8%;
-    top:14%;
-
-    background:#727a7e;
-}
-
-.bg3{
-
-    left:18%;
-    bottom:12%;
-
-    background:#777068;
-}
-
-.bg4{
-
-    right:7%;
-    bottom:10%;
-
-    background:#72786d;
-}
-
-/* =========================================================
-   STORES
-========================================================= */
-
-.store{
-
-    position:absolute;
-
-    width:112px;
-    height:90px;
-
-    z-index:30;
-
-    transform:
-        translate(-50%,-50%);
-
-    transition:
-        transform .15s,
-        filter .15s;
-
-    filter:
-        drop-shadow(7px 9px 3px #0006);
-}
-
-.store:active{
-
-    transform:
-        translate(-50%,-50%)
-        scale(.94);
-}
-
-.store.selected{
-
-    transform:
-        translate(-50%,-50%)
-        scale(1.12);
-
-    filter:
-        drop-shadow(0 0 10px #ffffffaa)
-        drop-shadow(7px 9px 3px #0006);
-}
-
-.storeRoof{
-
-    height:25px;
-
-    border:
-        2px solid #3b3217;
-
-    border-radius:
-        8px
-        8px
-        2px
-        2px;
-
-    position:relative;
-}
-
-.player .storeRoof{
-
-    background:#43a967;
-}
-
-.rival .storeRoof{
-
-    background:#c84444;
-}
-
-.abandoned .storeRoof{
-
-    background:#656a6d;
-}
-
-.storeRoof::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:6px;
-    right:6px;
-    top:5px;
-
-    height:4px;
-
-    border-radius:5px;
-
-    background:#ffffff55;
-}
-
-.storeFront{
-
-    height:65px;
-
-    position:relative;
-
-    background:#e2dfd1;
-
-    border:
-        2px solid #444741;
-
-    border-top:0;
-
-    border-radius:
-        0
-        0
-        8px
-        8px;
-}
-
-.player .storeFront{
-
-    background:#dfe9df;
-}
-
-.rival .storeFront{
-
-    background:#e8d7d7;
-}
-
-.abandoned .storeFront{
-
-    background:#777b7c;
-}
-
-.storeWindow{
-
-    position:absolute;
-
-    left:9px;
-    top:8px;
-
-    width:62px;
-    height:34px;
-
-    background:#416c7b;
-
-    border:
-        3px solid #303a3d;
-}
-
-.storeWindow::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            transparent 47%,
-            #ffffff55 48% 52%,
-            transparent 53%
-        ),
-
-        linear-gradient(
-            0deg,
-            transparent 47%,
-            #ffffff55 48% 52%,
-            transparent 53%
-        );
-}
-
-.storeDoor{
-
-    position:absolute;
-
-    right:9px;
-    bottom:7px;
-
-    width:22px;
-    height:34px;
-
-    background:#35484d;
-
-    border:
-        2px solid #242b2d;
-}
-
-.storeDoor::after{
-
-    content:"";
-
-    position:absolute;
-
-    right:3px;
-    top:15px;
-
-    width:4px;
-    height:4px;
-
-    border-radius:50%;
-
-    background:#e4c65b;
-}
-
-.storeSign{
-
-    position:absolute;
-
-    z-index:5;
-
-    left:9px;
-    top:13px;
-
-    max-width:70px;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
-    white-space:nowrap;
-
-    padding:3px 5px;
-
-    background:#26313a;
-
-    border-radius:3px;
-
-    font-size:7px;
-
-    font-weight:900;
-}
-
-/* =========================================================
-   STORE LABELS
-========================================================= */
-
-.storeMarker{
-
-    position:absolute;
-
-    z-index:40;
-
-    transform:
-        translate(-50%,-50%);
-
-    padding:4px 7px;
-
-    background:#151a20e8;
-
-    border:
-        1px solid #ffffff55;
-
-    border-radius:8px;
-
-    font-size:8px;
-
-    font-weight:900;
-
-    white-space:nowrap;
-
-    pointer-events:none;
-}
-
-.playerMarker{
-
-    border-color:#51c87a;
-}
-
-.rivalMarker{
-
-    border-color:#e55555;
-}
-
-/* =========================================================
-   CUSTOMERS
-========================================================= */
-
-.person{
-
-    position:absolute;
-
-    z-index:20;
-
-    font-size:18px;
-
-    animation:
-        walk 5s ease-in-out infinite;
-}
-
-.person2{
-    animation-delay:-2s;
-}
-
-.person3{
-    animation-delay:-3.5s;
-}
-
-.person4{
-    animation-delay:-1s;
-}
-
-@keyframes walk{
-
-    0%{
-        transform:translateX(-35px);
-    }
-
-    50%{
-        transform:translateX(35px);
-    }
-
-    100%{
-        transform:translateX(-35px);
-    }
-}
-
-/* =========================================================
-   BOTTOM MENU
-========================================================= */
-
-#bottomBar{
-
-    position:absolute;
-
-    left:0;
-    right:0;
+.road.vertical{
+    width:82px;
+    top:0;
     bottom:0;
+}
 
-    height:62px;
+.road.h1{top:30%}
+.road.h2{top:68%}
+.road.v1{left:24%}
+.road.v2{left:72%}
 
-    z-index:100;
+.roadLine{
+    position:absolute;
+    background:#e4c95d;
+}
 
+.road.horizontal .roadLine{
+    left:0;
+    right:0;
+    top:39px;
+    height:4px;
+    background:repeating-linear-gradient(
+        90deg,
+        #e6d16d 0 35px,
+        transparent 35px 65px
+    );
+}
+
+.road.vertical .roadLine{
+    top:0;
+    bottom:0;
+    left:39px;
+    width:4px;
+    background:repeating-linear-gradient(
+        180deg,
+        #e6d16d 0 35px,
+        transparent 35px 65px
+    );
+}
+
+/* =========================
+   BUILDINGS
+========================= */
+
+.building{
+    position:absolute;
+    width:150px;
+    height:112px;
+    border-radius:10px;
+    border:4px solid #222a30;
+    box-shadow:0 7px 0 rgba(0,0,0,.25),0 12px 25px rgba(0,0,0,.22);
+    overflow:hidden;
+    transition:.15s;
+}
+
+.building:active{
+    transform:scale(.96);
+}
+
+.buildingRoof{
+    height:25px;
+    background:#202a32;
+    border-bottom:3px solid #12181c;
+}
+
+.buildingFront{
+    position:absolute;
+    left:0;
+    right:0;
+    top:25px;
+    bottom:0;
+    background:#d9d0b8;
+}
+
+.windowRow{
     display:flex;
-
     gap:6px;
-
-    padding:
-        5px
-        max(8px,env(safe-area-inset-right))
-        5px
-        max(8px,env(safe-area-inset-left));
-
-    background:#171d23;
-
-    border-top:
-        2px solid #353f4b;
+    padding:8px;
 }
 
-.menuButton{
-
+.window{
     flex:1;
+    height:26px;
+    background:#73b6d0;
+    border:2px solid #24323b;
+}
 
-    min-width:0;
+.shopDoor{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:27px;
+    height:43px;
+    background:#4d6670;
+    border:3px solid #263038;
+}
 
-    background:#222c35;
-
-    border:
-        1px solid #394652;
-
-    border-radius:9px;
-
-    color:#aeb7c0;
-
-    font-size:9px;
-
+.shopSign{
+    position:absolute;
+    top:28px;
+    left:10px;
+    right:10px;
+    height:25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:4px;
+    background:#ffd34d;
+    color:#151515;
+    font-size:12px;
     font-weight:900;
+    overflow:hidden;
 }
 
-.menuButton span{
-
-    display:block;
-
-    font-size:19px;
-
-    line-height:20px;
+.storeOwned .buildingFront{
+    background:#e7dfc9;
 }
 
-.menuButton.active{
+.storeRival .buildingFront{
+    background:#c9ccd0;
+}
 
-    background:#34414d;
-
-    border-color:#637282;
-
+.storeRival .shopSign{
+    background:#d94b4b;
     color:white;
 }
 
-/* =========================================================
-   MANAGEMENT PANEL
-========================================================= */
+.abandoned .buildingFront{
+    background:#777b7d;
+}
 
-#panel{
+.abandoned .shopSign{
+    background:#4d5255;
+    color:#d9dee1;
+}
 
+.b1{left:5%;top:7%}
+.b2{left:39%;top:7%}
+.b3{left:78%;top:9%}
+.b4{left:5%;top:47%}
+.b5{left:39%;top:49%}
+.b6{left:78%;top:48%}
+.b7{left:39%;top:78%}
+
+/* =========================
+   PEOPLE / CARS
+========================= */
+
+.person{
     position:absolute;
-
-    z-index:200;
-
-    right:12px;
-
-    top:76px;
-
-    width:300px;
-
-    max-height:
-        calc(100% - 90px);
-
-    overflow:hidden;
-
-    background:#151b21ee;
-
-    border:
-        1px solid #46515e;
-
-    border-radius:15px;
-
-    box-shadow:
-        0 20px 60px #000b;
-
-    backdrop-filter:blur(10px);
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    background:#f3c39b;
+    border:2px solid #222;
+    z-index:5;
+    animation:walk 4s linear infinite;
 }
 
-.panelHeader{
-
-    height:46px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:0 12px;
-
-    background:#202933;
-
-    border-bottom:
-        1px solid #35404b;
+.person:after{
+    content:"";
+    position:absolute;
+    width:7px;
+    height:9px;
+    left:0;
+    top:8px;
+    border-radius:4px;
+    background:#3567a5;
 }
 
-.panelTitle{
-
-    font-size:13px;
-
-    font-weight:900;
+@keyframes walk{
+    0%{transform:translateX(-20px)}
+    50%{transform:translateX(80px)}
+    100%{transform:translateX(-20px)}
 }
 
-.closeButton{
+.car{
+    position:absolute;
+    width:42px;
+    height:20px;
+    border-radius:6px;
+    background:#d54c4c;
+    border:2px solid #202020;
+    z-index:4;
+    animation:drive 9s linear infinite;
+}
 
-    padding:5px 9px;
+.car:before{
+    content:"";
+    position:absolute;
+    width:16px;
+    height:9px;
+    left:11px;
+    top:2px;
+    background:#8ac0d2;
+}
 
-    background:#343f4b;
+@keyframes drive{
+    from{left:-60px}
+    to{left:110%}
+}
 
+/* =========================
+   MARKERS
+========================= */
+
+.marker{
+    position:absolute;
+    z-index:20;
+    padding:5px 8px;
     border-radius:7px;
-
-    font-weight:900;
-}
-
-.panelContent{
-
-    padding:12px;
-
-    max-height:
-        calc(100vh - 155px);
-
-    overflow:auto;
-}
-
-.moneyBig{
-
-    font-size:27px;
-
-    font-weight:900;
-}
-
-.small{
-
-    color:#9ca6b0;
-
+    background:#111820;
+    border:2px solid #657381;
+    color:white;
     font-size:10px;
+    font-weight:900;
+    box-shadow:0 4px 8px #0006;
+    pointer-events:none;
 }
 
-.progress{
-
-    height:8px;
-
-    margin:8px 0;
-
-    background:#303943;
-
-    border-radius:99px;
-
-    overflow:hidden;
+.marker.rival{
+    background:#9c2d2d;
+    border-color:#f16b6b;
 }
 
-.progressFill{
-
-    height:100%;
-
-    background:#55c97b;
+.marker.player{
+    background:#a67b14;
+    border-color:#ffd34d;
 }
 
-.grid{
+/* =========================
+   BOTTOM BAR
+========================= */
 
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:7px;
+#bottomBar{
+    position:absolute;
+    z-index:60;
+    left:0;
+    right:0;
+    bottom:0;
+    height:72px;
+    display:flex;
+    gap:6px;
+    padding:7px;
+    background:rgba(12,17,22,.96);
+    border-top:2px solid #38434d;
 }
 
-.gameButton{
-
-    width:100%;
-
-    margin-top:7px;
-
-    padding:10px;
-
-    text-align:left;
-
-    background:#29343f;
-
-    border:
-        1px solid #3d4a56;
-
-    border-radius:9px;
-
-    font-size:11px;
-}
-
-.gameButton strong{
-
-    display:block;
-
+.navButton{
+    flex:1;
+    min-width:0;
+    border-radius:10px;
+    background:#202a33;
+    color:#cbd4dc;
+    border:1px solid #3d4b56;
+    font-weight:800;
     font-size:12px;
 }
 
-.gameButton small{
-
+.navButton span{
     display:block;
-
-    margin-top:3px;
-
-    color:#9ca6b0;
-
-    font-size:9px;
+    font-size:20px;
+    margin-bottom:2px;
 }
 
-.gameButton:disabled{
-
-    opacity:.4;
-
-    cursor:not-allowed;
+.navButton.active{
+    background:#ffd34d;
+    color:#171717;
+    border-color:#ffd34d;
 }
 
-.infoBox{
+/* =========================
+   SIDE PANEL
+========================= */
 
+#panel{
+    position:absolute;
+    z-index:100;
+    top:90px;
+    right:12px;
+    width:min(390px,94vw);
+    max-height:calc(100vh - 175px);
+    overflow:auto;
+    display:none;
+    background:#151c23;
+    border:2px solid #52606d;
+    border-radius:16px;
+    box-shadow:0 15px 50px #000b;
+}
+
+.panelHeader{
+    position:sticky;
+    top:0;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 15px;
+    background:#1e2831;
+    border-bottom:1px solid #394650;
+}
+
+.panelTitle{
+    font-size:18px;
+    font-weight:900;
+}
+
+.close{
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    background:#3a4650;
+    color:white;
+    font-size:18px;
+}
+
+.panelBody{
+    padding:14px;
+}
+
+.card{
+    background:#202a33;
+    border:1px solid #3b4853;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:10px;
+}
+
+.cardTitle{
+    font-weight:900;
+    font-size:15px;
+    margin-bottom:5px;
+}
+
+.cardText{
+    color:#aeb9c3;
+    font-size:12px;
+    line-height:1.45;
+}
+
+.action{
+    width:100%;
+    padding:12px;
     margin-top:8px;
-
-    padding:9px;
-
-    background:#202832;
-
-    border:
-        1px solid #35414d;
-
     border-radius:9px;
-
-    font-size:10px;
-
-    line-height:1.4;
+    background:#ffd34d;
+    color:#151515;
+    font-weight:900;
 }
 
-.warning{
-
-    background:#352c1b;
-
-    border-color:#a7863d;
+.action.green{
+    background:#65d77e;
 }
 
-.danger{
-
-    background:#351e22;
-
-    border-color:#a54b4b;
+.action.red{
+    background:#dc5656;
+    color:white;
 }
 
-.good{
-
-    background:#1b3325;
-
-    border-color:#45835a;
+.action.blue{
+    background:#5da6e0;
+    color:white;
 }
 
-/* =========================================================
+.action.gray{
+    background:#4a5660;
+    color:white;
+}
+
+.action:active{
+    transform:scale(.98);
+}
+
+.progress{
+    height:9px;
+    border-radius:20px;
+    background:#0f1419;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progressFill{
+    height:100%;
+    background:#65d77e;
+}
+
+/* =========================
    TOAST
-========================================================= */
+========================= */
 
 #toast{
-
     position:absolute;
-
-    left:50%;
-
-    top:76px;
-
     z-index:500;
-
-    transform:
-        translate(-50%,-20px);
-
-    padding:9px 14px;
-
-    background:#10151aee;
-
-    border:
-        1px solid #596573;
-
+    left:50%;
+    bottom:88px;
+    transform:translateX(-50%) translateY(20px);
+    min-width:220px;
+    max-width:90%;
+    padding:12px 16px;
     border-radius:10px;
-
-    font-size:11px;
-
-    font-weight:900;
-
+    background:#10161c;
+    border:2px solid #52606d;
+    box-shadow:0 8px 30px #0008;
+    text-align:center;
+    font-weight:800;
     opacity:0;
-
     pointer-events:none;
-
     transition:.25s;
 }
 
 #toast.show{
-
     opacity:1;
-
-    transform:
-        translate(-50%,0);
+    transform:translateX(-50%) translateY(0);
 }
 
-/* =========================================================
-   START SCREEN
-========================================================= */
-
-#startScreen{
-
-    position:absolute;
-
-    inset:0;
-
-    z-index:1000;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:20px;
-
-    background:
-
-        radial-gradient(
-            circle at 50% 35%,
-            #384752,
-            #10151b 70%
-        );
-}
-
-.startCard{
-
-    width:min(
-        500px,
-        90vw
-    );
-
-    padding:27px;
-
-    text-align:center;
-
-    background:#151b22;
-
-    border:
-        1px solid #46515e;
-
-    border-radius:22px;
-
-    box-shadow:
-        0 30px 90px #000b;
-}
-
-.crown{
-
-    font-size:50px;
-}
-
-.startTitle{
-
-    margin-top:7px;
-
-    font-size:27px;
-
-    font-weight:900;
-}
-
-.startTitle span{
-
-    color:#e5b942;
-}
-
-.subtitle{
-
-    color:#9da7b1;
-
-    font-size:11px;
-}
-
-#companyInput{
-
-    width:100%;
-
-    margin-top:17px;
-
-    padding:13px;
-
-    background:#0d1318;
-
-    color:white;
-
-    border:
-        1px solid #3b4652;
-
-    border-radius:10px;
-
-    outline:none;
-
-    font-size:14px;
-}
-
-.startButton{
-
-    width:100%;
-
-    margin-top:9px;
-
-    padding:13px;
-
-    background:#48a76a;
-
-    border-radius:10px;
-
-    font-weight:900;
-}
-
-/* =========================================================
-   RANDOM EVENT
-========================================================= */
+/* =========================
+   EVENT BOX
+========================= */
 
 #eventBox{
-
     position:absolute;
-
-    z-index:800;
-
-    left:50%;
-    top:50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    width:min(
-        390px,
-        85vw
-    );
-
-    padding:18px;
-
-    background:#171e25;
-
-    border:
-        1px solid #596674;
-
-    border-radius:16px;
-
-    box-shadow:
-        0 30px 90px #000c;
+    z-index:80;
+    left:12px;
+    bottom:84px;
+    width:min(330px,calc(100vw - 24px));
+    background:#182129;
+    border:2px solid #596875;
+    border-radius:12px;
+    padding:12px;
+    display:none;
+    box-shadow:0 10px 30px #0009;
 }
 
-#eventBox h3{
-
-    margin:
-        0 0 7px;
-}
-
-.eventButtons{
-
-    display:flex;
-
-    gap:7px;
-
-    margin-top:14px;
-}
-
-.eventButtons button{
-
-    flex:1;
-
-    padding:10px;
-
-    background:#2a3540;
-
-    border-radius:9px;
-
+.eventTitle{
     font-weight:900;
+    color:#ffd34d;
+    margin-bottom:4px;
 }
 
-/* =========================================================
-   RESPONSIVE SIZING
-   IMPORTANT:
-   NO ORIENTATION POPUP
-========================================================= */
+.eventText{
+    color:#c5cdd4;
+    font-size:12px;
+}
 
-/* Smaller landscape phones */
+/* =========================
+   MOBILE
+========================= */
 
-@media(max-width:800px) and (orientation:landscape){
+@media(max-width:800px){
 
     #topBar{
-        height:54px;
+        min-height:62px;
+        padding:5px;
     }
 
-    #world{
-        top:54px;
+    .brand{
+        min-width:auto;
+        padding:5px;
     }
 
-    #bottomBar{
-        height:54px;
+    .brandName{
+        font-size:15px;
+        letter-spacing:-1px;
     }
 
-    .stat{
-        min-width:65px;
-        padding:5px 6px;
-    }
-
-    .statValue{
-        font-size:11px;
-    }
-
-    .statLabel{
-        font-size:7px;
-    }
-
-    .logo{
-        font-size:13px;
-    }
-
-    .companyName{
-        max-width:80px;
-        font-size:8px;
-    }
-
-    .store{
-        width:92px;
-        height:75px;
-    }
-
-    .storeRoof{
-        height:21px;
-    }
-
-    .storeFront{
-        height:54px;
-    }
-
-    .storeWindow{
-        width:51px;
-        height:28px;
-    }
-
-    .storeDoor{
-        width:18px;
-        height:28px;
-    }
-
-    #panel{
-        top:64px;
-        width:280px;
-    }
-
-}
-
-/* Portrait phones */
-
-@media(max-width:600px) and (orientation:portrait){
-
-    #topBar{
-
-        height:72px;
-
-        flex-wrap:wrap;
-
-        padding:5px 7px;
-    }
-
-    .logo{
-
-        font-size:13px;
-    }
-
-    .companyName{
-
-        max-width:100px;
-    }
-
-    .hudStats{
-
-        order:3;
-
-        width:100%;
-
-        flex-basis:100%;
-
-        height:30px;
-    }
-
-    .stat{
-
-        min-width:0;
-
-        flex:1;
-
-        padding:4px 5px;
-    }
-
-    .statValue{
-
-        font-size:10px;
-    }
-
-    .statLabel{
-
-        font-size:6px;
-    }
-
-    .speedButton{
-
-        padding:7px 9px;
-    }
-
-    #world{
-
-        top:72px;
-
-        bottom:58px;
-    }
-
-    #bottomBar{
-
-        height:58px;
-    }
-
-    .menuButton{
-
-        font-size:8px;
-    }
-
-    .menuButton span{
-
-        font-size:17px;
-    }
-
-    .store{
-
-        width:82px;
-
-        height:68px;
-    }
-
-    .storeRoof{
-
-        height:19px;
-    }
-
-    .storeFront{
-
-        height:49px;
-    }
-
-    .storeWindow{
-
-        width:44px;
-
-        height:25px;
-    }
-
-    .storeDoor{
-
-        width:16px;
-
-        height:25px;
-    }
-
-    .storeMarker{
-
-        font-size:6px;
-
-        padding:3px 5px;
-    }
-
-    #panel{
-
-        left:8px;
-        right:8px;
-
-        top:80px;
-
-        width:auto;
-
-        max-height:
-            calc(100% - 145px);
-    }
-
-    .panelContent{
-
-        max-height:
-            calc(100vh - 210px);
-    }
-
-}
-
-/* Very small screens */
-
-@media(max-width:380px){
-
-    .logo{
-        font-size:11px;
-    }
-
-    .companyName{
+    .brandSmall{
         display:none;
     }
 
-    .stat{
-        padding:3px;
+    .stats{
+        gap:4px;
     }
 
-    .statValue{
-        font-size:9px;
+    .stat{
+        min-width:72px;
+        padding:5px;
     }
 
     .statLabel{
-        font-size:5px;
+        font-size:8px;
     }
 
+    .statValue{
+        font-size:13px;
+    }
+
+    #world{
+        inset:62px 0 65px 0;
+    }
+
+    #bottomBar{
+        height:65px;
+    }
+
+    .navButton{
+        font-size:9px;
+    }
+
+    .navButton span{
+        font-size:17px;
+    }
+
+    .building{
+        width:105px;
+        height:82px;
+        border-width:3px;
+    }
+
+    .buildingRoof{
+        height:18px;
+    }
+
+    .buildingFront{
+        top:18px;
+    }
+
+    .shopSign{
+        top:20px;
+        height:18px;
+        font-size:8px;
+        left:5px;
+        right:5px;
+    }
+
+    .windowRow{
+        padding:5px;
+        gap:3px;
+    }
+
+    .window{
+        height:18px;
+    }
+
+    .shopDoor{
+        width:20px;
+        height:30px;
+    }
+
+    #panel{
+        top:70px;
+        right:7px;
+        width:min(360px,94vw);
+        max-height:calc(100vh - 140px);
+    }
+
+    #toast{
+        bottom:76px;
+    }
+
+    #eventBox{
+        bottom:76px;
+    }
 }
 
+/* =========================
+   SMALL PORTRAIT PHONES
+========================= */
+
+@media(max-width:480px){
+
+    .stat:nth-child(4){
+        display:none;
+    }
+
+    .brandName{
+        font-size:13px;
+    }
+
+    .building{
+        width:82px;
+        height:65px;
+    }
+
+    .buildingRoof{
+        height:14px;
+    }
+
+    .buildingFront{
+        top:14px;
+    }
+
+    .shopSign{
+        top:16px;
+        height:14px;
+        font-size:6px;
+    }
+
+    .window{
+        height:13px;
+    }
+
+    .shopDoor{
+        width:16px;
+        height:24px;
+    }
+
+    .road.horizontal{
+        height:58px;
+    }
+
+    .road.horizontal .roadLine{
+        top:27px;
+    }
+
+    .road.vertical{
+        width:58px;
+    }
+
+    .road.vertical .roadLine{
+        left:27px;
+    }
+}
+
+/* =========================
+   LANDSCAPE
+========================= */
+
+@media(max-height:500px) and (orientation:landscape){
+
+    #topBar{
+        min-height:54px;
+    }
+
+    #world{
+        inset:54px 0 57px 0;
+    }
+
+    #bottomBar{
+        height:57px;
+    }
+
+    .navButton span{
+        display:inline;
+        font-size:15px;
+        margin-right:3px;
+    }
+
+    .navButton{
+        font-size:10px;
+    }
+
+    #panel{
+        top:60px;
+        max-height:calc(100vh - 115px);
+    }
+}
 </style>
 </head>
 
@@ -1450,942 +865,592 @@ button{
 
 <div id="game">
 
+    <!-- START -->
+    <div id="startScreen">
+        <div class="startBox">
 
-<!-- =====================================================
-     START SCREEN
-===================================================== -->
+            <div class="logo">
+                KING'S <span>MART</span>
+            </div>
 
-<div id="startScreen">
+            <div class="startSub">
+                TYCOON
+            </div>
 
-    <div class="startCard">
+            <p>
+                Build your shop empire.<br>
+                Crush the competition.
+            </p>
 
-        <div class="crown">
-            👑
+            <input
+                id="companyInput"
+                class="nameInput"
+                placeholder="Enter your company name"
+                maxlength="24"
+            >
+
+            <button class="startButton" onclick="startGame()">
+                START BUSINESS
+            </button>
+
+        </div>
+    </div>
+
+    <!-- TOP HUD -->
+    <div id="topBar">
+
+        <div class="brand">
+            <div class="brandName" id="companyName">
+                MY MART
+            </div>
+            <div class="brandSmall">
+                CITY TYCOON
+            </div>
         </div>
 
-        <div class="startTitle">
-            KING'S MART
-            <span>TYCOON</span>
+        <div class="stats">
+
+            <div class="stat">
+                <div class="statLabel">Cash</div>
+                <div class="statValue money" id="cash">
+                    £5,000
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="statLabel">Income</div>
+                <div class="statValue" id="income">
+                    £0/s
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="statLabel">Customers</div>
+                <div class="statValue" id="customers">
+                    0
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="statLabel">Market</div>
+                <div class="statValue" id="market">
+                    0%
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="statLabel">Reputation</div>
+                <div class="statValue" id="reputation">
+                    50
+                </div>
+            </div>
+
         </div>
+    </div>
 
-        <div class="subtitle">
-            LANDSCAPE GAME EDITION
+    <!-- CITY -->
+    <div id="world">
+
+        <div class="city">
+
+            <div class="road horizontal h1">
+                <div class="roadLine"></div>
+            </div>
+
+            <div class="road horizontal h2">
+                <div class="roadLine"></div>
+            </div>
+
+            <div class="road vertical v1">
+                <div class="roadLine"></div>
+            </div>
+
+            <div class="road vertical v2">
+                <div class="roadLine"></div>
+            </div>
+
+            <!-- BUILDINGS -->
+
+            <div class="building storeOwned b1" onclick="openShop(0)">
+                <div class="buildingRoof"></div>
+                <div class="buildingFront">
+                    <div class="windowRow">
+                        <div class="window"></div>
+                        <div class="window"></div>
+                        <div class="window"></div>
+                    </div>
+                    <div class="shopSign" id="storeSign0">
+                        YOUR SHOP
+                    </div>
+                    <div class="shopDoor"></div>
+                </div>
+            </div>
+
+            <div class="building storeRival b2" onclick="openRival()">
+                <div class="buildingRoof"></div>
+                <div class="buildingFront">
+                    <div class="windowRow">
+                        <div class="window"></div>
+                        <div class="window"></div>
+                        <div class="window"></div>
+                    </div>
+                    <div class="shopSign">
+                        KING'S MART
+                    </div>
+                    <div class="shopDoor"></div>
+                </div>
+            </div>
+
+            <div class="building abandoned b3" onclick="buyProperty(2)">
+                <div class="buildingRoof"></div>
+                <div class="buildingFront">
+                    <div class="windowRow">
+                        <div class="window"></div>
+                        <div class="window"></div>
+                    </div>
+                    <div class="shopSign">
+                        FOR SALE
+                    </div>
+                    <div class="shopDoor"></div>
+                </div>
+            </div>
+
+            <div class="building abandoned b4" onclick="buyProperty(0)">
+                <div class="buildingRoof"></div>
+                <div class="buildingFront">
+                    <div class="windowRow">
+                        <div class="window"></div>
+                        <div class="window"></div>
+                    </div>
+                    <div class="shopSign">
+                        ABANDONED
+                    </div>
+                    <div class="shopDoor"></div>
+                </div>
+            </div>
+
+            <div class="building abandoned b5" onclick="buyProperty(1)">
+                <div class="buildingRoof"></div>
+                <div class="buildingFront">
+                    <div class="windowRow">
+                        <div class="window"></div>
+                        <div class="window"></div>
+                    </div>
+                    <div class="shopSign">
+                        FOR SALE
+                    </div>
+                    <div class="shopDoor"></div>
+                </div>
+            </div>
+
+            <div class="building storeRival b6" onclick="openRival()">
+                <div class="buildingRoof"></div>
+                <div class="buildingFront">
+                    <div class="windowRow">
+                        <div class="window"></div>
+                        <div class="window"></div>
+                        <div class="window"></div>
+                    </div>
+                    <div class="shopSign">
+                        KING'S MART
+                    </div>
+                    <div class="shopDoor"></div>
+                </div>
+            </div>
+
+            <div class="building abandoned b7" onclick="buyProperty(1)">
+                <div class="buildingRoof"></div>
+                <div class="buildingFront">
+                    <div class="windowRow">
+                        <div class="window"></div>
+                        <div class="window"></div>
+                    </div>
+                    <div class="shopSign">
+                        ABANDONED
+                    </div>
+                    <div class="shopDoor"></div>
+                </div>
+            </div>
+
+            <!-- LABELS -->
+
+            <div class="marker player" style="left:8%;top:4%;">
+                YOUR SHOP
+            </div>
+
+            <div class="marker rival" style="left:42%;top:4%;">
+                KING'S MART
+            </div>
+
+            <!-- PEOPLE -->
+
+            <div class="person" style="left:10%;top:31%;animation-delay:0s"></div>
+            <div class="person" style="left:28%;top:68%;animation-delay:1s"></div>
+            <div class="person" style="left:58%;top:31%;animation-delay:2s"></div>
+            <div class="person" style="left:75%;top:69%;animation-delay:3s"></div>
+            <div class="person" style="left:48%;top:89%;animation-delay:1.5s"></div>
+
+            <!-- CARS -->
+
+            <div class="car" style="top:34%;animation-delay:0s"></div>
+            <div class="car" style="top:72%;animation-delay:4s"></div>
+
         </div>
+    </div>
 
-        <p class="subtitle">
+    <!-- BOTTOM NAV -->
 
-            Build shops.
-            Steal customers.
-            Defeat King's Mart.
-            Own the city.
+    <div id="bottomBar">
 
-        </p>
+        <button class="navButton active" onclick="showCity()">
+            <span>🏙️</span>
+            City
+        </button>
 
-        <input
-            id="companyInput"
-            maxlength="25"
-            value="My Retail Empire"
-            placeholder="Company name"
-        >
+        <button class="navButton" onclick="openShops()">
+            <span>🏪</span>
+            Shops
+        </button>
 
-        <button
-            class="startButton"
-            onclick="startGame()"
-        >
+        <button class="navButton" onclick="openStaff()">
+            <span>👨‍💼</span>
+            Staff
+        </button>
 
-            START BUSINESS
+        <button class="navButton" onclick="openUpgrades()">
+            <span>⬆️</span>
+            Upgrades
+        </button>
 
+        <button class="navButton" onclick="openRival()">
+            <span>⚔️</span>
+            Rival
         </button>
 
     </div>
 
-</div>
+    <!-- PANEL -->
 
+    <div id="panel">
 
-<!-- =====================================================
-     TOP HUD
-===================================================== -->
+        <div class="panelHeader">
 
-<div id="topBar">
-
-    <div class="logo">
-        👑 KING'S <span>MART</span>
-    </div>
-
-    <div
-        class="companyName"
-        id="companyName"
-    >
-        My Retail Empire
-    </div>
-
-    <div class="hudStats">
-
-        <div class="stat">
-
-            <div
-                class="statValue"
-                id="cash"
-            >
-                £5,000
+            <div class="panelTitle" id="panelTitle">
+                Management
             </div>
 
-            <div class="statLabel">
-                Cash
-            </div>
+            <button class="close" onclick="closePanel()">
+                ×
+            </button>
 
         </div>
 
-
-        <div class="stat">
-
-            <div
-                class="statValue"
-                id="customers"
-            >
-                42
-            </div>
-
-            <div class="statLabel">
-                Customers
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div
-                class="statValue"
-                id="reputation"
-            >
-                45
-            </div>
-
-            <div class="statLabel">
-                Reputation
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div
-                class="statValue"
-                id="market"
-            >
-                4.2%
-            </div>
-
-            <div class="statLabel">
-                Market
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div
-                class="statValue"
-                id="storeCount"
-            >
-                1
-            </div>
-
-            <div class="statLabel">
-                Stores
-            </div>
-
-        </div>
+        <div class="panelBody" id="panelBody"></div>
 
     </div>
 
+    <!-- EVENT -->
 
-    <button
-        class="speedButton"
-        id="speedButton"
-        onclick="changeSpeed()"
-    >
-        1×
-    </button>
+    <div id="eventBox">
+        <div class="eventTitle" id="eventTitle"></div>
+        <div class="eventText" id="eventText"></div>
+    </div>
+
+    <!-- TOAST -->
+
+    <div id="toast"></div>
 
 </div>
-
-
-<!-- =====================================================
-     CITY
-===================================================== -->
-
-<div id="world">
-
-    <div id="cityGround">
-
-        <div class="road road1"></div>
-
-        <div class="road road2"></div>
-
-        <div class="road road3"></div>
-
-
-        <div class="backgroundBuilding bg1"></div>
-
-        <div class="backgroundBuilding bg2"></div>
-
-        <div class="backgroundBuilding bg3"></div>
-
-        <div class="backgroundBuilding bg4"></div>
-
-    </div>
-
-
-    <div id="storesLayer"></div>
-
-
-    <!-- customers -->
-
-    <div
-        class="person"
-        style="left:31%;top:43%"
-    >
-        🧍
-    </div>
-
-
-    <div
-        class="person person2"
-        style="left:59%;top:68%"
-    >
-        🧍‍♀️
-    </div>
-
-
-    <div
-        class="person person3"
-        style="left:79%;top:45%"
-    >
-        🧍
-    </div>
-
-
-    <div
-        class="person person4"
-        style="left:43%;top:76%"
-    >
-        🧍‍♂️
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     MANAGEMENT PANEL
-===================================================== -->
-
-<div
-    id="panel"
-    style="display:none"
->
-
-    <div class="panelHeader">
-
-        <div
-            class="panelTitle"
-            id="panelTitle"
-        >
-            Shop
-        </div>
-
-        <button
-            class="closeButton"
-            onclick="closePanel()"
-        >
-            ×
-        </button>
-
-    </div>
-
-
-    <div
-        class="panelContent"
-        id="panelContent"
-    ></div>
-
-</div>
-
-
-<!-- =====================================================
-     BOTTOM MENU
-===================================================== -->
-
-<div id="bottomBar">
-
-    <button
-        class="menuButton active"
-        onclick="openPanel('shop')"
-    >
-
-        <span>🏪</span>
-
-        SHOP
-
-    </button>
-
-
-    <button
-        class="menuButton"
-        onclick="openPanel('city')"
-    >
-
-        <span>🗺️</span>
-
-        CITY
-
-    </button>
-
-
-    <button
-        class="menuButton"
-        onclick="openPanel('staff')"
-    >
-
-        <span>👨‍💼</span>
-
-        STAFF
-
-    </button>
-
-
-    <button
-        class="menuButton"
-        onclick="openPanel('upgrades')"
-    >
-
-        <span>🔨</span>
-
-        UPGRADES
-
-    </button>
-
-
-    <button
-        class="menuButton"
-        onclick="openPanel('business')"
-    >
-
-        <span>📈</span>
-
-        BUSINESS
-
-    </button>
-
-</div>
-
-
-<!-- =====================================================
-     TOAST
-===================================================== -->
-
-<div id="toast"></div>
-
-
-<!-- =====================================================
-     EVENT
-===================================================== -->
-
-<div
-    id="eventBox"
-    style="display:none"
->
-
-    <h3 id="eventTitle"></h3>
-
-    <div
-        class="small"
-        id="eventText"
-    ></div>
-
-    <div class="eventButtons">
-
-        <button
-            onclick="eventChoice(true)"
-        >
-            DO IT
-        </button>
-
-        <button
-            onclick="eventChoice(false)"
-        >
-            IGNORE
-        </button>
-
-    </div>
-
-</div>
-
-
-</div>
-
 
 <script>
 
 /* =========================================================
-   GAME DATA
+   KING'S MART TYCOON
 ========================================================= */
 
-const SAVE_KEY =
-    "kings_mart_tycoon_landscape_v3";
+const SAVE_KEY = "kings_mart_tycoon_v4";
 
+let game = {
 
-let game;
+    started:false,
 
-let currentEvent=null;
+    company:"My Mart",
 
+    cash:5000,
 
-/* =========================================================
-   NEW GAME
-========================================================= */
+    reputation:45,
 
-function newGame(){
+    customers:42,
 
-    return {
+    marketShare:4.2,
 
-        started:false,
+    totalEarned:0,
 
-        company:"My Retail Empire",
+    totalStores:1,
 
-        cash:5000,
+    selectedShop:0,
 
-        customers:42,
+    lastSave:Date.now(),
 
-        reputation:45,
-
-        marketShare:4.2,
-
-        day:1,
-
-        speed:1,
-
-        selectedShop:0,
-
-        shops:[
-
-            {
-
-                id:1,
-
-                name:"Corner Shop #1",
-
-                level:1,
-
-                customers:42,
-
-                revenue:12,
-
-                satisfaction:72,
-
-                upgrades:{
-
-                    shelves:0,
-
-                    fridges:0,
-
-                    lighting:0,
-
-                    security:0,
-
-                    checkout:0,
-
-                    staffroom:0,
-
-                    expansion:0
-
-                }
-
-            }
-
-        ],
-
-        properties:[
-
-            {
-
-                id:"old-market",
-
-                name:"Old Market Unit",
-
-                cost:850,
-
-                revenue:22
-
-            },
-
-            {
-
-                id:"riverside",
-
-                name:"Riverside Grocery",
-
-                cost:1800,
-
-                revenue:38
-
-            },
-
-            {
-
-                id:"station",
-
-                name:"Station Stores",
-
-                cost:3200,
-
-                revenue:61
-
-            }
-
-        ],
-
-        staff:[
-
-            {
-
-                name:"Adam",
-
-                age:18,
-
-                intelligence:100,
-
-                management:95,
-
-                stocking:65,
-
-                service:72,
-
-                problemSolving:100,
-
-                hired:true,
-
-                natural:true
-
-            },
-
-            {
-
-                name:"Mia",
-
-                age:21,
-
-                intelligence:78,
-
-                management:61,
-
-                stocking:84,
-
-                service:91,
-
-                problemSolving:70,
-
-                hired:false,
-
-                natural:false
-
-            },
-
-            {
-
-                name:"Jordan",
-
-                age:24,
-
-                intelligence:72,
-
-                management:82,
-
-                stocking:88,
-
-                service:64,
-
-                problemSolving:76,
-
-                hired:false,
-
-                natural:false
-
-            }
-
-        ],
-
-        rival:{
-
-            name:"King's Mart",
-
-            stores:4,
-
-            health:100,
-
-            customers:620,
-
-            stage:"HEALTHY"
-
-        },
-
-        lastSave:Date.now()
-
-    };
-
-}
-
-
-/* =========================================================
-   LOAD GAME
-========================================================= */
-
-function loadGame(){
-
-    try{
-
-        const saved =
-            localStorage.getItem(
-                SAVE_KEY
-            );
-
-        if(saved){
-
-            game =
-                JSON.parse(saved);
-
+    stores:[
+        {
+            name:"Main Street Mart",
+            level:1,
+            condition:55,
+            baseIncome:12,
+            customers:42,
+            shelves:1,
+            fridges:0,
+            lighting:0,
+            security:0,
+            checkout:0,
+            staffRoom:0,
+            expansion:0
         }
+    ],
 
-    }catch(error){
-
-        console.log(
-            "Save error:",
-            error
-        );
-
-    }
-
-
-    if(!game){
-
-        game =
-            newGame();
-
-    }
-
-
-    if(game.started){
-
-        document
-            .getElementById(
-                "startScreen"
-            )
-            .style.display="none";
-
-        calculateOffline();
-
-    }
-
-}
-
-
-/* =========================================================
-   SAVE
-========================================================= */
-
-function saveGame(){
-
-    if(!game){
-
-        return;
-
-    }
-
-
-    game.lastSave =
-        Date.now();
-
-
-    try{
-
-        localStorage.setItem(
-            SAVE_KEY,
-            JSON.stringify(game)
-        );
-
-    }catch(error){
-
-        console.log(
-            "Save error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   OFFLINE MONEY
-========================================================= */
-
-function calculateOffline(){
-
-    if(!game.lastSave){
-
-        game.lastSave =
-            Date.now();
-
-        return;
-
-    }
-
-
-    const now =
-        Date.now();
-
-
-    let seconds =
-        Math.floor(
-            (now-game.lastSave)
-            /1000
-        );
-
-
-    /* maximum 8 hours */
-
-    seconds =
-        Math.min(
-            seconds,
-            8*60*60
-        );
-
-
-    if(seconds < 30){
-
-        return;
-
-    }
-
-
-    let incomePerSecond=0;
-
-
-    game.shops.forEach(
-        function(shop){
-
-            incomePerSecond +=
-                shopPower(shop)
-                *
-                .04;
-
-        }
-    );
-
-
-    const offlineMoney =
-        incomePerSecond *
-        seconds;
-
-
-    game.cash +=
-        offlineMoney;
-
-
-    setTimeout(
-        function(){
-
-            toast(
-                "While you were away: "+
-                money(offlineMoney)
-            );
-
+    properties:[
+        {
+            bought:false,
+            price:2200,
+            name:"Old Corner Shop"
         },
-        800
-    );
+        {
+            bought:false,
+            price:3500,
+            name:"Empty High Street Unit"
+        },
+        {
+            bought:false,
+            price:4800,
+            name:"Abandoned Supermarket"
+        }
+    ],
 
-}
+    staff:[
+        {
+            name:"Adam",
+            age:18,
+            intelligence:100,
+            management:95,
+            stocking:65,
+            service:72,
+            problemSolving:100,
+            role:"Natural Manager",
+            hired:true
+        },
+        {
+            name:"Sarah",
+            age:24,
+            intelligence:72,
+            management:62,
+            stocking:82,
+            service:91,
+            problemSolving:70,
+            role:"Customer Specialist",
+            hired:true
+        },
+        {
+            name:"Jack",
+            age:31,
+            intelligence:61,
+            management:48,
+            stocking:94,
+            service:63,
+            problemSolving:61,
+            role:"Stock Specialist",
+            hired:true
+        }
+    ],
+
+    rival:{
+        name:"King's Mart",
+        stores:4,
+        health:100,
+        customers:160,
+        marketShare:32,
+        income:72,
+        stage:"HEALTHY"
+    }
+
+};
 
 
 /* =========================================================
-   START GAME
+   START
 ========================================================= */
 
 function startGame(){
 
-    const input =
-        document.getElementById(
-            "companyInput"
-        );
+    let input = document.getElementById("companyInput").value.trim();
 
+    if(input){
+        game.company = input;
+    }
 
-    const name =
-        input.value.trim();
+    game.started = true;
 
-
-    game.company =
-        name ||
-        "My Retail Empire";
-
-
-    game.started=true;
-
+    document.getElementById("startScreen").style.display="none";
 
     saveGame();
 
-
-    document
-        .getElementById(
-            "startScreen"
-        )
-        .style.display="none";
-
-
     render();
 
+    toast("Welcome to the city. Build your empire!");
 
-    toast(
-        "Your retail empire begins!"
+}
+
+
+/* =========================================================
+   SAVE / LOAD
+========================================================= */
+
+function saveGame(){
+
+    game.lastSave = Date.now();
+
+    localStorage.setItem(
+        SAVE_KEY,
+        JSON.stringify(game)
     );
 
 }
 
 
-/* =========================================================
-   MONEY FORMAT
-========================================================= */
+function loadGame(){
 
-function money(value){
+    let saved = localStorage.getItem(SAVE_KEY);
 
-    if(value>=1000000){
-
-        return "£"+
-            (
-                value/
-                1000000
-            ).toFixed(2)+
-            "m";
-
+    if(!saved){
+        return;
     }
 
+    try{
 
-    if(value>=1000){
+        let old = JSON.parse(saved);
 
-        return "£"+
-            (
-                value/
-                1000
-            ).toFixed(1)+
-            "k";
-
-    }
-
-
-    return "£"+
-        Math.floor(value);
-
-}
-
-
-/* =========================================================
-   HTML SAFE
-========================================================= */
-
-function safe(text){
-
-    return String(text)
-        .replace(
-            /[&<>"']/g,
-            function(char){
-
-                const map={
-
-                    "&":"&amp;",
-
-                    "<":"&lt;",
-
-                    ">":"&gt;",
-
-                    '"':"&quot;",
-
-                    "'":"&#039;"
-
-                };
-
-                return map[char];
-
-            }
+        game = Object.assign(
+            game,
+            old
         );
 
+        game.started = true;
+
+        document.getElementById("startScreen").style.display="none";
+
+        calculateOffline();
+
+    }catch(e){
+
+        console.log("Save error",e);
+
+    }
+
 }
 
 
 /* =========================================================
-   SHOP POWER
+   OFFLINE EARNINGS
+========================================================= */
+
+function calculateOffline(){
+
+    let seconds =
+        Math.min(
+            (Date.now()-game.lastSave)/1000,
+            8*60*60
+        );
+
+    if(seconds < 10){
+        return;
+    }
+
+    let income = getIncomePerSecond();
+
+    let earned = Math.floor(
+        income*seconds
+    );
+
+    if(earned>0){
+
+        game.cash += earned;
+
+        game.totalEarned += earned;
+
+        toast(
+            "While you were away: +£"+
+            formatMoney(earned)
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MONEY
+========================================================= */
+
+function formatMoney(value){
+
+    return Math.floor(value)
+        .toLocaleString("en-GB");
+
+}
+
+
+/* =========================================================
+   STAFF POWER
 ========================================================= */
 
 function shopPower(shop){
 
-    const u =
-        shop.upgrades;
+    let power = 1;
 
+    power += shop.shelves * .12;
+    power += shop.fridges * .15;
+    power += shop.lighting * .10;
+    power += shop.security * .08;
+    power += shop.checkout * .15;
+    power += shop.staffRoom * .10;
+    power += shop.expansion * .30;
 
-    let power =
-        shop.level*10;
+    for(let person of game.staff){
 
+        if(person.hired){
 
-    power +=
-        u.shelves*5;
+            power +=
+                (person.management+
+                 person.service+
+                 person.stocking)/900;
 
+        }
 
-    power +=
-        u.fridges*5;
-
-
-    power +=
-        u.lighting*4;
-
-
-    power +=
-        u.security*2;
-
-
-    power +=
-        u.checkout*5;
-
-
-    power +=
-        u.staffroom*3;
-
-
-    power +=
-        u.expansion*14;
-
-
-    game.staff
-        .filter(
-            person =>
-                person.hired
-        )
-        .forEach(
-            function(person){
-
-                power +=
-                    person.management
-                    *0.035;
-
-                power +=
-                    person.service
-                    *0.015;
-
-            }
-        );
-
+    }
 
     return power;
+}
 
+
+/* =========================================================
+   INCOME
+========================================================= */
+
+function getIncomePerSecond(){
+
+    let total = 0;
+
+    for(let shop of game.stores){
+
+        total +=
+            shop.baseIncome *
+            shop.level *
+            shopPower(shop) *
+            Math.max(.2,shop.condition/100);
+
+    }
+
+    return total;
 }
 
 
@@ -2393,892 +1458,1194 @@ function shopPower(shop){
    GAME LOOP
 ========================================================= */
 
-function gameTick(){
+setInterval(function(){
 
     if(!game.started){
-
         return;
-
     }
 
+    let income =
+        getIncomePerSecond();
 
-    let totalCustomers=0;
+    game.cash += income;
 
-    let totalIncome=0;
+    game.totalEarned += income;
 
+    rivalAI();
 
-    game.shops.forEach(
-        function(shop){
+    randomEvent();
 
-            const power =
-                shopPower(shop);
+    render();
 
+    saveGame();
 
-            const customers =
-                Math.max(
-
-                    4,
-
-                    Math.floor(
-
-                        power*
-                        (
-                            .75+
-                            Math.random()*.35
-                        )
-
-                    )
-
-                );
-
-
-            const revenue =
-                customers*
-                (
-                    .38+
-                    shop.level*.08
-                );
-
-
-            shop.customers =
-                customers;
-
-
-            shop.revenue =
-                revenue;
-
-
-            totalCustomers +=
-                customers;
-
-
-            totalIncome +=
-                revenue;
-
-
-            if(
-                Math.random()<.15
-            ){
-
-                shop.satisfaction +=
-                    Math.random()*3-
-                    1;
-
-            }
-
-
-            shop.satisfaction =
-                Math.max(
-                    35,
-                    Math.min(
-                        100,
-                        shop.satisfaction
-                    )
-                );
-
-        }
-    );
-
-
-    game.cash +=
-        totalIncome*
-        game.speed;
-
-
-    game.customers =
-        Math.floor(
-            totalCustomers
-        );
-
-
-    if(
-        game.customers >
-        game.rival.customers/8
-    ){
-
-        game.reputation +=
-            .01*
-            game.speed;
-
-        game.marketShare +=
-            .012*
-            game.speed;
-
-    }else{
-
-        game.reputation -=
-            .005*
-            game.speed;
-
-    }
-
-
-    game.reputation =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                game.reputation
-            )
-        );
-
-
-    game.marketShare =
-        Math.max(
-            1,
-            Math.min(
-                80,
-                game.marketShare
-            )
-        );
-
-
-    game.day +=
-        .006*
-        game.speed;
-
-
-    if(game.day>31){
-
-        game.day=1;
-
-    }
-
-
-    updateRival();
-
-
-    renderHUD();
-
-    renderStores();
-
-
-    if(
-        Math.random()<
-        .003*
-        game.speed
-    ){
-
-        randomEvent();
-
-    }
-
-
-    if(
-        Math.random()<.005
-    ){
-
-        saveGame();
-
-    }
-
-}
+},1000);
 
 
 /* =========================================================
    RIVAL AI
 ========================================================= */
 
-function updateRival(){
+function rivalAI(){
 
-    const pressure =
-
-        (
-            game.marketShare-4
-        )*.45
-
-        +
-
-        game.shops.length*1.2;
-
+    let pressure =
+        game.marketShare * .08 +
+        game.reputation * .025;
 
     game.rival.health -=
+        pressure/100;
 
+    game.rival.health =
         Math.max(
             0,
-            pressure
-        )*
-        .0015*
-        game.speed;
-
-
-    if(
-        game.rival.health>75
-    ){
-
-        game.rival.stage =
-            "HEALTHY";
-
-    }
-
-    else if(
-        game.rival.health>55
-    ){
-
-        game.rival.stage =
-            "UNDER PRESSURE";
-
-    }
-
-    else if(
-        game.rival.health>32
-    ){
-
-        game.rival.stage =
-            "STRUGGLING";
-
-    }
-
-    else if(
-        game.rival.health>0
-    ){
-
-        game.rival.stage =
-            "DISTRESSED";
-
-    }
-
-    else{
-
-        game.rival.health=0;
-
-        game.rival.stage =
-            "FOR SALE";
-
-    }
-
-}
-
-
-/* =========================================================
-   HUD
-========================================================= */
-
-function renderHUD(){
-
-    document
-        .getElementById(
-            "companyName"
-        )
-        .textContent =
-        game.company;
-
-
-    document
-        .getElementById(
-            "cash"
-        )
-        .textContent =
-        money(game.cash);
-
-
-    document
-        .getElementById(
-            "customers"
-        )
-        .textContent =
-        game.customers
-            .toLocaleString();
-
-
-    document
-        .getElementById(
-            "reputation"
-        )
-        .textContent =
-        Math.floor(
-            game.reputation
+            Math.min(
+                100,
+                game.rival.health
+            )
         );
 
+    if(game.rival.health > 75){
 
-    document
-        .getElementById(
-            "market"
-        )
-        .textContent =
-        game.marketShare
-            .toFixed(1)+"%";
+        game.rival.stage="HEALTHY";
 
+    }else if(game.rival.health > 50){
 
-    document
-        .getElementById(
-            "storeCount"
-        )
-        .textContent =
-        game.shops.length;
+        game.rival.stage="UNDER PRESSURE";
 
+    }else if(game.rival.health > 30){
 
-    document
-        .getElementById(
-            "speedButton"
-        )
-        .textContent =
-        game.speed+"×";
+        game.rival.stage="STRUGGLING";
+
+    }else if(game.rival.health > 10){
+
+        game.rival.stage="DISTRESSED";
+
+    }else{
+
+        game.rival.stage="FOR SALE";
+
+    }
 
 }
 
 
 /* =========================================================
-   SPEED
+   OPEN SHOP
 ========================================================= */
 
-function changeSpeed(){
+function openShop(index){
 
-    if(game.speed===1){
-
-        game.speed=2;
-
+    if(!game.stores[index]){
+        return;
     }
 
-    else if(game.speed===2){
+    game.selectedShop=index;
 
-        game.speed=4;
+    let shop =
+        game.stores[index];
 
+    panel(
+        shop.name,
+        `
+        <div class="card">
+
+            <div class="cardTitle">
+                Store Level ${shop.level}
+            </div>
+
+            <div class="cardText">
+                Condition: ${Math.floor(shop.condition)}%<br>
+                Customers: ${Math.floor(shop.customers)}<br>
+                Income: £${formatMoney(
+                    shop.baseIncome *
+                    shop.level *
+                    shopPower(shop)
+                )}/s
+            </div>
+
+            <div class="progress">
+                <div class="progressFill"
+                     style="width:${shop.condition}%">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                Store Management
+            </div>
+
+            <button class="action"
+                    onclick="renovate(${index})">
+                🛠 Renovate — £500
+            </button>
+
+            <button class="action green"
+                    onclick="advertise(${index})">
+                📢 Advertise — £300
+            </button>
+
+            <button class="action blue"
+                    onclick="pricePush(${index})">
+                💷 Competitive Pricing — £250
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                Current Upgrades
+            </div>
+
+            <div class="cardText">
+                Shelves: ${shop.shelves}<br>
+                Fridges: ${shop.fridges}<br>
+                Lighting: ${shop.lighting}<br>
+                Security: ${shop.security}<br>
+                Checkout: ${shop.checkout}<br>
+                Staff Room: ${shop.staffRoom}<br>
+                Expansion: ${shop.expansion}
+            </div>
+
+        </div>
+        `
+    );
+
+}
+
+
+/* =========================================================
+   SHOPS
+========================================================= */
+
+function openShops(){
+
+    let html = "";
+
+    game.stores.forEach((shop,i)=>{
+
+        html += `
+
+        <div class="card">
+
+            <div class="cardTitle">
+                🏪 ${shop.name}
+            </div>
+
+            <div class="cardText">
+                Level ${shop.level}<br>
+                Condition ${Math.floor(shop.condition)}%<br>
+                £${formatMoney(
+                    shop.baseIncome *
+                    shop.level *
+                    shopPower(shop)
+                )}/second
+            </div>
+
+            <button class="action"
+                    onclick="openShop(${i})">
+                Manage Shop
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+
+    html += `
+
+    <div class="card">
+
+        <div class="cardTitle">
+            🏗 Available Properties
+        </div>
+
+        <div class="cardText">
+            Buy abandoned stores around the city
+            and turn them into profitable businesses.
+        </div>
+
+        <button class="action"
+                onclick="openProperties()">
+            View Properties
+        </button>
+
+    </div>
+
+    `;
+
+    panel(
+        "Your Shops",
+        html
+    );
+
+}
+
+
+/* =========================================================
+   PROPERTIES
+========================================================= */
+
+function openProperties(){
+
+    let html="";
+
+    game.properties.forEach((property,i)=>{
+
+        html += `
+
+        <div class="card">
+
+            <div class="cardTitle">
+                🏚 ${property.name}
+            </div>
+
+            <div class="cardText">
+                Purchase price:
+                £${formatMoney(property.price)}
+            </div>
+
+            ${
+                property.bought
+                ?
+                `<button class="action gray">
+                    OWNED
+                 </button>`
+                :
+                `<button class="action"
+                    onclick="buyProperty(${i})">
+                    Buy Property
+                 </button>`
+            }
+
+        </div>
+
+        `;
+
+    });
+
+    panel(
+        "City Properties",
+        html
+    );
+
+}
+
+
+function buyProperty(index){
+
+    let property =
+        game.properties[index];
+
+    if(!property){
+        return;
     }
 
-    else{
+    if(property.bought){
 
-        game.speed=1;
+        toast("You already own this property.");
 
+        return;
     }
 
+    if(game.cash < property.price){
 
-    renderHUD();
+        toast("You need £"+
+              formatMoney(property.price-game.cash)+
+              " more.");
 
+        return;
+    }
+
+    game.cash -= property.price;
+
+    property.bought=true;
+
+    game.stores.push({
+
+        name:property.name,
+
+        level:1,
+
+        condition:40,
+
+        baseIncome:15,
+
+        customers:10,
+
+        shelves:0,
+
+        fridges:0,
+
+        lighting:0,
+
+        security:0,
+
+        checkout:0,
+
+        staffRoom:0,
+
+        expansion:0
+
+    });
+
+    game.totalStores++;
 
     toast(
-        "Game speed: "+
-        game.speed+
-        "×"
+        "Property purchased! New shop added."
     );
+
+    closePanel();
+
+    render();
 
 }
 
 
 /* =========================================================
-   STORE POSITIONS
+   RENOVATE
 ========================================================= */
 
-const storePositions=[
+function renovate(index){
 
-    [16,27],
+    let shop =
+        game.stores[index];
 
-    [39,53],
+    if(game.cash < 500){
 
-    [66,28],
+        toast("Not enough cash.");
 
-    [78,70],
+        return;
+    }
 
-    [29,76],
+    game.cash -= 500;
 
-    [55,76],
+    shop.condition =
+        Math.min(
+            100,
+            shop.condition+20
+        );
 
-    [87,31],
+    shop.customers += 8;
 
-    [10,67],
+    game.reputation += 2;
 
-    [50,18],
+    toast(
+        shop.name+
+        " has been renovated!"
+    );
 
-    [70,52]
+    render();
 
-];
+}
 
 
 /* =========================================================
-   RENDER STORES
+   ADVERTISING
 ========================================================= */
 
-function renderStores(){
+function advertise(index){
 
-    const layer =
-        document.getElementById(
-            "storesLayer"
+    if(game.cash < 300){
+
+        toast("Not enough cash.");
+
+        return;
+    }
+
+    game.cash -= 300;
+
+    let shop =
+        game.stores[index];
+
+    shop.customers += 12;
+
+    game.customers += 12;
+
+    game.reputation += 1;
+
+    game.marketShare += .4;
+
+    toast(
+        "Advertising campaign brought new customers!"
+    );
+
+    render();
+
+}
+
+
+/* =========================================================
+   PRICE PUSH
+========================================================= */
+
+function pricePush(index){
+
+    if(game.cash < 250){
+
+        toast("Not enough cash.");
+
+        return;
+    }
+
+    game.cash -= 250;
+
+    let shop =
+        game.stores[index];
+
+    shop.customers += 7;
+
+    game.customers += 7;
+
+    game.marketShare += .25;
+
+    game.rival.health -= 2;
+
+    toast(
+        "Your competitive prices hurt King's Mart."
+    );
+
+    render();
+
+}
+
+
+/* =========================================================
+   STAFF
+========================================================= */
+
+function openStaff(){
+
+    let html="";
+
+    game.staff.forEach((person,i)=>{
+
+        html += `
+
+        <div class="card">
+
+            <div class="cardTitle">
+                👤 ${person.name}
+            </div>
+
+            <div class="cardText">
+
+                Age: ${person.age}<br>
+                Role: ${person.role}<br><br>
+
+                Intelligence:
+                ${person.intelligence}/100<br>
+
+                Management:
+                ${person.management}/100<br>
+
+                Stocking:
+                ${person.stocking}/100<br>
+
+                Customer Service:
+                ${person.service}/100<br>
+
+                Problem Solving:
+                ${person.problemSolving}/100
+
+            </div>
+
+            ${
+                person.hired
+                ?
+                `<button class="action green">
+                    HIRED
+                 </button>`
+                :
+                `<button class="action"
+                    onclick="hireStaff(${i})">
+                    Hire — £400
+                 </button>`
+            }
+
+        </div>
+
+        `;
+
+    });
+
+
+    html += `
+
+    <div class="card">
+
+        <div class="cardTitle">
+            ⭐ Adam
+        </div>
+
+        <div class="cardText">
+            Adam is your smartest employee.
+            His intelligence and management skills
+            make him ideal for growing your empire.
+        </div>
+
+    </div>
+
+    `;
+
+    panel(
+        "Employees",
+        html
+    );
+
+}
+
+
+function hireStaff(index){
+
+    let person =
+        game.staff[index];
+
+    if(!person){
+        return;
+    }
+
+    if(person.hired){
+
+        toast(
+            person.name+
+            " already works for you."
         );
 
+        return;
+    }
 
-    layer.innerHTML="";
+    if(game.cash < 400){
 
+        toast("Not enough cash.");
 
-    game.shops.forEach(
-        function(shop,index){
+        return;
+    }
 
-            const position =
-                storePositions[
-                    index %
-                    storePositions.length
-                ];
+    game.cash -= 400;
 
+    person.hired=true;
 
-            const x =
-                position[0];
+    toast(
+        person.name+
+        " has joined your company!"
+    );
 
+    render();
 
-            const y =
-                position[1];
-
-
-            const store =
-                document.createElement(
-                    "div"
-                );
+}
 
 
-            store.className =
-                "store player"+
-                (
-                    game.selectedShop===
-                    index
-                    ?
-                    " selected"
-                    :
-                    ""
-                );
+/* =========================================================
+   UPGRADES
+========================================================= */
+
+function openUpgrades(){
+
+    let i =
+        game.selectedShop;
+
+    if(!game.stores[i]){
+        i=0;
+    }
+
+    let shop =
+        game.stores[i];
+
+    panel(
+        "Shop Upgrades",
+        `
+
+        <div class="card">
+
+            <div class="cardTitle">
+                🏪 ${shop.name}
+            </div>
+
+            <div class="cardText">
+                Choose upgrades to increase
+                income and customer capacity.
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                📚 Shelves
+            </div>
+
+            <div class="cardText">
+                More products available.
+                Current: ${shop.shelves}
+            </div>
+
+            <button class="action"
+                onclick="upgrade(${i},'shelves',250)">
+                Upgrade — £250
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                🧊 Fridges
+            </div>
+
+            <div class="cardText">
+                Increase food and drink sales.
+                Current: ${shop.fridges}
+            </div>
+
+            <button class="action"
+                onclick="upgrade(${i},'fridges',400)">
+                Upgrade — £400
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                💡 Lighting
+            </div>
+
+            <div class="cardText">
+                Make the store feel modern.
+                Current: ${shop.lighting}
+            </div>
+
+            <button class="action"
+                onclick="upgrade(${i},'lighting',350)">
+                Upgrade — £350
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                🔐 Security
+            </div>
+
+            <div class="cardText">
+                Reduce losses and improve reputation.
+                Current: ${shop.security}
+            </div>
+
+            <button class="action"
+                onclick="upgrade(${i},'security',450)">
+                Upgrade — £450
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                🧾 Checkout
+            </div>
+
+            <div class="cardText">
+                Faster customer service.
+                Current: ${shop.checkout}
+            </div>
+
+            <button class="action"
+                onclick="upgrade(${i},'checkout',500)">
+                Upgrade — £500
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                👥 Staff Room
+            </div>
+
+            <div class="cardText">
+                Better employee performance.
+                Current: ${shop.staffRoom}
+            </div>
+
+            <button class="action"
+                onclick="upgrade(${i},'staffRoom',650)">
+                Upgrade — £650
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                🏢 Expansion
+            </div>
+
+            <div class="cardText">
+                Make the store physically larger.
+                Current: ${shop.expansion}
+            </div>
+
+            <button class="action"
+                onclick="upgrade(${i},'expansion',1200)">
+                Expand — £1,200
+            </button>
+
+        </div>
+
+        `
+    );
+
+}
 
 
-            store.style.left =
-                x+"%";
+function upgrade(index,type,cost){
+
+    let shop =
+        game.stores[index];
+
+    if(game.cash < cost){
+
+        toast("Not enough cash.");
+
+        return;
+    }
+
+    game.cash -= cost;
+
+    shop[type]++;
+
+    if(type==="security"){
+
+        game.reputation += 1;
+
+    }
+
+    if(type==="expansion"){
+
+        shop.baseIncome += 5;
+
+    }
+
+    toast(
+        "Upgrade installed!"
+    );
+
+    render();
+
+}
 
 
-            store.style.top =
-                y+"%";
+/* =========================================================
+   RIVAL
+========================================================= */
 
+function openRival(){
 
-            store.innerHTML=
+    let r =
+        game.rival;
 
-                '<div class="storeRoof"></div>'+
+    let buyCost =
+        9000;
 
-                '<div class="storeFront">'+
+    panel(
+        "King's Mart",
+        `
 
-                    '<div class="storeSign">'+
+        <div class="card">
 
-                        safe(shop.name)+
+            <div class="cardTitle">
+                👑 King's Mart
+            </div>
 
-                    '</div>'+
+            <div class="cardText">
 
-                    '<div class="storeWindow"></div>'+
+                Stores:
+                ${r.stores}<br>
 
-                    '<div class="storeDoor"></div>'+
+                Customers:
+                ${Math.floor(r.customers)}<br>
 
-                '</div>';
+                Market Share:
+                ${r.marketShare.toFixed(1)}%<br>
 
+                Income:
+                £${formatMoney(r.income)}/s<br><br>
 
-            store.onclick =
-                function(){
+                Status:
+                <strong>${r.stage}</strong>
 
-                    game.selectedShop =
-                        index;
+            </div>
 
-                    renderStores();
+            <div class="progress">
+                <div class="progressFill"
+                     style="width:${r.health}%">
+                </div>
+            </div>
 
-                    openPanel(
-                        "shop"
-                    );
+        </div>
 
-                };
+        <div class="card">
 
+            <div class="cardTitle">
+                ⚔️ Compete
+            </div>
 
-            layer.appendChild(
-                store
-            );
+            <div class="cardText">
+                Attack King's Mart's market position
+                using advertising, pricing and customer
+                experience.
+            </div>
 
+            <button class="action red"
+                    onclick="attackRival()">
+                Attack Rival — £500
+            </button>
 
-            const marker =
-                document.createElement(
-                    "div"
-                );
+        </div>
 
+        ${
+            r.stage==="FOR SALE"
+            ?
 
-            marker.className =
-                "storeMarker playerMarker";
+            `<div class="card">
 
+                <div class="cardTitle">
+                    🏢 Opportunity
+                </div>
 
-            marker.style.left =
-                (x+4)+"%";
+                <div class="cardText">
+                    King's Mart is collapsing.
+                    You can buy the company.
+                </div>
 
+                <button class="action green"
+                        onclick="buyRival()">
+                    Buy King's Mart — £${formatMoney(buyCost)}
+                </button>
 
-            marker.style.top =
-                (y-7)+"%";
+            </div>`
 
+            :
 
-            marker.textContent =
-                money(shop.revenue)+
-                "/tick";
+            `<div class="card">
 
+                <div class="cardTitle">
+                    🔒 Not For Sale
+                </div>
 
-            layer.appendChild(
-                marker
-            );
+                <div class="cardText">
+                    Keep damaging their business
+                    until they become distressed.
+                </div>
 
+            </div>`
         }
+
+        `
     );
 
-
-    /* =====================================================
-       KING'S MART
-    ===================================================== */
-
-    const rivalX=52;
-
-    const rivalY=16;
+}
 
 
-    const rival =
-        document.createElement(
-            "div"
+function attackRival(){
+
+    if(game.cash < 500){
+
+        toast("Not enough cash.");
+
+        return;
+    }
+
+    game.cash -= 500;
+
+    game.rival.health -= 7;
+
+    game.rival.customers =
+        Math.max(
+            0,
+            game.rival.customers-8
         );
 
+    game.marketShare += .5;
 
-    rival.className =
-        "store rival";
+    game.customers += 5;
 
+    game.reputation += 1;
 
-    rival.style.left =
-        rivalX+"%";
+    rivalAI();
 
-
-    rival.style.top =
-        rivalY+"%";
-
-
-    rival.innerHTML=
-
-        '<div class="storeRoof"></div>'+
-
-        '<div class="storeFront">'+
-
-            '<div class="storeSign">KING’S MART</div>'+
-
-            '<div class="storeWindow"></div>'+
-
-            '<div class="storeDoor"></div>'+
-
-        '</div>';
-
-
-    rival.onclick =
-        function(){
-
-            openPanel(
-                "business"
-            );
-
-        };
-
-
-    layer.appendChild(
-        rival
+    toast(
+        "King's Mart lost customers!"
     );
 
+    render();
 
-    const rivalMarker =
-        document.createElement(
-            "div"
+}
+
+
+function buyRival(){
+
+    const cost=9000;
+
+    if(game.rival.stage!=="FOR SALE"){
+
+        toast(
+            "King's Mart is not for sale yet."
         );
 
+        return;
+    }
 
-    rivalMarker.className =
-        "storeMarker rivalMarker";
+    if(game.cash < cost){
 
+        toast(
+            "You need £"+
+            formatMoney(cost-game.cash)+
+            " more."
+        );
 
-    rivalMarker.style.left =
-        (rivalX+5)+"%";
+        return;
+    }
 
+    game.cash -= cost;
 
-    rivalMarker.style.top =
-        (rivalY-7)+"%";
+    game.totalStores +=
+        game.rival.stores;
 
+    game.rival.stores=0;
 
-    rivalMarker.textContent =
-        "KING'S MART • "+
-        game.rival.stage;
+    game.rival.customers=0;
 
+    game.rival.income=0;
 
-    layer.appendChild(
-        rivalMarker
+    game.marketShare += 20;
+
+    game.reputation += 8;
+
+    toast(
+        "You bought King's Mart!"
     );
 
+    closePanel();
 
-    /* =====================================================
-       PROPERTIES
-    ===================================================== */
+    render();
 
-    const propertyPositions=[
+}
 
-        [85,50],
 
-        [8,46],
+/* =========================================================
+   RANDOM EVENTS
+========================================================= */
 
-        [40,13]
+let lastEvent=Date.now();
+
+function randomEvent(){
+
+    if(Date.now()-lastEvent < 30000){
+        return;
+    }
+
+    if(Math.random()>.08){
+        return;
+    }
+
+    lastEvent=Date.now();
+
+    let events=[
+
+        {
+            title:"🛒 Shopping Rush",
+            text:"A local event brought extra customers.",
+            effect:()=>{
+                game.customers+=25;
+                game.cash+=300;
+            }
+        },
+
+        {
+            title:"📦 Supplier Discount",
+            text:"A supplier gave you a surprise discount.",
+            effect:()=>{
+                game.cash+=450;
+            }
+        },
+
+        {
+            title:"📱 Viral Post",
+            text:"Your shop went viral online!",
+            effect:()=>{
+                game.reputation+=5;
+                game.marketShare+=1;
+                game.customers+=20;
+            }
+        },
+
+        {
+            title:"💡 Power Problem",
+            text:"One of your shops suffered a power problem.",
+            effect:()=>{
+                game.cash=Math.max(
+                    0,
+                    game.cash-250
+                );
+            }
+        }
 
     ];
 
+    let event =
+        events[
+            Math.floor(
+                Math.random()*events.length
+            )
+        ];
 
-    game.properties
-        .slice(0,3)
-        .forEach(
-            function(property,index){
+    event.effect();
 
-                const position =
-                    propertyPositions[
-                        index
-                    ];
+    document.getElementById("eventTitle")
+        .textContent=event.title;
 
+    document.getElementById("eventText")
+        .textContent=event.text;
 
-                const x =
-                    position[0];
+    document.getElementById("eventBox")
+        .style.display="block";
 
+    setTimeout(()=>{
 
-                const y =
-                    position[1];
+        document.getElementById("eventBox")
+            .style.display="none";
 
-
-                const building =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                building.className =
-                    "store abandoned";
-
-
-                building.style.left =
-                    x+"%";
-
-
-                building.style.top =
-                    y+"%";
-
-
-                building.innerHTML=
-
-                    '<div class="storeRoof"></div>'+
-
-                    '<div class="storeFront">'+
-
-                        '<div class="storeSign">FOR SALE</div>'+
-
-                        '<div class="storeWindow"></div>'+
-
-                        '<div class="storeDoor"></div>'+
-
-                    '</div>';
-
-
-                building.onclick =
-                    function(){
-
-                        buyProperty(
-                            index
-                        );
-
-                    };
-
-
-                layer.appendChild(
-                    building
-                );
-
-
-                const marker =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                marker.className =
-                    "storeMarker";
-
-
-                marker.style.left =
-                    (x+5)+"%";
-
-
-                marker.style.top =
-                    (y-7)+"%";
-
-
-                marker.textContent =
-                    property.name+
-                    " • "+
-                    money(
-                        property.cost
-                    );
-
-
-                layer.appendChild(
-                    marker
-                );
-
-            }
-        );
+    },6000);
 
 }
 
 
 /* =========================================================
-   OPEN PANEL
+   PANEL
 ========================================================= */
 
-function openPanel(type){
+function panel(title,html){
 
-    if(!game.started){
+    document.getElementById("panelTitle")
+        .textContent=title;
 
-        return;
+    document.getElementById("panelBody")
+        .innerHTML=html;
 
-    }
-
-
-    document
-        .getElementById(
-            "panel"
-        )
-        .style.display =
-        "block";
-
-
-    document
-        .querySelectorAll(
-            ".menuButton"
-        )
-        .forEach(
-            button =>
-                button.classList
-                    .remove(
-                        "active"
-                    )
-        );
-
-
-    const menuIndexes={
-
-        shop:0,
-
-        city:1,
-
-        staff:2,
-
-        upgrades:3,
-
-        business:4
-
-    };
-
-
-    if(
-        menuIndexes[type] !==
-        undefined
-    ){
-
-        document
-            .querySelectorAll(
-                ".menuButton"
-            )[menuIndexes[type]]
-            .classList
-            .add("active");
-
-    }
-
-
-    if(type==="shop"){
-
-        shopPanel();
-
-    }
-
-    else if(type==="city"){
-
-        cityPanel();
-
-    }
-
-    else if(type==="staff"){
-
-        staffPanel();
-
-    }
-
-    else if(type==="upgrades"){
-
-        upgradePanel();
-
-    }
-
-    else if(type==="business"){
-
-        businessPanel();
-
-    }
+    document.getElementById("panel")
+        .style.display="block";
 
 }
 
-
-/* =========================================================
-   CLOSE PANEL
-========================================================= */
 
 function closePanel(){
 
-    document
-        .getElementById(
-            "panel"
-        )
-        .style.display =
-        "none";
+    document.getElementById("panel")
+        .style.display="none";
+
+}
+
+
+function showCity(){
+
+    closePanel();
 
 }
 
 
 /* =========================================================
-   SHOP PANEL
+   TOAST
 ========================================================= */
 
-function shopPanel(){
+let toastTimer;
 
-    const shop =
-        game.shops[
-            game.selectedShop
-        ];
+function toast(message){
 
+    let box =
+        document.getElementById("toast");
 
-    document
-        .getElementById(
-            "panelTitle"
-        )
-        .textContent =
-        shop.name;
+    box.textContent=message;
 
+    box.classList.add("show");
 
-    document
-        .getElementById(
-            "panelContent"
-        )
-        .innerHTML=
+    clearTimeout(toastTimer);
 
-        `
+    toastTimer =
+        setTimeout(()=>{
+            box.classList.remove("show");
+        },3000);
 
-        <div class="moneyBig">
-
-            ${money(shop.revenue)}/tick
-
-        </div>
+}
 
 
-        <div class="small">
+/* =========================================================
+   RENDER
+========================================================= */
 
-            Level ${shop.level}
+function render(){
 
-            •
+    document.getElementById("companyName")
+        .textContent=game.company;
 
-            ${shop.customers}
-            customers
+    document.getElementById("cash")
+        .textContent=
+        "£"+formatMoney(game.cash);
 
-        </div>
+    document.getElementById("income")
+        .textContent=
+        "£"+formatMoney(
+            getIncomePerSecond()
+        )+"/s";
+
+    document.getElementById("customers")
+        .textContent=
+        Math.floor(game.customers);
+
+    document.getElementById("market")
+        .textContent=
+        game.marketShare.toFixed(1)+"%";
+
+    document.getElementById("reputation")
+        .textContent=
+        Math.floor(game.reputation);
+
+    if(game.stores[0]){
+
+        document.getElementById("storeSign0")
+            .textContent=
+            game.stores[0].name
+                .toUpperCase();
+
+    }
+
+}
 
 
-        <div class="progress">
+/* =========================================================
+   STARTUP
+========================================================= */
 
-            <div
-                class="progressFill"
-                style="
-                width:${shop.satisfaction}
+loadGame();
+
+if(game.started){
+
+    document.getElementById("startScreen")
+        .style.display="none";
+
+    render();
+
+}
+
+</script>
+
+</body>
+</html>

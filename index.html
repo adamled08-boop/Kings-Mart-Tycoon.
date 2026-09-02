@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>King's Mart Tycoon</title>
 
 <style>
@@ -48,7 +48,7 @@ button{
   padding:7px 12px;
   background:linear-gradient(#263640,#172128);
   border-bottom:2px solid #53656e;
-  z-index:1000;
+  z-index:2000;
   overflow:hidden;
 }
 
@@ -64,11 +64,12 @@ button{
   color:#3d2a06;
   font-size:25px;
   box-shadow:inset 0 2px #fff8,0 3px 8px #0008;
+  user-select:none;
 }
 
 .companyTitle{
   min-width:100px;
-  max-width:180px;
+  max-width:190px;
   overflow:hidden;
 }
 
@@ -123,8 +124,7 @@ button{
   position:relative;
   flex:1;
   overflow:hidden;
-  background:
-    linear-gradient(135deg,#76a95b 0%,#679d51 45%,#5d934d 100%);
+  background:#70a657;
   isolation:isolate;
 }
 
@@ -132,62 +132,46 @@ button{
   content:"";
   position:absolute;
   inset:0;
+  z-index:1;
+  pointer-events:none;
   background:
-    radial-gradient(circle at 20% 30%,#ffffff0b 0 2px,transparent 3px),
+    radial-gradient(circle at 20% 30%,#ffffff09 0 2px,transparent 3px),
     radial-gradient(circle at 70% 70%,#00000008 0 2px,transparent 3px);
   background-size:55px 55px,70px 70px;
-  pointer-events:none;
 }
 
 /* =========================================================
-   DISTRICTS
+   CITY BANDS
+   The player district is deliberately organised into
+   ROAD -> GRASS -> ROAD -> GRASS -> ROAD -> GRASS...
 ========================================================= */
 
-.district{
+.playerDistrict{
   position:absolute;
-  border-radius:20px;
-  opacity:.55;
+  left:0;
+  top:0;
+  width:58%;
+  height:100%;
   z-index:2;
+  background:#72a95a;
 }
 
-.district.one{
-  left:0;
+.rivalDistrict{
+  position:absolute;
+  left:69%;
   top:0;
-  width:53%;
-  height:50%;
-  background:#83b967;
-}
-
-.district.two{
-  left:0;
-  top:50%;
-  width:53%;
-  height:50%;
-  background:#72a95b;
-}
-
-.district.three{
-  left:67%;
-  top:0;
-  width:33%;
-  height:50%;
-  background:#7eae61;
-}
-
-.district.four{
-  left:67%;
-  top:50%;
-  width:33%;
-  height:50%;
-  background:#6fa256;
+  width:31%;
+  height:100%;
+  z-index:2;
+  background:#6da052;
 }
 
 .zoneLabel{
   position:absolute;
-  z-index:15;
+  z-index:120;
   padding:5px 9px;
   border-radius:8px;
-  background:#172027aa;
+  background:#172027cc;
   border:1px solid #ffffff22;
   font-size:8px;
   font-weight:bold;
@@ -196,12 +180,12 @@ button{
 }
 
 .playerZone{
-  left:3%;
+  left:2%;
   top:2%;
 }
 
 .rivalZone{
-  right:3%;
+  right:2%;
   top:2%;
 }
 
@@ -211,10 +195,10 @@ button{
 
 #river{
   position:absolute;
-  z-index:20;
-  left:57%;
+  z-index:25;
+  left:58%;
   top:0;
-  width:12%;
+  width:11%;
   height:100%;
   background:
     repeating-linear-gradient(
@@ -246,8 +230,8 @@ button{
 
 .road{
   position:absolute;
-  z-index:30;
-  background:#3b4144;
+  z-index:70;
+  background:#3a4043;
   box-shadow:
     inset 0 2px #555c5f,
     inset 0 -2px #25292b;
@@ -256,27 +240,32 @@ button{
 .road.horizontal{
   left:0;
   width:100%;
-  height:8%;
+  height:7%;
   transform:translateY(-50%);
 }
 
 .road.vertical{
   top:0;
   height:100%;
-  width:5%;
+  width:4.5%;
   transform:translateX(-50%);
 }
 
-.h1{top:20%}
-.h2{top:51%}
-.h3{top:78%}
+/* Four major horizontal roads */
+.hRoad1{top:18%}
+.hRoad2{top:39%}
+.hRoad3{top:60%}
+.hRoad4{top:81%}
 
-.v1{left:16%}
-.v2{left:38%}
-.v3{left:51%}
-.v4{left:76%}
-.v5{left:89%}
+/* Player-side vertical roads */
+.vRoad1{left:14%}
+.vRoad2{left:36%}
+.vRoad3{left:51%}
 
+/* King's Mart road */
+.vRoad4{left:82%}
+
+/* road centre lines */
 .road.horizontal::after{
   content:"";
   position:absolute;
@@ -285,11 +274,12 @@ button{
   width:100%;
   height:3px;
   transform:translateY(-50%);
-  background:repeating-linear-gradient(
-    90deg,
-    #f1d34d 0 22px,
-    transparent 22px 42px
-  );
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #f1d34d 0 22px,
+      transparent 22px 42px
+    );
 }
 
 .road.vertical::after{
@@ -300,31 +290,35 @@ button{
   width:3px;
   height:100%;
   transform:translateX(-50%);
-  background:repeating-linear-gradient(
-    0deg,
-    #f1d34d 0 22px,
-    transparent 22px 42px
-  );
-}
-
-/* intersection patches stop visual overlap */
-.intersection{
-  position:absolute;
-  z-index:35;
-  width:5%;
-  height:8%;
-  transform:translate(-50%,-50%);
-  background:#3b4144;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #f1d34d 0 22px,
+      transparent 22px 42px
+    );
 }
 
 /* =========================================================
-   PAVEMENTS / PEDESTRIAN PATHS
+   ROAD INTERSECTIONS
+========================================================= */
+
+.intersection{
+  position:absolute;
+  z-index:75;
+  width:4.5%;
+  height:7%;
+  transform:translate(-50%,-50%);
+  background:#3a4043;
+}
+
+/* =========================================================
+   PAVEMENTS
 ========================================================= */
 
 .pavement{
   position:absolute;
-  z-index:40;
-  background:#b8b5a7;
+  z-index:80;
+  background:#bbb8aa;
   border-top:2px solid #d4d0bd;
   border-bottom:2px solid #8d8a7e;
   box-shadow:0 2px 4px #0003;
@@ -333,240 +327,162 @@ button{
 .pavement.horizontal{
   left:0;
   width:100%;
-  height:2.8%;
+  height:2.4%;
   transform:translateY(-50%);
 }
 
 .pavement.vertical{
   top:0;
   height:100%;
-  width:2%;
+  width:1.7%;
   transform:translateX(-50%);
 }
 
-.ph1{top:25%}
-.ph2{top:56%}
-.ph3{top:83%}
+.ph1{top:22%}
+.ph2{top:43%}
+.ph3{top:64%}
+.ph4{top:85%}
 
-.pv1{left:12%}
-.pv2{left:33%}
+.pv1{left:10%}
+.pv2{left:32%}
 .pv3{left:47%}
-.pv4{left:73%}
-.pv5{left:94%}
-
-.path{
-  position:absolute;
-  z-index:42;
-  background:#c8c4b2;
-  border:1px solid #aaa697;
-  box-shadow:0 1px 3px #0002;
-}
-
-.path.h{
-  height:1.5%;
-  left:3%;
-  width:48%;
-}
-
-.path.p1{top:30%}
-.path.p2{top:47%}
-.path.p3{top:59%}
-.path.p4{top:87%}
-
-.path.v{
-  width:1.3%;
-  height:25%;
-}
-
-.path.v1{left:13%;top:5%}
-.path.v2{left:29%;top:29%}
-.path.v3{left:13%;top:59%}
-.path.v4{left:31%;top:68%}
-
-.shopPath{
-  position:absolute;
-  z-index:44;
-  width:12px;
-  background:#c8c4b2;
-  border-left:1px solid #aaa697;
-  border-right:1px solid #aaa697;
-}
+.pv4{left:86%}
 
 /* =========================================================
-   CROSSINGS
+   GRASS SHOP PLOTS
+   These sit BETWEEN roads, never over them.
 ========================================================= */
 
-.crossing{
+.shopPlot{
   position:absolute;
-  z-index:50;
-  width:6%;
-  height:8%;
-  transform:translate(-50%,-50%);
-  display:flex;
-  gap:3px;
-  align-items:center;
-  justify-content:center;
-  pointer-events:none;
-}
-
-.crossing i{
-  width:4px;
-  height:65%;
-  background:#eee;
-}
-
-/* =========================================================
-   ROUNDABOUT
-========================================================= */
-
-#roundabout{
-  position:absolute;
-  z-index:38;
-  left:29%;
-  top:47%;
-  width:185px;
-  height:185px;
-  transform:translate(-50%,-50%);
-}
-
-.roundRoad{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  background:#383e40;
-  border:5px solid #555b5d;
-  box-shadow:0 4px 9px #0005;
-}
-
-.roundRoad::before{
-  content:"";
-  position:absolute;
-  inset:18px;
-  border-radius:50%;
-  border:3px dashed #f1d34d;
-}
-
-.roundIsland{
-  position:absolute;
-  inset:55px;
-  border-radius:50%;
-  background:#72a653;
-  border:4px solid #527b3d;
-  box-shadow:inset 0 0 8px #0004;
-}
-
-.roundIsland::after{
-  content:"🌳";
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  font-size:27px;
-}
-
-.roundArrow{
-  position:absolute;
-  color:#f4e68b;
-  font-size:18px;
-}
-
-.ra1{left:20px;top:79px}
-.ra2{right:20px;top:79px;transform:rotate(180deg)}
-.ra3{left:81px;top:18px;transform:rotate(90deg)}
-.ra4{left:81px;bottom:18px;transform:rotate(-90deg)}
-
-/* =========================================================
-   BRIDGES
-========================================================= */
-
-.bridge{
-  position:absolute;
-  z-index:55;
-  left:51%;
-  width:25%;
-  height:5%;
-  transform:translate(-50%,-50%);
-  background:
-    repeating-linear-gradient(
-      90deg,
-      #6b7376 0 22px,
-      #51585b 22px 44px
-    );
-  border-top:3px solid #d0d1c8;
-  border-bottom:3px solid #d0d1c8;
-  box-shadow:0 3px 8px #0006;
-}
-
-.bridge1{top:20%}
-.bridge2{top:78%}
-
-/* =========================================================
-   GRASS PLOTS
-========================================================= */
-
-.plot{
-  position:absolute;
-  z-index:60;
-  border-radius:16px;
+  z-index:40;
   background:#83b866;
   border:3px solid #67974e;
+  border-radius:14px;
   box-shadow:
     inset 0 0 0 2px #ffffff12,
-    0 4px 7px #0002;
+    0 4px 8px #0002;
 }
 
-.plot::after{
+.shopPlot::after{
   content:"";
   position:absolute;
   inset:5px;
-  border-radius:11px;
-  border:1px dashed #ffffff1a;
+  border-radius:9px;
+  border:1px dashed #ffffff1c;
   pointer-events:none;
 }
 
-/* exact plots */
-.plot1{left:4%;top:5%;width:27%;height:25%}
-.plot2{left:21%;top:29%;width:18%;height:18%}
-.plot3{left:3%;top:59%;width:28%;height:25%}
-.plot4{left:23%;top:68%;width:18%;height:20%}
+/*
+  Player plots:
+  plot 1 between road 1 and road 2
+  plot 2 between road 2 and road 3
+  plot 3 between road 3 and road 4
+  plot 4 below road 4
+*/
 
-.plot5{right:3%;top:7%;width:25%;height:31%}
-.plot6{right:6%;top:56%;width:20%;height:22%}
+.playerPlot1{
+  left:3%;
+  top:22.8%;
+  width:25%;
+  height:14%;
+}
+
+.playerPlot2{
+  left:3%;
+  top:43.8%;
+  width:25%;
+  height:14%;
+}
+
+.playerPlot3{
+  left:3%;
+  top:64.8%;
+  width:25%;
+  height:14%;
+}
+
+.playerPlot4{
+  left:3%;
+  top:85.8%;
+  width:25%;
+  height:11%;
+}
+
+/* More grass beside the shops */
+
+.sideGrass1{
+  position:absolute;
+  z-index:38;
+  left:29%;
+  top:23%;
+  width:26%;
+  height:13%;
+  background:#79ad5d;
+  border-radius:14px;
+}
+
+.sideGrass2{
+  position:absolute;
+  z-index:38;
+  left:29%;
+  top:44%;
+  width:26%;
+  height:13%;
+  background:#79ad5d;
+  border-radius:14px;
+}
+
+.sideGrass3{
+  position:absolute;
+  z-index:38;
+  left:29%;
+  top:65%;
+  width:26%;
+  height:13%;
+  background:#79ad5d;
+  border-radius:14px;
+}
+
+.bottomGrass{
+  position:absolute;
+  z-index:35;
+  left:0;
+  bottom:0;
+  width:58%;
+  height:10%;
+  background:#67994f;
+}
 
 /* =========================================================
-   BUILDINGS
+   SHOP BUILDINGS
 ========================================================= */
 
 .building{
   position:absolute;
-  z-index:100;
-  border-radius:7px;
+  z-index:140;
   cursor:pointer;
   user-select:none;
-  transition:filter .15s,transform .15s;
-}
-
-.building:hover{
-  filter:brightness(1.1);
+  border-radius:7px;
 }
 
 .buildingBody{
   position:absolute;
-  inset:12% 0 0;
+  inset:13% 0 0;
   border:3px solid #3c3f3c;
   border-radius:5px;
   background:#d8c58a;
   box-shadow:
-    0 7px 0 #756e59,
-    0 10px 12px #0005;
+    0 6px 0 #756e59,
+    0 9px 12px #0005;
 }
 
 .roof{
   position:absolute;
-  left:-4%;
-  right:-4%;
+  left:-5%;
+  right:-5%;
   top:0;
-  height:23%;
+  height:25%;
   clip-path:polygon(7% 100%,50% 0,93% 100%);
   background:#7a4e35;
   border:2px solid #4d3426;
@@ -580,12 +496,12 @@ button{
   top:31%;
   display:flex;
   justify-content:space-around;
-  gap:4px;
+  gap:3px;
 }
 
 .window{
   width:20%;
-  height:19px;
+  height:16px;
   background:#8ed3e8;
   border:2px solid #34464a;
   box-shadow:inset 0 0 7px #fff8;
@@ -595,7 +511,7 @@ button{
   position:absolute;
   bottom:0;
   left:50%;
-  width:17%;
+  width:19%;
   height:35%;
   transform:translateX(-50%);
   background:#543d2d;
@@ -605,11 +521,11 @@ button{
 
 .sign{
   position:absolute;
-  z-index:15;
+  z-index:20;
   left:50%;
-  top:-18%;
+  top:-21%;
   transform:translateX(-50%);
-  min-width:80%;
+  min-width:100%;
   padding:4px 7px;
   text-align:center;
   border-radius:5px;
@@ -618,13 +534,13 @@ button{
   border:2px solid #725c18;
   box-shadow:0 3px 4px #0005;
   font-weight:900;
-  font-size:9px;
+  font-size:8px;
   white-space:nowrap;
 }
 
 .levelBadge{
   position:absolute;
-  z-index:20;
+  z-index:30;
   right:-7px;
   top:-7px;
   min-width:23px;
@@ -640,9 +556,9 @@ button{
 
 .stockBadge{
   position:absolute;
-  z-index:20;
+  z-index:30;
   left:50%;
-  bottom:-23px;
+  bottom:-22px;
   transform:translateX(-50%);
   padding:3px 6px;
   border-radius:8px;
@@ -652,47 +568,86 @@ button{
   white-space:nowrap;
 }
 
-/* player buildings fit plots */
+.stateBadge{
+  position:absolute;
+  z-index:31;
+  left:50%;
+  bottom:-38px;
+  transform:translateX(-50%);
+  padding:2px 6px;
+  border-radius:8px;
+  font-size:6px;
+  white-space:nowrap;
+  font-weight:bold;
+  border:1px solid #0004;
+}
+
+.stateBadge.OPEN{
+  background:#3f8f4d;
+}
+
+.stateBadge.BUSY{
+  background:#c98b2c;
+}
+
+.stateBadge.LOW_STOCK{
+  background:#c93e3e;
+}
+
+.stateBadge.CLOSED{
+  background:#555;
+}
+
+.stateBadge.RENOVATING{
+  background:#3f85b4;
+}
+
+.stateBadge.OPENING{
+  background:#8a5cc9;
+}
+
+/* ---------------------------------------------------------
+   PLAYER SHOPS
+   One vertical line.
+   Each building stays completely inside its grass plot.
+--------------------------------------------------------- */
+
 #shop1{
   left:8%;
-  top:10%;
-  width:9.2%;
-  height:11%;
+  top:26%;
+  width:15%;
+  height:9%;
 }
 
 #shop2{
-  left:24%;
-  top:33%;
-  width:7.2%;
-  height:8.5%;
+  left:8%;
+  top:47%;
+  width:15%;
+  height:9%;
 }
 
 #shop3{
   left:8%;
-  top:64%;
-  width:9.5%;
-  height:10.5%;
+  top:68%;
+  width:15%;
+  height:9%;
 }
 
 #shop4{
-  left:26%;
-  top:72%;
-  width:7.2%;
-  height:8.5%;
+  left:8%;
+  top:88%;
+  width:15%;
+  height:7%;
 }
 
-/* player's building colours */
-.playerBuilding .buildingBody{
+.playerBuilding .buildingBody,
+.playerPurchased .buildingBody{
   background:#e3c35a;
 }
 
-.playerBuilding .roof{
+.playerBuilding .roof,
+.playerPurchased .roof{
   background:#9b622d;
-}
-
-/* abandoned */
-.abandonedBuilding{
-  background:#555;
 }
 
 .abandonedBuilding .buildingBody{
@@ -708,31 +663,17 @@ button{
   color:#eee;
 }
 
-/* purchased abandoned building */
-.playerPurchased .buildingBody{
-  background:#e3c35a;
-}
-
-.playerPurchased .roof{
-  background:#9b622d;
-}
-
-.playerPurchased .sign{
-  background:#f1c63e;
-  color:#2c250d;
-}
-
 /* =========================================================
-   KING'S MART HQ
+   KING'S MART DISTRICT
 ========================================================= */
 
 #kingsHQ{
   position:absolute;
-  z-index:110;
-  right:7%;
-  top:12%;
-  width:16.5%;
-  height:20%;
+  z-index:145;
+  left:74%;
+  top:23%;
+  width:22%;
+  height:16%;
   cursor:pointer;
 }
 
@@ -746,28 +687,23 @@ button{
 
 #kingsHQ .roof{
   height:27%;
-  clip-path:none;
   left:0;
   right:0;
+  clip-path:none;
   background:#1e2930;
   border:3px solid #11181c;
 }
 
 #kingsHQ .sign{
-  top:-17%;
+  top:-18%;
   background:#dc3434;
   color:#fff;
   border-color:#751c1c;
   font-size:10px;
-  min-width:100%;
-}
-
-#kingsHQ .windows{
-  top:35%;
 }
 
 #kingsHQ .window{
-  height:25px;
+  height:23px;
   background:#78bdd5;
 }
 
@@ -777,7 +713,7 @@ button{
   background:#303d43;
 }
 
-#kingsHQ .hqBanner{
+.hqBanner{
   position:absolute;
   left:5%;
   right:5%;
@@ -791,14 +727,13 @@ button{
   font-weight:bold;
 }
 
-/* Express */
 #kingsExpress{
   position:absolute;
-  z-index:110;
-  right:9%;
-  top:61%;
-  width:12%;
-  height:13%;
+  z-index:145;
+  left:77%;
+  top:67%;
+  width:16%;
+  height:12%;
   cursor:pointer;
 }
 
@@ -818,18 +753,34 @@ button{
   border-color:#711d1d;
 }
 
+#rivalCustomerLabel{
+  position:absolute;
+  z-index:180;
+  left:75%;
+  top:39%;
+  width:20%;
+  text-align:center;
+  padding:5px;
+  border-radius:7px;
+  background:#571b1b;
+  border:1px solid #e65b5b;
+  color:#fff;
+  font-size:8px;
+  font-weight:bold;
+}
+
 /* =========================================================
-   PARK / CITY DETAILS
+   PARK / DETAILS
 ========================================================= */
 
 .park{
   position:absolute;
-  z-index:65;
-  right:31%;
-  top:3%;
-  width:19%;
-  height:13%;
-  border-radius:18px;
+  z-index:45;
+  left:30%;
+  top:5%;
+  width:23%;
+  height:11%;
+  border-radius:16px;
   background:#72a95b;
   border:3px solid #5b914a;
 }
@@ -837,14 +788,14 @@ button{
 .park::before{
   content:"🌳   🌳   🌳";
   position:absolute;
-  left:15%;
-  top:30%;
-  font-size:22px;
+  left:13%;
+  top:28%;
+  font-size:20px;
 }
 
 .bench{
   position:absolute;
-  z-index:70;
+  z-index:90;
   width:35px;
   height:8px;
   border-radius:3px;
@@ -852,12 +803,50 @@ button{
   border:2px solid #412719;
 }
 
-.bench.b1{right:34%;top:10%}
-.bench.b2{right:38%;top:13%}
+.b1{
+  left:38%;
+  top:9%;
+}
+
+.b2{
+  left:46%;
+  top:12%;
+}
+
+.tree{
+  position:absolute;
+  z-index:95;
+  width:29px;
+  height:29px;
+  border-radius:50%;
+  background:#43833e;
+  border:4px solid #316633;
+  box-shadow:
+    inset 5px 5px #72ad5a,
+    0 5px 4px #0003;
+}
+
+.tree::after{
+  content:"";
+  position:absolute;
+  width:7px;
+  height:13px;
+  left:7px;
+  top:23px;
+  background:#65442b;
+  z-index:-1;
+}
+
+.t1{left:32%;top:27%}
+.t2{left:45%;top:33%}
+.t3{left:34%;top:47%}
+.t4{left:45%;top:58%}
+.t5{left:31%;top:69%}
+.t6{left:44%;top:90%}
 
 .lamp{
   position:absolute;
-  z-index:75;
+  z-index:100;
   width:4px;
   height:22px;
   background:#30383b;
@@ -875,49 +864,18 @@ button{
   box-shadow:0 0 8px #fff3a3;
 }
 
-.l1{left:7%;top:35%}
-.l2{left:19%;top:44%}
-.l3{left:47%;top:63%}
-.l4{right:26%;top:45%}
-.l5{right:12%;top:81%}
-
-.tree{
-  position:absolute;
-  z-index:67;
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  background:#43833e;
-  border:4px solid #316633;
-  box-shadow:
-    inset 5px 5px #72ad5a,
-    0 5px 4px #0003;
-}
-
-.tree::after{
-  content:"";
-  position:absolute;
-  width:7px;
-  height:13px;
-  left:9px;
-  top:25px;
-  background:#65442b;
-  z-index:-1;
-}
-
-.t1{left:34%;top:8%}
-.t2{left:43%;top:16%}
-.t3{left:46%;top:90%}
-.t4{right:29%;top:42%}
-.t5{right:4%;top:48%}
-.t6{right:27%;top:84%}
+.l1{left:5%;top:31%}
+.l2{left:27%;top:44%}
+.l3{left:53%;top:69%}
+.l4{left:55%;top:89%}
+.l5{right:6%;top:54%}
 
 .parking{
   position:absolute;
-  z-index:64;
-  right:4%;
-  top:42%;
-  width:20%;
+  z-index:60;
+  left:73%;
+  top:43%;
+  width:23%;
   height:11%;
   background:#747875;
   border:3px solid #555a58;
@@ -938,7 +896,81 @@ button{
 .parking span:nth-child(3){left:65%}
 
 /* =========================================================
-   PEOPLE + CARS
+   BRIDGES
+========================================================= */
+
+.bridge{
+  position:absolute;
+  z-index:110;
+  left:63.5%;
+  width:11%;
+  height:7%;
+  transform:translate(-50%,-50%);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #6b7376 0 22px,
+      #51585b 22px 44px
+    );
+  border-top:3px solid #d0d1c8;
+  border-bottom:3px solid #d0d1c8;
+  box-shadow:0 3px 8px #0006;
+}
+
+.bridge1{top:18%}
+.bridge2{top:81%}
+
+/* =========================================================
+   ROUNDABOUT
+========================================================= */
+
+#roundabout{
+  position:absolute;
+  z-index:100;
+  left:45%;
+  top:39%;
+  width:125px;
+  height:125px;
+  transform:translate(-50%,-50%);
+}
+
+.roundRoad{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:#383e40;
+  border:5px solid #555b5d;
+  box-shadow:0 4px 9px #0005;
+}
+
+.roundRoad::before{
+  content:"";
+  position:absolute;
+  inset:17px;
+  border-radius:50%;
+  border:3px dashed #f1d34d;
+}
+
+.roundIsland{
+  position:absolute;
+  inset:42px;
+  border-radius:50%;
+  background:#72a653;
+  border:4px solid #527b3d;
+  box-shadow:inset 0 0 8px #0004;
+}
+
+.roundIsland::after{
+  content:"🌳";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:20px;
+}
+
+/* =========================================================
+   PEOPLE / CARS / DELIVERIES
 ========================================================= */
 
 #peopleLayer,
@@ -958,9 +990,7 @@ button{
   background:#2f6fb3;
   border:1px solid #182f4a;
   box-shadow:0 2px 3px #0007;
-  transition:
-    left 9s linear,
-    top 9s linear;
+  transform:translate(-50%,-50%);
 }
 
 .person::before{
@@ -980,8 +1010,8 @@ button{
   border-color:#701919;
 }
 
-.person.red::before{
-  background:#ffc0a5;
+.person.hidden{
+  opacity:0;
 }
 
 .car{
@@ -1009,17 +1039,9 @@ button{
 .car::before{left:4px}
 .car::after{right:4px}
 
-.car.redCar{
-  background:#c94343;
-}
-
-.car.blueCar{
-  background:#4288b8;
-}
-
-.car.yellowCar{
-  background:#d7aa35;
-}
+.car.blueCar{background:#4288b8}
+.car.yellowCar{background:#d7aa35}
+.car.redCar{background:#c94343}
 
 .deliveryVan{
   position:absolute;
@@ -1043,6 +1065,40 @@ button{
 }
 
 /* =========================================================
+   DEBUG
+========================================================= */
+
+#debugLayer{
+  position:absolute;
+  inset:0;
+  z-index:900;
+  pointer-events:none;
+  display:none;
+}
+
+#debugLayer.on{
+  display:block;
+}
+
+#debugBadge{
+  position:absolute;
+  left:6px;
+  top:62px;
+  z-index:950;
+  background:#c93e3e;
+  color:#fff;
+  font-size:9px;
+  font-weight:bold;
+  padding:3px 7px;
+  border-radius:6px;
+  display:none;
+}
+
+#debugBadge.on{
+  display:block;
+}
+
+/* =========================================================
    BOTTOM BAR
 ========================================================= */
 
@@ -1052,7 +1108,7 @@ button{
   display:flex;
   background:#182229;
   border-top:2px solid #4c5e67;
-  z-index:1000;
+  z-index:2000;
 }
 
 .navButton{
@@ -1080,7 +1136,7 @@ button{
 
 #panel{
   position:absolute;
-  z-index:2000;
+  z-index:2500;
   right:15px;
   top:15px;
   width:330px;
@@ -1222,6 +1278,9 @@ button{
   pointer-events:none;
   transition:.25s;
   white-space:nowrap;
+  max-width:90%;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 #toast.show{
@@ -1230,7 +1289,7 @@ button{
 }
 
 /* =========================================================
-   RESPONSIVE
+   MOBILE
 ========================================================= */
 
 @media(max-width:900px){
@@ -1287,23 +1346,22 @@ button{
   }
 
   #roundabout{
-    width:135px;
-    height:135px;
+    width:95px;
+    height:95px;
   }
 
   .roundIsland{
-    inset:42px;
+    inset:32px;
   }
 
   .window{
-    height:13px;
+    height:10px;
   }
 
   .tree{
-    width:24px;
-    height:24px;
+    width:22px;
+    height:22px;
   }
-
 }
 
 @media(max-width:600px){
@@ -1325,6 +1383,10 @@ button{
     width:280px;
   }
 
+  #kingsHQ{
+    left:73%;
+    width:23%;
+  }
 }
 </style>
 </head>
@@ -1339,7 +1401,7 @@ button{
 
 <div id="topBar">
 
-  <div class="logo">👑</div>
+  <div class="logo" id="logoTap">👑</div>
 
   <div class="companyTitle">
     <b id="companyName">Your Company</b>
@@ -1374,7 +1436,6 @@ button{
     </div>
 
   </div>
-
 </div>
 
 
@@ -1384,10 +1445,10 @@ button{
 
 <div id="world">
 
-  <div class="district one"></div>
-  <div class="district two"></div>
-  <div class="district three"></div>
-  <div class="district four"></div>
+  <!-- CITY BACKGROUNDS -->
+
+  <div class="playerDistrict"></div>
+  <div class="rivalDistrict"></div>
 
   <div class="zoneLabel playerZone">
     YOUR CITY
@@ -1403,105 +1464,79 @@ button{
   <div id="river"></div>
 
 
-  <!-- ROADS -->
+  <!-- =====================================================
+       ROADS
+  ====================================================== -->
 
-  <div class="road horizontal h1"></div>
-  <div class="road horizontal h2"></div>
-  <div class="road horizontal h3"></div>
+  <div class="road horizontal hRoad1"></div>
+  <div class="road horizontal hRoad2"></div>
+  <div class="road horizontal hRoad3"></div>
+  <div class="road horizontal hRoad4"></div>
 
-  <div class="road vertical v1"></div>
-  <div class="road vertical v2"></div>
-  <div class="road vertical v3"></div>
-  <div class="road vertical v4"></div>
-  <div class="road vertical v5"></div>
+  <div class="road vertical vRoad1"></div>
+  <div class="road vertical vRoad2"></div>
+  <div class="road vertical vRoad3"></div>
+  <div class="road vertical vRoad4"></div>
 
 
   <!-- INTERSECTIONS -->
 
-  <div class="intersection" style="left:16%;top:20%"></div>
-  <div class="intersection" style="left:38%;top:20%"></div>
-  <div class="intersection" style="left:51%;top:20%"></div>
+  <div class="intersection" style="left:14%;top:18%"></div>
+  <div class="intersection" style="left:36%;top:18%"></div>
+  <div class="intersection" style="left:51%;top:18%"></div>
+  <div class="intersection" style="left:82%;top:18%"></div>
 
-  <div class="intersection" style="left:16%;top:51%"></div>
-  <div class="intersection" style="left:38%;top:51%"></div>
-  <div class="intersection" style="left:51%;top:51%"></div>
+  <div class="intersection" style="left:14%;top:39%"></div>
+  <div class="intersection" style="left:36%;top:39%"></div>
+  <div class="intersection" style="left:51%;top:39%"></div>
+  <div class="intersection" style="left:82%;top:39%"></div>
 
-  <div class="intersection" style="left:16%;top:78%"></div>
-  <div class="intersection" style="left:38%;top:78%"></div>
-  <div class="intersection" style="left:51%;top:78%"></div>
+  <div class="intersection" style="left:14%;top:60%"></div>
+  <div class="intersection" style="left:36%;top:60%"></div>
+  <div class="intersection" style="left:51%;top:60%"></div>
+  <div class="intersection" style="left:82%;top:60%"></div>
+
+  <div class="intersection" style="left:14%;top:81%"></div>
+  <div class="intersection" style="left:36%;top:81%"></div>
+  <div class="intersection" style="left:51%;top:81%"></div>
+  <div class="intersection" style="left:82%;top:81%"></div>
 
 
-  <!-- PAVEMENTS -->
+  <!-- =====================================================
+       PAVEMENTS
+  ====================================================== -->
 
   <div class="pavement horizontal ph1"></div>
   <div class="pavement horizontal ph2"></div>
   <div class="pavement horizontal ph3"></div>
+  <div class="pavement horizontal ph4"></div>
 
   <div class="pavement vertical pv1"></div>
   <div class="pavement vertical pv2"></div>
   <div class="pavement vertical pv3"></div>
+  <div class="pavement vertical pv4"></div>
 
 
-  <!-- EXTRA PEDESTRIAN PATHS -->
+  <!-- =====================================================
+       GRASS PLOTS
+  ====================================================== -->
 
-  <div class="path h p1"></div>
-  <div class="path h p2"></div>
-  <div class="path h p3"></div>
-  <div class="path h p4"></div>
+  <div class="shopPlot playerPlot1"></div>
+  <div class="shopPlot playerPlot2"></div>
+  <div class="shopPlot playerPlot3"></div>
+  <div class="shopPlot playerPlot4"></div>
 
-  <div class="path v v1"></div>
-  <div class="path v v2"></div>
-  <div class="path v v3"></div>
-  <div class="path v v4"></div>
+  <div class="sideGrass1"></div>
+  <div class="sideGrass2"></div>
+  <div class="sideGrass3"></div>
 
-
-  <!-- CROSSINGS -->
-
-  <div class="crossing" style="left:16%;top:51%">
-    <i></i><i></i><i></i><i></i><i></i>
-  </div>
-
-  <div class="crossing" style="left:38%;top:51%">
-    <i></i><i></i><i></i><i></i><i></i>
-  </div>
-
-
-  <!-- ROUNDABOUT -->
-
-  <div id="roundabout">
-
-    <div class="roundRoad"></div>
-
-    <div class="roundIsland"></div>
-
-    <div class="roundArrow ra1">➜</div>
-    <div class="roundArrow ra2">➜</div>
-    <div class="roundArrow ra3">➜</div>
-    <div class="roundArrow ra4">➜</div>
-
-  </div>
-
-
-  <!-- BRIDGES -->
-
-  <div class="bridge bridge1"></div>
-  <div class="bridge bridge2"></div>
-
-
-  <!-- GRASS PLOTS -->
-
-  <div class="plot plot1"></div>
-  <div class="plot plot2"></div>
-  <div class="plot plot3"></div>
-  <div class="plot plot4"></div>
-
-  <div class="plot plot5"></div>
-  <div class="plot plot6"></div>
+  <div class="bottomGrass"></div>
 
 
   <!-- PARK -->
 
   <div class="park"></div>
+
   <div class="bench b1"></div>
   <div class="bench b2"></div>
 
@@ -1535,7 +1570,8 @@ button{
 
 
   <!-- =====================================================
-       PLAYER SHOP 1
+       YOUR SHOPS
+       ALL FOUR ARE IN ONE VERTICAL LINE
   ====================================================== -->
 
   <div
@@ -1543,17 +1579,10 @@ button{
     class="building playerBuilding collisionSolid"
     onclick="openShop(0)"
   >
-
-    <div class="sign">
-      MY MART
-    </div>
-
-    <div class="levelBadge">
-      LV 1
-    </div>
+    <div class="sign">MY MART</div>
+    <div class="levelBadge">LV 1</div>
 
     <div class="buildingBody">
-
       <div class="roof"></div>
 
       <div class="windows">
@@ -1563,32 +1592,21 @@ button{
       </div>
 
       <div class="door"></div>
-
     </div>
-
   </div>
 
 
-  <!-- =====================================================
-       PLAYER SHOP 2 / ABANDONED PROPERTY
-  ====================================================== -->
+  <!-- SHOP 2 -->
 
   <div
     id="shop2"
     class="building abandonedBuilding collisionSolid"
     onclick="openProperty(0)"
   >
-
-    <div class="sign">
-      £2,200
-    </div>
-
-    <div class="levelBadge">
-      FOR SALE
-    </div>
+    <div class="sign">£2,200</div>
+    <div class="levelBadge">FOR SALE</div>
 
     <div class="buildingBody">
-
       <div class="roof"></div>
 
       <div class="windows">
@@ -1597,32 +1615,21 @@ button{
       </div>
 
       <div class="door"></div>
-
     </div>
-
   </div>
 
 
-  <!-- =====================================================
-       PLAYER SHOP 3
-  ====================================================== -->
+  <!-- SHOP 3 -->
 
   <div
     id="shop3"
     class="building abandonedBuilding collisionSolid"
     onclick="openProperty(1)"
   >
-
-    <div class="sign">
-      £3,500
-    </div>
-
-    <div class="levelBadge">
-      FOR SALE
-    </div>
+    <div class="sign">£3,500</div>
+    <div class="levelBadge">FOR SALE</div>
 
     <div class="buildingBody">
-
       <div class="roof"></div>
 
       <div class="windows">
@@ -1632,32 +1639,21 @@ button{
       </div>
 
       <div class="door"></div>
-
     </div>
-
   </div>
 
 
-  <!-- =====================================================
-       PLAYER SHOP 4
-  ====================================================== -->
+  <!-- SHOP 4 -->
 
   <div
     id="shop4"
     class="building abandonedBuilding collisionSolid"
     onclick="openProperty(2)"
   >
-
-    <div class="sign">
-      £4,800
-    </div>
-
-    <div class="levelBadge">
-      FOR SALE
-    </div>
+    <div class="sign">£4,800</div>
+    <div class="levelBadge">FOR SALE</div>
 
     <div class="buildingBody">
-
       <div class="roof"></div>
 
       <div class="windows">
@@ -1666,9 +1662,7 @@ button{
       </div>
 
       <div class="door"></div>
-
     </div>
-
   </div>
 
 
@@ -1676,10 +1670,7 @@ button{
        KING'S MART HQ
   ====================================================== -->
 
-  <div
-    id="kingsHQ"
-    onclick="openRival()"
-  >
+  <div id="kingsHQ" onclick="openRival()">
 
     <div class="sign">
       KING'S MART
@@ -1707,23 +1698,18 @@ button{
       </div>
 
     </div>
-
   </div>
 
 
   <!-- KING'S MART EXPRESS -->
 
-  <div
-    id="kingsExpress"
-    onclick="openRival()"
-  >
+  <div id="kingsExpress" onclick="openRival()">
 
     <div class="sign">
       KING'S MART EXPRESS
     </div>
 
     <div class="buildingBody">
-
       <div class="roof"></div>
 
       <div class="windows">
@@ -1732,41 +1718,36 @@ button{
       </div>
 
       <div class="door"></div>
-
     </div>
 
   </div>
 
 
-  <!-- RIVAL CUSTOMER COUNT -->
+  <!-- RIVAL CUSTOMER COUNTER -->
 
-  <div
-    id="rivalCustomerLabel"
-    style="
-      position:absolute;
-      z-index:150;
-      right:7%;
-      top:33%;
-      width:16.5%;
-      text-align:center;
-      padding:5px;
-      border-radius:7px;
-      background:#571b1b;
-      border:1px solid #e65b5b;
-      color:#fff;
-      font-size:8px;
-      font-weight:bold;
-    "
-  >
+  <div id="rivalCustomerLabel">
     🔴 220 CUSTOMERS
   </div>
 
 
-  <!-- MOVING LAYERS -->
+  <!-- MOVING OBJECTS -->
 
   <div id="carsLayer"></div>
   <div id="deliveryLayer"></div>
   <div id="peopleLayer"></div>
+
+
+  <!-- DEBUG -->
+
+  <svg
+    id="debugLayer"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+  ></svg>
+
+  <div id="debugBadge">
+    DEBUG MODE
+  </div>
 
 
   <!-- PANEL -->
@@ -1847,18 +1828,20 @@ button{
 
 /* =========================================================
    KING'S MART TYCOON
-   COMPLETE SINGLE FILE
+   VERSION 12
+   REORGANISED CITY MAP
 ========================================================= */
 
-const SAVE_KEY =
-  "kings_mart_tycoon_city_v10";
+const SAVE_KEY = "kings_mart_tycoon_city_v12";
+
+let DEBUG_MODE = false;
 
 
 /* =========================================================
-   DEFAULT GAME
+   GAME STATE
 ========================================================= */
 
-let game={
+let game = {
 
   company:"Your Company",
 
@@ -1911,7 +1894,9 @@ let game={
       customers:42,
       upgrades:0,
       stock:100,
-      maxStock:100
+      maxStock:100,
+      renovatingUntil:0,
+      openingUntil:0
     }
 
   ],
@@ -1938,7 +1923,7 @@ let game={
 
 
 /* =========================================================
-   LOAD OLD SAVES
+   LOAD GAME
 ========================================================= */
 
 function loadGame(){
@@ -1947,12 +1932,9 @@ function loadGame(){
 
   try{
 
-    old=
-      JSON.parse(
-        localStorage.getItem(
-          SAVE_KEY
-        )
-      );
+    old=JSON.parse(
+      localStorage.getItem(SAVE_KEY)
+    );
 
   }catch(e){
 
@@ -1961,33 +1943,30 @@ function loadGame(){
   }
 
 
-  /*
-    Also migrate previous versions.
-  */
-
   if(!old){
 
     const oldKeys=[
+
+      "kings_mart_tycoon_city_v11",
+      "kings_mart_tycoon_city_v10",
       "kings_mart_tycoon_city_v9",
       "kings_mart_tycoon_city_v8",
       "kings_mart_tycoon_city_v7",
       "kings_mart_tycoon_v5"
+
     ];
 
-    for(
-      const key of oldKeys
-    ){
+    for(const key of oldKeys){
 
       try{
 
         const data=
-          JSON.parse(
-            localStorage.getItem(key)
-          );
+          JSON.parse(localStorage.getItem(key));
 
         if(data){
 
           old=data;
+
           break;
 
         }
@@ -2004,76 +1983,52 @@ function loadGame(){
     game={
       ...game,
       ...old,
-
       rival:{
         ...game.rival,
         ...(old.rival||{})
       }
-
     };
 
-
-    if(!Array.isArray(game.stores))
-      game.stores=[];
-
-    if(!Array.isArray(game.properties))
-      game.properties=[];
-
-    if(!Array.isArray(game.staff))
-      game.staff=[];
-
-
-    game.stores.forEach(
-      shop=>{
-
-        if(typeof shop.stock!=="number")
-          shop.stock=100;
-
-        if(typeof shop.maxStock!=="number")
-          shop.maxStock=100;
-
-        if(typeof shop.upgrades!=="number")
-          shop.upgrades=0;
-
-        if(typeof shop.level!=="number")
-          shop.level=1;
-
-        if(typeof shop.condition!=="number")
-          shop.condition=50;
-
-        if(typeof shop.customers!=="number")
-          shop.customers=10;
-
-      }
-    );
-
-
-    /*
-      Make sure properties remain linked
-      to their purchased shop.
-    */
-
-    game.properties.forEach(
-      property=>{
-
-        if(
-          property.bought &&
-          (
-            property.storeIndex===null ||
-            typeof property.storeIndex!=="number" ||
-            !game.stores[property.storeIndex]
-          )
-        ){
-
-          property.bought=false;
-          property.storeIndex=null;
-
-        }
-
-      }
-    );
-
   }
+
+
+  if(!Array.isArray(game.stores))
+    game.stores=[];
+
+  if(!Array.isArray(game.properties))
+    game.properties=[];
+
+  if(!Array.isArray(game.staff))
+    game.staff=[];
+
+
+  game.stores.forEach(shop=>{
+
+    if(typeof shop.stock!=="number")
+      shop.stock=100;
+
+    if(typeof shop.maxStock!=="number")
+      shop.maxStock=100;
+
+    if(typeof shop.upgrades!=="number")
+      shop.upgrades=0;
+
+    if(typeof shop.level!=="number")
+      shop.level=1;
+
+    if(typeof shop.condition!=="number")
+      shop.condition=50;
+
+    if(typeof shop.customers!=="number")
+      shop.customers=10;
+
+    if(typeof shop.renovatingUntil!=="number")
+      shop.renovatingUntil=0;
+
+    if(typeof shop.openingUntil!=="number")
+      shop.openingUntil=0;
+
+  });
 
 
   if(!game.stores.length){
@@ -2081,24 +2036,72 @@ function loadGame(){
     game.stores.push({
 
       name:"My Mart",
-
       level:1,
-
       condition:65,
-
       baseIncome:12,
-
       customers:42,
-
       upgrades:0,
-
       stock:100,
-
-      maxStock:100
+      maxStock:100,
+      renovatingUntil:0,
+      openingUntil:0
 
     });
 
   }
+
+
+  while(game.properties.length<3){
+
+    const defaults=[
+
+      {
+        name:"Old Corner Shop",
+        price:2200,
+        bought:false,
+        storeIndex:null
+      },
+
+      {
+        name:"Empty High Street",
+        price:3500,
+        bought:false,
+        storeIndex:null
+      },
+
+      {
+        name:"Abandoned Supermarket",
+        price:4800,
+        bought:false,
+        storeIndex:null
+      }
+
+    ];
+
+    game.properties.push(
+      defaults[game.properties.length]
+    );
+
+  }
+
+
+  game.properties.forEach(property=>{
+
+    if(
+      property.bought &&
+      (
+        property.storeIndex===null ||
+        typeof property.storeIndex!=="number" ||
+        !game.stores[property.storeIndex]
+      )
+    ){
+
+      property.bought=false;
+      property.storeIndex=null;
+
+    }
+
+  });
 
 }
 
@@ -2109,8 +2112,7 @@ function loadGame(){
 
 function saveGame(){
 
-  game.lastSave=
-    Date.now();
+  game.lastSave=Date.now();
 
   try{
 
@@ -2130,43 +2132,37 @@ function saveGame(){
 
 function offlineIncome(){
 
-  const now=
-    Date.now();
+  const now=Date.now();
 
-  const elapsed=
-    Math.min(
-      28800,
-      Math.max(
-        0,
-        (now-game.lastSave)/1000
-      )
-    );
-
+  const elapsed=Math.min(
+    28800,
+    Math.max(
+      0,
+      (now-game.lastSave)/1000
+    )
+  );
 
   if(elapsed<5)
     return;
 
 
-  const amount=
-    Math.floor(
-      getIncome()*
-      elapsed
-    );
+  const amount=Math.floor(
+    getIncome()*elapsed
+  );
 
 
   if(amount>0){
 
     game.cash+=amount;
 
-    setTimeout(
-      ()=>{
-        toast(
-          "💰 Offline earnings: £"+
-          amount.toLocaleString()
-        );
-      },
-      500
-    );
+    setTimeout(()=>{
+
+      toast(
+        "💰 Offline earnings: £"+
+        amount.toLocaleString()
+      );
+
+    },500);
 
   }
 
@@ -2204,3064 +2200,72 @@ function getStaffBonus(){
 
   let customerBonus=0;
 
-
-  game.staff.forEach(
-    person=>{
-
-      incomeBonus +=
-        (person.management||0)
-        *0.00035;
+  let stockBonus=0;
 
 
-      incomeBonus +=
-        (person.problemSolving||0)
-        *0.00015;
+  game.staff.forEach(p=>{
+
+    incomeBonus+=
+      (p.management||0)*0.00035;
+
+    incomeBonus+=
+      (p.problemSolving||0)*0.00015;
+
+    customerBonus+=
+      (p.intelligence||0)*0.00008;
+
+    customerBonus+=
+      (p.customerService||0)*0.00006;
+
+    stockBonus+=
+      (p.stocking||0)*0.0003;
+
+  });
 
 
-      customerBonus +=
-        (person.intelligence||0)
-        *0.00008;
-
-
-      customerBonus +=
-        (person.customerService||0)
-        *0.00006;
-
-
-    }
-  );
-
-
-  return {
+  return{
     incomeBonus,
-    customerBonus
+    customerBonus,
+    stockBonus
   };
 
 }
 
 
 /* =========================================================
-   INCOME
+   ECONOMY
 ========================================================= */
-
-function getIncome(){
-
-  let total=0;
-
-  game.stores.forEach(
-    shop=>{
-
-      let shopIncome=
-        shop.baseIncome+
-        ((shop.level-1)*10)+
-        ((shop.upgrades||0)*8);
-
-
-      const stock=
-        Math.max(
-          0,
-          Math.min(
-            1,
-            (shop.stock||0)/100
-          )
-        );
-
-
-      /*
-        Shops with stock still make money,
-        but poor stock reduces income.
-      */
-
-      const stockMultiplier=
-        0.5+
-        stock*0.5;
-
-
-      const conditionMultiplier=
-        0.7+
-        Math.max(
-          0,
-          Math.min(
-            1,
-            shop.condition/100
-          )
-        )*0.3;
-
-
-      total +=
-        shopIncome*
-        stockMultiplier*
-        conditionMultiplier;
-
-    }
-  );
-
-
-  const staff=
-    getStaffBonus();
-
-
-  total *=
-    1+
-    staff.incomeBonus;
-
-
-  return total;
-
-}
-
-
-/* =========================================================
-   CUSTOMER UPDATE
-========================================================= */
-
-function updateCustomers(seconds){
-
-  const staff=
-    getStaffBonus();
-
-
-  game.stores.forEach(
-    shop=>{
-
-      const stock=
-        Math.min(
-          1,
-          Math.max(
-            0,
-            (shop.stock||0)/100
-          )
-        );
-
-
-      const condition=
-        Math.min(
-          1,
-          Math.max(
-            0,
-            shop.condition/100
-          )
-        );
-
-
-      let growth=
-        (
-          .012+
-          staff.customerBonus+
-          stock*.007+
-          condition*.006
-        )*
-        seconds;
-
-
-      /*
-        A well stocked shop grows faster.
-      */
-
-      shop.customers+=
-        growth;
-
-
-      /*
-        Poor stock hurts customer numbers.
-      */
-
-      if(shop.stock<10){
-
-        shop.customers=
-          Math.max(
-            5,
-            shop.customers-
-            .01*
-            seconds
-          );
-
-      }
-
-    }
-  );
-
-
-  game.customers=
-    game.stores.reduce(
-      (sum,shop)=>
-        sum+shop.customers,
-      0
-    );
-
-}
-
-
-/* =========================================================
-   STOCK
-========================================================= */
-
-let deliveryTimer=0;
-
-function updateStock(seconds){
-
-  game.stores.forEach(
-    shop=>{
-
-      if(
-        typeof shop.stock!=="number"
-      )
-        shop.stock=100;
-
-
-      /*
-        Customers consume stock.
-      */
-
-      const consumption=
-        shop.customers*
-        .0022*
-        seconds;
-
-
-      shop.stock=
-        Math.max(
-          0,
-          shop.stock-
-          consumption
-        );
-
-    }
-  );
-
-
-  deliveryTimer+=seconds;
-
-
-  if(deliveryTimer>=45){
-
-    deliveryTimer=0;
-
-    game.stores.forEach(
-      shop=>{
-
-        shop.stock=
-          Math.min(
-            shop.maxStock||100,
-            (shop.stock||0)+35
-          );
-
-      }
-    );
-
-
-    createDeliveryVan();
-
-    toast(
-      "🚚 Your delivery has arrived!"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   STAFF PANEL
-========================================================= */
-
-function openStaff(){
-
-  let html=
-    "<h2>👷 Your Staff</h2>";
-
-  html+=
-    "<p>Good employees improve your stores.</p>";
-
-
-  if(game.staff.length===0){
-
-    html+=
-      "<p>No employees hired yet.</p>";
-
-  }
-
-
-  game.staff.forEach(
-    person=>{
-
-      html+=`
-
-        <div class="staffCard">
-
-          <strong>${person.name}</strong>
-
-          Age: ${person.age}<br>
-
-          Intelligence:
-          ${person.intelligence}<br>
-
-          Management:
-          ${person.management}<br>
-
-          Stocking:
-          ${person.stocking}<br>
-
-          Customer Service:
-          ${person.customerService}<br>
-
-          Problem Solving:
-          ${person.problemSolving}<br>
-
-          ⭐ ${person.trait}
-
-        </div>
-
-      `;
-
-    }
-  );
-
-
-  const alreadyHasAdam=
-    game.staff.some(
-      p=>p.name==="Adam"
-    );
-
-
-  if(!alreadyHasAdam){
-
-    html+=`
-
-      <button
-        class="actionButton green"
-        onclick="hireAdam()"
-      >
-        👨‍💼 Hire Adam — £1,000
-      </button>
-
-    `;
-
-  }else{
-
-    html+=
-      "<p>Adam is already working for you.</p>";
-
-  }
-
-
-  openPanel(html);
-
-}
-
-
-function hireAdam(){
-
-  if(game.cash<1000){
-
-    toast(
-      "❌ You need £1,000."
-    );
-
-    return;
-
-  }
-
-
-  game.cash-=1000;
-
-  game.staff.push({
-    ...ADAM
-  });
-
-
-  saveGame();
-
-  render();
-
-  openStaff();
-
-  toast(
-    "👨‍💼 Adam joined your company!"
-  );
-
-}
-
-
-/* =========================================================
-   SHOP PANEL
-========================================================= */
-
-function openShop(index){
-
-  if(!game.stores[index])
-    return;
-
-
-  game.selectedShop=
-    index;
-
-
-  const shop=
-    game.stores[index];
-
-
-  const income=
-    getShopIncome(shop);
-
-
-  const upgradeCost=
-    1000+
-    shop.level*850+
-    (shop.upgrades||0)*700;
-
-
-  const stock=
-    Math.floor(
-      shop.stock||0
-    );
-
-
-  let html=`
-
-    <h2>🏪 ${shop.name}</h2>
-
-    <div class="statGrid">
-
-      <div class="miniStat">
-        <small>LEVEL</small>
-        <b>${shop.level}</b>
-      </div>
-
-      <div class="miniStat">
-        <small>INCOME</small>
-        <b>£${income.toFixed(1)}/s</b>
-      </div>
-
-      <div class="miniStat">
-        <small>CUSTOMERS</small>
-        <b>${Math.floor(shop.customers)}</b>
-      </div>
-
-      <div class="miniStat">
-        <small>CONDITION</small>
-        <b>${Math.floor(shop.condition)}%</b>
-      </div>
-
-      <div class="miniStat">
-        <small>STOCK</small>
-        <b>${stock}%</b>
-      </div>
-
-      <div class="miniStat">
-        <small>UPGRADES</small>
-        <b>${shop.upgrades||0}</b>
-      </div>
-
-    </div>
-
-    <button
-      class="actionButton"
-      onclick="upgradeShop(${index})"
-    >
-      ⬆️ Upgrade — £${upgradeCost.toLocaleString()}
-    </button>
-
-    <button
-      class="actionButton green"
-      onclick="renovateShop(${index})"
-    >
-      🔨 Renovate — £750
-    </button>
-
-    <button
-      class="actionButton blue"
-      onclick="advertiseShop(${index})"
-    >
-      📢 Advertise — £500
-    </button>
-
-    <button
-      class="actionButton"
-      onclick="orderStock(${index})"
-    >
-      📦 Order Stock — £250
-    </button>
-
-  `;
-
-
-  openPanel(html);
-
-}
-
 
 function getShopIncome(shop){
 
   let income=
+
     shop.baseIncome+
+
     ((shop.level-1)*10)+
+
     ((shop.upgrades||0)*8);
 
 
-  const stock=
-    Math.max(
-      0,
-      Math.min(
-        1,
-        (shop.stock||0)/100
-      )
-    );
+  const stock=Math.max(
+    0,
+    Math.min(
+      1,
+      (shop.stock||0)/100
+    )
+  );
 
 
   const stockMultiplier=
-    .5+
-    stock*.5;
+    0.5+(stock*0.5);
 
 
   const condition=
-    .7+
+    0.7+
     Math.max(
       0,
       Math.min(
         1,
         shop.condition/100
       )
-    )*.3;
-
-
-  return income*
-    stockMultiplier*
-    condition;
-
-}
-
-
-function upgradeShop(index){
-
-  const shop=
-    game.stores[index];
-
-  if(!shop)
-    return;
-
-
-  const cost=
-    1000+
-    shop.level*850+
-    (shop.upgrades||0)*700;
-
-
-  if(game.cash<cost){
-
-    toast(
-      "❌ Not enough cash."
-    );
-
-    return;
-
-  }
-
-
-  game.cash-=cost;
-
-  shop.level++;
-
-  shop.upgrades++;
-
-  shop.condition=
-    Math.min(
-      100,
-      shop.condition+8
-    );
-
-  shop.customers+=
-    10;
-
-  shop.stock=
-    Math.min(
-      100,
-      (shop.stock||0)+15
-    );
-
-  game.reputation+=2;
-
-
-  saveGame();
-
-  render();
-
-  openShop(index);
-
-  toast(
-    "⬆️ "+shop.name+" upgraded!"
-  );
-
-}
-
-
-function renovateShop(index){
-
-  const shop=
-    game.stores[index];
-
-
-  if(game.cash<750){
-
-    toast(
-      "❌ You need £750."
-    );
-
-    return;
-
-  }
-
-
-  game.cash-=750;
-
-  shop.condition=
-    Math.min(
-      100,
-      shop.condition+20
-    );
-
-  shop.customers+=5;
-
-  game.reputation+=2;
-
-
-  saveGame();
-
-  render();
-
-  openShop(index);
-
-  toast(
-    "🔨 "+shop.name+" renovated!"
-  );
-
-}
-
-
-function advertiseShop(index){
-
-  if(game.cash<500){
-
-    toast(
-      "❌ You need £500."
-    );
-
-    return;
-
-  }
-
-
-  game.cash-=500;
-
-  game.stores[index].customers+=10;
-
-  game.marketShare=
-    Math.min(
-      100,
-      game.marketShare+.4
-    );
-
-  game.reputation+=1;
-
-
-  saveGame();
-
-  render();
-
-  openShop(index);
-
-  toast(
-    "📢 Advertising brought in customers!"
-  );
-
-}
-
-
-function orderStock(index){
-
-  if(game.cash<250){
-
-    toast(
-      "❌ You need £250."
-    );
-
-    return;
-
-  }
-
-
-  game.cash-=250;
-
-
-  game.stores[index].stock=
-    Math.min(
-      game.stores[index].maxStock||100,
-      (game.stores[index].stock||0)+35
-    );
-
-
-  saveGame();
-
-  render();
-
-  openShop(index);
-
-  toast(
-    "📦 Stock delivered!"
-  );
-
-}
-
-
-/* =========================================================
-   SHOP LIST
-========================================================= */
-
-function openShops(){
-
-  let html=
-    "<h2>🏪 Your Shops</h2>";
-
-  game.stores.forEach(
-    (shop,index)=>{
-
-      html+=`
-
-        <button
-          class="actionButton"
-          onclick="openShop(${index})"
-        >
-
-          ${shop.name}
-          —
-          Lv ${shop.level}
-          —
-          ${Math.floor(shop.customers)} customers
-
-        </button>
-
-      `;
-
-    }
-  );
-
-
-  openPanel(html);
-
-}
-
-
-/* =========================================================
-   PROPERTIES
-========================================================= */
-
-function openProperty(index){
-
-  const property=
-    game.properties[index];
-
-
-  if(!property)
-    return;
-
-
-  if(property.bought){
-
-    openShop(
-      property.storeIndex
-    );
-
-    return;
-
-  }
-
-
-  let html=`
-
-    <h2>🏚️ ${property.name}</h2>
-
-    <p>
-      This abandoned property can be
-      renovated and turned into one of
-      your shops.
-    </p>
-
-    <p>
-      Purchase price:
-      <b>£${property.price.toLocaleString()}</b>
-    </p>
-
-    <button
-      class="actionButton green"
-      onclick="buyProperty(${index})"
-    >
-      🏪 Buy & Rebuild
-      — £${property.price.toLocaleString()}
-    </button>
-
-  `;
-
-
-  openPanel(html);
-
-}
-
-
-function buyProperty(index){
-
-  const property=
-    game.properties[index];
-
-
-  if(!property)
-    return;
-
-
-  if(property.bought){
-
-    openShop(
-      property.storeIndex
-    );
-
-    return;
-
-  }
-
-
-  if(game.cash<property.price){
-
-    toast(
-      "❌ You need £"+
-      property.price.toLocaleString()
-    );
-
-    return;
-
-  }
-
-
-  game.cash-=
-    property.price;
-
-
-  const storeIndex=
-    game.stores.length;
-
-
-  game.stores.push({
-
-    name:
-      property.name+
-      " Mart",
-
-    level:1,
-
-    condition:45,
-
-    baseIncome:15,
-
-    customers:15,
-
-    upgrades:0,
-
-    stock:100,
-
-    maxStock:100
-
-  });
-
-
-  property.bought=true;
-
-  property.storeIndex=
-    storeIndex;
-
-
-  game.totalStores=
-    game.stores.length;
-
-  game.customers+=15;
-
-  game.reputation+=3;
-
-
-  saveGame();
-
-  render();
-
-  closePanel();
-
-  toast(
-    "🏪 You bought "+
-    property.name+
-    " and turned it into your shop!"
-  );
-
-}
-
-
-/* =========================================================
-   BUILDING RENDERING
-========================================================= */
-
-function renderBuildings(){
-
-  const ids=[
-    "shop1",
-    "shop2",
-    "shop3",
-    "shop4"
-  ];
-
-
-  /*
-    Main shop.
-  */
-
-  const first=
-    document.getElementById("shop1");
-
-
-  if(first){
-
-    first.querySelector(".sign")
-      .textContent=
-      game.stores[0]
-      ?game.stores[0].name
-      :"MY MART";
-
-
-    first.querySelector(".levelBadge")
-      .textContent=
-      "LV "+
-      (
-        game.stores[0]
-        ?game.stores[0].level
-        :1
-      );
-
-  }
-
-
-  /*
-    Properties.
-  */
-
-  game.properties.forEach(
-    (property,index)=>{
-
-      const el=
-        document.getElementById(
-          ids[index+1]
-        );
-
-
-      if(!el)
-        return;
-
-
-      if(property.bought){
-
-        const shop=
-          game.stores[
-            property.storeIndex
-          ];
-
-
-        el.classList.remove(
-          "abandonedBuilding"
-        );
-
-        el.classList.add(
-          "playerPurchased"
-        );
-
-        el.querySelector(".sign")
-          .textContent=
-          shop
-          ?shop.name
-          :property.name;
-
-
-        el.querySelector(".levelBadge")
-          .textContent=
-          "LV "+
-          (
-            shop
-            ?shop.level
-            :1
-          );
-
-
-        /*
-          IMPORTANT:
-          The building stays the same size,
-          so upgrades never push it into
-          the road.
-        */
-
-      }else{
-
-        el.classList.remove(
-          "playerPurchased"
-        );
-
-        el.classList.add(
-          "abandonedBuilding"
-        );
-
-
-        el.querySelector(".sign")
-          .textContent=
-          "£"+
-          property.price.toLocaleString();
-
-
-        el.querySelector(".levelBadge")
-          .textContent=
-          "FOR SALE";
-
-      }
-
-    }
-  );
-
-
-  renderStockBadges();
-
-}
-
-
-function renderStockBadges(){
-
-  game.stores.forEach(
-    (shop,index)=>{
-
-      let el=null;
-
-
-      if(index===0){
-
-        el=
-          document.getElementById(
-            "shop1"
-          );
-
-      }else{
-
-        const property=
-          game.properties.find(
-            p=>p.storeIndex===index
-          );
-
-
-        if(property){
-
-          const ids=[
-            "shop2",
-            "shop3",
-            "shop4"
-          ];
-
-
-          el=
-            document.getElementById(
-              ids[
-                game.properties.indexOf(
-                  property
-                )
-              ]
-            );
-
-        }
-
-      }
-
-
-      if(!el)
-        return;
-
-
-      let badge=
-        el.querySelector(
-          ".stockBadge"
-        );
-
-
-      if(!badge){
-
-        badge=
-          document.createElement("div");
-
-        badge.className=
-          "stockBadge";
-
-        el.appendChild(
-          badge
-        );
-
-      }
-
-
-      badge.textContent=
-        "📦 "+
-        Math.floor(
-          shop.stock||0
-        )+
-        "% stock";
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   RIVAL AI
-========================================================= */
-
-function rivalAI(){
-
-  const health=
-    game.rival.health;
-
-
-  if(health>75){
-
-    game.rival.stage=
-      "HEALTHY";
-
-  }else if(health>50){
-
-    game.rival.stage=
-      "UNDER PRESSURE";
-
-  }else if(health>30){
-
-    game.rival.stage=
-      "STRUGGLING";
-
-  }else if(health>10){
-
-    game.rival.stage=
-      "DISTRESSED";
-
-  }else{
-
-    game.rival.stage=
-      "FOR SALE";
-
-  }
-
-
-  const maximum=
-    Math.floor(
-      220*
-      health/
-      100
-    );
-
-
-  game.rival.customers=
-    Math.min(
-      game.rival.customers,
-      maximum
-    );
-
-
-  if(
-    game.rival.health<=0
-  ){
-
-    game.rival.customers=0;
-
-  }
-
-}
-
-
-/* =========================================================
-   RIVAL DISPLAY
-========================================================= */
-
-function renderRival(){
-
-  const el=
-    document.getElementById(
-      "rivalCustomerLabel"
-    );
-
-
-  if(!el)
-    return;
-
-
-  el.textContent=
-    "🔴 "+
-    Math.floor(
-      game.rival.customers
-    )+
-    " CUSTOMERS";
-
-}
-
-
-function openRival(){
-
-  rivalAI();
-
-
-  let statusClass=
-    game.rival.stage==="FOR SALE"
-    ?"red"
-    :"";
-
-
-  let html=`
-
-    <h2>⚔️ ${game.rival.name}</h2>
-
-    <div class="statGrid">
-
-      <div class="miniStat">
-        <small>STATUS</small>
-        <b>${game.rival.stage}</b>
-      </div>
-
-      <div class="miniStat">
-        <small>CUSTOMERS</small>
-        <b>${Math.floor(game.rival.customers)}</b>
-      </div>
-
-      <div class="miniStat">
-        <small>HEALTH</small>
-        <b>${Math.floor(game.rival.health)}%</b>
-      </div>
-
-      <div class="miniStat">
-        <small>MARKET</small>
-        <b>${game.rival.marketShare.toFixed(1)}%</b>
-      </div>
-
-    </div>
-
-    <p>
-      Attack King's Mart to steal customers
-      and damage their business.
-    </p>
-
-    <button
-      class="actionButton red"
-      onclick="attackRival()"
-    >
-      ⚔️ Attack King's Mart
-    </button>
-
-  `;
-
-
-  if(
-    game.rival.stage==="FOR SALE"
-  ){
-
-    html+=`
-
-      <button
-        class="actionButton green"
-        onclick="buyRival()"
-      >
-        👑 Buy King's Mart
-        — £9,000
-      </button>
-
-    `;
-
-  }
-
-
-  openPanel(html);
-
-}
-
-
-function attackRival(){
-
-  if(
-    game.rival.customers<=0 ||
-    game.rival.health<=0
-  ){
-
-    toast(
-      "King's Mart is already finished!"
-    );
-
-    return;
-
-  }
-
-
-  const loss=
-    Math.floor(
-      10+
-      Math.random()*9
-    );
-
-
-  game.rival.customers=
-    Math.max(
-      0,
-      game.rival.customers-
-      loss
-    );
-
-
-  game.rival.health=
-    Math.max(
-      0,
-      game.rival.health-7
-    );
-
-
-  game.rival.marketShare=
-    Math.max(
-      0,
-      game.rival.marketShare-.65
-    );
-
-
-  game.marketShare=
-    Math.min(
-      100,
-      game.marketShare+.5
-    );
-
-
-  game.customers+=
-    Math.floor(
-      loss*.65
-    );
-
-
-  game.reputation+=1;
-
-
-  rivalAI();
-
-  saveGame();
-
-  render();
-
-  createPeople();
-
-  openRival();
-
-
-  toast(
-    "⚔️ King's Mart lost "+
-    loss+
-    " customers!"
-  );
-
-}
-
-
-function buyRival(){
-
-  if(
-    game.rival.stage!=="FOR SALE"
-  ){
-
-    toast(
-      "❌ King's Mart isn't for sale yet."
-    );
-
-    return;
-
-  }
-
-
-  if(game.cash<9000){
-
-    toast(
-      "❌ You need £9,000."
-    );
-
-    return;
-
-  }
-
-
-  game.cash-=9000;
-
-  game.rival.customers=0;
-
-  game.rival.health=0;
-
-  game.rival.marketShare=0;
-
-  game.marketShare=
-    Math.min(
-      100,
-      game.marketShare+12
-    );
-
-  game.reputation+=10;
-
-
-  saveGame();
-
-  render();
-
-  createPeople();
-
-  closePanel();
-
-
-  toast(
-    "👑 You bought King's Mart!"
-  );
-
-}
-
-
-/* =========================================================
-   COMPANY
-========================================================= */
-
-function openCompany(){
-
-  let html=`
-
-    <h2>🏢 Your Company</h2>
-
-    <p>
-      Rename your company and build
-      your own retail empire.
-    </p>
-
-    <input
-      id="companyInput"
-      class="input"
-      maxlength="28"
-      value="${escapeHtml(game.company)}"
-      placeholder="Company name"
-    >
-
-    <button
-      class="actionButton green"
-      onclick="saveCompanyName()"
-    >
-      💾 Save Company Name
-    </button>
-
-    <div class="statGrid">
-
-      <div class="miniStat">
-        <small>STORES</small>
-        <b>${game.stores.length}</b>
-      </div>
-
-      <div class="miniStat">
-        <small>REPUTATION</small>
-        <b>${Math.floor(game.reputation)}</b>
-      </div>
-
-      <div class="miniStat">
-        <small>MARKET SHARE</small>
-        <b>${game.marketShare.toFixed(1)}%</b>
-      </div>
-
-      <div class="miniStat">
-        <small>EMPLOYEES</small>
-        <b>${game.staff.length}</b>
-      </div>
-
-    </div>
-
-    <button
-      class="actionButton"
-      onclick="saveGame();toast('💾 Game saved!')"
-    >
-      💾 Save Game
-    </button>
-
-  `;
-
-
-  openPanel(html);
-
-}
-
-
-function saveCompanyName(){
-
-  const input=
-    document.getElementById(
-      "companyInput"
-    );
-
-
-  if(!input)
-    return;
-
-
-  const name=
-    input.value.trim();
-
-
-  if(!name){
-
-    toast(
-      "❌ Enter a company name."
-    );
-
-    return;
-
-  }
-
-
-  game.company=
-    name;
-
-
-  saveGame();
-
-  render();
-
-  openCompany();
-
-
-  toast(
-    "🏢 Company renamed!"
-  );
-
-}
-
-
-/* =========================================================
-   CITY
-========================================================= */
-
-function showCity(){
-
-  closePanel();
-
-  toast(
-    "🗺️ Tap your shops, abandoned buildings or King's Mart."
-  );
-
-}
-
-
-/* =========================================================
-   PANEL
-========================================================= */
-
-function openPanel(html){
-
-  document.getElementById(
-    "panelContent"
-  ).innerHTML=html;
-
-
-  document.getElementById(
-    "panel"
-  ).classList.add(
-    "open"
-  );
-
-}
-
-
-function closePanel(){
-
-  document.getElementById(
-    "panel"
-  ).classList.remove(
-    "open"
-  );
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let toastTimer=null;
-
-function toast(message){
-
-  const el=
-    document.getElementById(
-      "toast"
-    );
-
-
-  el.textContent=
-    message;
-
-
-  el.classList.add(
-    "show"
-  );
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer=
-    setTimeout(
-      ()=>{
-        el.classList.remove(
-          "show"
-        );
-      },
-      2800
-    );
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHtml(text){
-
-  return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-/* =========================================================
-   PEOPLE
-   REAL PATH NETWORK
-========================================================= */
-
-const playerRoutes=[
-
-  [
-    [4,30],
-    [12,30],
-    [20,30],
-    [29,30],
-    [37,30],
-    [47,30],
-    [51,30],
-    [51,47],
-    [47,47],
-    [37,47],
-    [29,47],
-    [20,47],
-    [12,47],
-    [4,47]
-  ],
-
-  [
-    [12,30],
-    [12,47],
-    [12,59],
-    [12,75],
-    [12,87],
-    [25,87],
-    [37,87],
-    [49,87]
-  ],
-
-  [
-    [29,30],
-    [29,40],
-    [29,47],
-    [29,59],
-    [29,68],
-    [29,87]
-  ],
-
-  [
-    [47,30],
-    [47,47],
-    [47,59],
-    [47,78],
-    [47,87]
-  ],
-
-  [
-    [4,87],
-    [12,87],
-    [22,87],
-    [31,87],
-    [40,87],
-    [49,87]
-  ]
-
-];
-
-
-const rivalRoutes=[
-
-  [
-    [72,38],
-    [80,38],
-    [89,38],
-    [96,38]
-  ],
-
-  [
-    [74,55],
-    [82,55],
-    [89,55],
-    [96,55]
-  ],
-
-  [
-    [74,79],
-    [82,79],
-    [89,79],
-    [96,79]
-  ],
-
-  [
-    [76,38],
-    [76,55],
-    [76,79]
-  ],
-
-  [
-    [89,38],
-    [89,55],
-    [89,79]
-  ]
-
-];
-
-
-function createPeople(){
-
-  const layer=
-    document.getElementById(
-      "peopleLayer"
-    );
-
-
-  layer.innerHTML="";
-
-
-  /*
-    Keep visible customers sensible.
-  */
-
-  const playerCount=
-    Math.min(
-      18,
-      Math.max(
-        7,
-        Math.floor(
-          game.customers/12
-        )
-      )
-    );
-
-
-  for(
-    let i=0;
-    i<playerCount;
-    i++
-  ){
-
-    const route=
-      playerRoutes[
-        i%playerRoutes.length
-      ];
-
-
-    const person=
-      document.createElement(
-        "div"
-      );
-
-
-    person.className=
-      "person";
-
-
-    person.dataset.route=
-      i%playerRoutes.length;
-
-
-    person.route=
-      route;
-
-
-    person.point=
-      Math.floor(
-        Math.random()*
-        route.length
-      );
-
-
-    const start=
-      route[
-        person.point
-      ];
-
-
-    person.style.left=
-      start[0]+"%";
-
-    person.style.top=
-      start[1]+"%";
-
-
-    layer.appendChild(
-      person
-    );
-
-
-    setTimeout(
-      ()=>{
-        movePerson(person);
-      },
-      Math.random()*3000
-    );
-
-  }
-
-
-  /*
-    Rival customers are deliberately
-    limited visually.
-  */
-
-  const rivalCount=
-    Math.min(
-      5,
-      Math.max(
-        1,
-        Math.ceil(
-          game.rival.customers/70
-        )
-      )
-    );
-
-
-  for(
-    let i=0;
-    i<rivalCount;
-    i++
-  ){
-
-    const route=
-      rivalRoutes[
-        i%rivalRoutes.length
-      ];
-
-
-    const person=
-      document.createElement(
-        "div"
-      );
-
-
-    person.className=
-      "person red";
-
-
-    person.route=
-      route;
-
-
-    person.point=
-      Math.floor(
-        Math.random()*
-        route.length
-      );
-
-
-    const start=
-      route[
-        person.point
-      ];
-
-
-    person.style.left=
-      start[0]+"%";
-
-    person.style.top=
-      start[1]+"%";
-
-
-    layer.appendChild(
-      person
-    );
-
-
-    setTimeout(
-      ()=>{
-        movePerson(person);
-      },
-      Math.random()*5000
-    );
-
-  }
-
-}
-
-
-function movePerson(person){
-
-  if(!person.route)
-    return;
-
-
-  person.point=
-    (person.point+1)%
-    person.route.length;
-
-
-  const target=
-    person.route[
-      person.point
-    ];
-
-
-  /*
-    Slow pedestrians.
-  */
-
-  person.style.transition=
-    "left 9s linear, top 9s linear";
-
-
-  person.style.left=
-    target[0]+"%";
-
-  person.style.top=
-    target[1]+"%";
-
-
-  /*
-    Pause naturally at junctions.
-  */
-
-  const pause=
-    8500+
-    Math.random()*4500;
-
-
-  setTimeout(
-    ()=>{
-      movePerson(person);
-    },
-    pause
-  );
-
-}
-
-
-/* =========================================================
-   TRAFFIC
-========================================================= */
-
-/*
-  Traffic stays on road centre lines.
-  The roundabout route uses multiple points
-  to create a curved circular movement.
-*/
-
-const trafficRoutes=[
-
-  /* roundabout route */
-  [
-    [5,20],
-    [16,20],
-    [22,20],
-    [25,25],
-    [27,32],
-    [29,36],
-    [33,37],
-    [36,42],
-    [37,47],
-    [36,52],
-    [33,57],
-    [29,59],
-    [25,58],
-    [22,53],
-    [21,48],
-    [22,43],
-    [25,38],
-    [29,36],
-    [34,37],
-    [37,43],
-    [38,51],
-    [51,51],
-    [67,51],
-    [76,51],
-    [89,51],
-    [98,51]
-  ],
-
-  /* main horizontal */
-  [
-    [2,51],
-    [16,51],
-    [28,51],
-    [38,51],
-    [51,51],
-    [67,51],
-    [76,51],
-    [89,51],
-    [98,51]
-  ],
-
-  /* vertical player road */
-  [
-    [16,87],
-    [16,78],
-    [16,51],
-    [16,20],
-    [16,8],
-    [16,87]
-  ],
-
-  /* second player road */
-  [
-    [38,87],
-    [38,78],
-    [38,51],
-    [38,20],
-    [38,8],
-    [38,87]
-  ],
-
-  /* rival vertical */
-  [
-    [76,88],
-    [76,78],
-    [76,51],
-    [76,20],
-    [76,8],
-    [76,88]
-  ],
-
-  /* rival vertical */
-  [
-    [89,8],
-    [89,20],
-    [89,51],
-    [89,78],
-    [89,88],
-    [89,8]
-  ],
-
-  /* bridge route */
-  [
-    [51,20],
-    [58,20],
-    [67,20],
-    [76,20],
-    [76,51],
-    [67,51],
-    [58,51],
-    [51,51]
-  ],
-
-  /* lower roads */
-  [
-    [3,78],
-    [16,78],
-    [28,78],
-    [38,78],
-    [51,78],
-    [67,78],
-    [76,78],
-    [89,78],
-    [98,78]
-  ]
-
-];
-
-
-let cars=[];
-
-
-function createCars(){
-
-  const layer=
-    document.getElementById(
-      "carsLayer"
-    );
-
-
-  layer.innerHTML="";
-
-  cars=[];
-
-
-  trafficRoutes.forEach(
-    (route,index)=>{
-
-      /*
-        Some routes get two cars.
-      */
-
-      const number=
-        index===1||
-        index===7
-        ?2
-        :1;
-
-
-      for(
-        let n=0;
-        n<number;
-        n++
-      ){
-
-        const car=
-          document.createElement(
-            "div"
-          );
-
-
-        car.className=
-          "car "+
-          (
-            index%3===0
-            ?"blueCar"
-            :index%3===1
-            ?"yellowCar"
-            :""
-          );
-
-
-        layer.appendChild(
-          car
-        );
-
-
-        cars.push({
-
-          element:car,
-
-          route:route,
-
-          progress:
-            (
-              Math.random()*
-              (route.length-1)
-            ),
-
-          speed:
-            .0016+
-            Math.random()*.0013
-
-        });
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   BUILDING COLLISION
-========================================================= */
-
-function getSolidBuildingRects(){
-
-  const world=
-    document.getElementById(
-      "world"
-    );
-
-
-  const worldRect=
-    world.getBoundingClientRect();
-
-
-  const ids=[
-    "shop1",
-    "shop2",
-    "shop3",
-    "shop4",
-    "kingsHQ",
-    "kingsExpress"
-  ];
-
-
-  return ids
-    .map(
-      id=>
-        document.getElementById(id)
-    )
-    .filter(Boolean)
-    .map(
-      el=>{
-
-        const r=
-          el.getBoundingClientRect();
-
-
-        return {
-
-          left:
-            (r.left-worldRect.left)/
-            worldRect.width*
-            100,
-
-          right:
-            (r.right-worldRect.left)/
-            worldRect.width*
-            100,
-
-          top:
-            (r.top-worldRect.top)/
-            worldRect.height*
-            100,
-
-          bottom:
-            (r.bottom-worldRect.top)/
-            worldRect.height*
-            100
-
-        };
-
-      }
-    );
-
-}
-
-
-function carHitsBuilding(
-  x,
-  y
-){
-
-  const rects=
-    getSolidBuildingRects();
-
-
-  /*
-    Small safety margin around buildings.
-  */
-
-  const paddingX=1.3;
-  const paddingY=1.3;
-
-
-  return rects.some(
-    rect=>{
-
-      return (
-        x>
-          rect.left-paddingX&&
-
-        x<
-          rect.right+paddingX&&
-
-        y>
-          rect.top-paddingY&&
-
-        y<
-          rect.bottom+paddingY
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   CAR-TO-CAR TRAFFIC
-========================================================= */
-
-function trafficTooClose(
-  currentCar,
-  x,
-  y
-){
-
-  for(
-    const other of cars
-  ){
-
-    if(
-      other===currentCar
-    )
-      continue;
-
-
-    const index=
-      Math.floor(
-        other.progress
-      );
-
-
-    const a=
-      other.route[
-        Math.min(
-          index,
-          other.route.length-1
-        )
-      ];
-
-
-    if(!a)
-      continue;
-
-
-    const dx=
-      a[0]-x;
-
-    const dy=
-      a[1]-y;
-
-
-    const distance=
-      Math.sqrt(
-        dx*dx+
-        dy*dy
-      );
-
-
-    if(distance<2.4)
-      return true;
-
-  }
-
-
-  return false;
-
-}
-
-
-/* =========================================================
-   UPDATE CARS
-========================================================= */
-
-function updateCars(){
-
-  cars.forEach(
-    car=>{
-
-      let speed=
-        car.speed;
-
-
-      const index=
-        Math.floor(
-          car.progress
-        );
-
-
-      const next=
-        Math.min(
-          index+1,
-          car.route.length-1
-        );
-
-
-      const amount=
-        car.progress-index;
-
-
-      const a=
-        car.route[index];
-
-      const b=
-        car.route[next];
-
-
-      if(!a||!b)
-        return;
-
-
-      const x=
-        a[0]+
-        (b[0]-a[0])*
-        amount;
-
-
-      const y=
-        a[1]+
-        (b[1]-a[1])*
-        amount;
-
-
-      /*
-        Cars slow down when another car
-        is in front of them.
-      */
-
-      if(
-        trafficTooClose(
-          car,
-          x,
-          y
-        )
-      ){
-
-        speed*=.25;
-
-      }
-
-
-      /*
-        Building collision protection.
-      */
-
-      const nextProgress=
-        car.progress+
-        speed;
-
-
-      const testIndex=
-        Math.floor(
-          nextProgress
-        );
-
-
-      const testNext=
-        Math.min(
-          testIndex+1,
-          car.route.length-1
-        );
-
-
-      const testAmount=
-        nextProgress-testIndex;
-
-
-      const testA=
-        car.route[testIndex];
-
-
-      const testB=
-        car.route[testNext];
-
-
-      if(testA&&testB){
-
-        const testX=
-          testA[0]+
-          (testB[0]-testA[0])*
-          testAmount;
-
-
-        const testY=
-          testA[1]+
-          (testB[1]-testA[1])*
-          testAmount;
-
-
-        if(
-          carHitsBuilding(
-            testX,
-            testY
-          )
-        ){
-
-          speed=0;
-
-        }
-
-      }
-
-
-      car.progress+=
-        speed;
-
-
-      if(
-        car.progress>=
-        car.route.length-1
-      ){
-
-        car.progress=0;
-
-      }
-
-
-      const finalIndex=
-        Math.floor(
-          car.progress
-        );
-
-
-      const finalNext=
-        Math.min(
-          finalIndex+1,
-          car.route.length-1
-        );
-
-
-      const finalAmount=
-        car.progress-
-        finalIndex;
-
-
-      const finalA=
-        car.route[
-          finalIndex
-        ];
-
-      const finalB=
-        car.route[
-          finalNext
-        ];
-
-
-      if(!finalA||!finalB)
-        return;
-
-
-      const finalX=
-        finalA[0]+
-        (finalB[0]-finalA[0])*
-        finalAmount;
-
-
-      const finalY=
-        finalA[1]+
-        (finalB[1]-finalA[1])*
-        finalAmount;
-
-
-      if(
-        carHitsBuilding(
-          finalX,
-          finalY
-        )
-      ){
-
-        return;
-
-      }
-
-
-      car.element.style.left=
-        finalX+"%";
-
-      car.element.style.top=
-        finalY+"%";
-
-
-      const dx=
-        finalB[0]-
-        finalA[0];
-
-      const dy=
-        finalB[1]-
-        finalA[1];
-
-
-      let angle=0;
-
-
-      if(
-        Math.abs(dx)>
-        Math.abs(dy)
-      ){
-
-        angle=
-          dx>=0
-          ?0
-          :180;
-
-      }else{
-
-        angle=
-          dy>=0
-          ?90
-          :-90;
-
-      }
-
-
-      car.element.style.transform=
-        "translate(-50%,-50%) rotate("+
-        angle+
-        "deg)";
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   DELIVERY VAN
-========================================================= */
-
-function createDeliveryVan(){
-
-  const layer=
-    document.getElementById(
-      "deliveryLayer"
-    );
-
-
-  const van=
-    document.createElement(
-      "div"
-    );
-
-
-  van.className=
-    "deliveryVan";
-
-
-  layer.appendChild(
-    van
-  );
-
-
-  let progress=0;
-
-
-  const route=[
-    [3,51],
-    [16,51],
-    [28,51],
-    [38,51],
-    [51,51]
-  ];
-
-
-  function move(){
-
-    progress+=.012;
-
-
-    if(
-      progress>=
-      route.length-1
-    ){
-
-      van.remove();
-
-      return;
-
-    }
-
-
-    const i=
-      Math.floor(
-        progress
-      );
-
-
-    const next=
-      Math.min(
-        i+1,
-        route.length-1
-      );
-
-
-    const amount=
-      progress-i;
-
-
-    const a=
-      route[i];
-
-    const b=
-      route[next];
-
-
-    const x=
-      a[0]+
-      (b[0]-a[0])*
-      amount;
-
-
-    const y=
-      a[1]+
-      (b[1]-a[1])*
-      amount;
-
-
-    van.style.left=
-      x+"%";
-
-    van.style.top=
-      y+"%";
-
-
-    requestAnimationFrame(
-      move
-    );
-
-  }
-
-
-  move();
-
-}
-
-
-/* =========================================================
-   RANDOM EVENTS
-========================================================= */
-
-function randomEvent(){
-
-  if(
-    Math.random()>.12
-  )
-    return;
-
-
-  const events=[
-
-    {
-      text:
-        "🛍️ Shopping boom! Customers flood the city.",
-      cash:500,
-      customers:15
-    },
-
-    {
-      text:
-        "🚚 Supplier discount! Your delivery was cheap.",
-      cash:300,
-      customers:8
-    },
-
-    {
-      text:
-        "📺 Your shop appeared on TV!",
-      cash:250,
-      customers:12
-    },
-
-    {
-      text:
-        "⚡ Electricity bill!",
-      cash:-150,
-      customers:-4
-    },
-
-    {
-      text:
-        "🎉 City festival!",
-      cash:700,
-      customers:20
-    }
-
-  ];
-
-
-  const event=
-    events[
-      Math.floor(
-        Math.random()*
-        events.length
-      )
-    ];
-
-
-  game.cash+=
-    event.cash;
-
-
-  game.customers=
-    Math.max(
-      0,
-      game.customers+
-      event.customers
-    );
-
-
-  game.stores.forEach(
-    shop=>{
-      shop.customers=
-        Math.max(
-          1,
-          shop.customers+
-          event.customers/
-          Math.max(
-            1,
-            game.stores.length
-          )
-        );
-    }
-  );
-
-
-  saveGame();
-
-  render();
-
-  toast(
-    event.text
-  );
-
-}
-
-
-/* =========================================================
-   GAME LOOP
-========================================================= */
-
-let lastLoop=
-  Date.now();
-
-
-function gameLoop(){
-
-  const now=
-    Date.now();
-
-
-  const seconds=
-    Math.min(
-      1,
-      (now-lastLoop)/1000
-    );
-
-
-  lastLoop=
-    now;
-
-
-  /*
-    Idle income.
-  */
-
-  game.cash+=
-    getIncome()*
-    seconds;
-
-
-  /*
-    Individual customer growth.
-  */
-
-  updateCustomers(
-    seconds
-  );
-
-
-  /*
-    Stock consumption and deliveries.
-  */
-
-  updateStock(
-    seconds
-  );
-
-
-  /*
-    Rival can weaken naturally
-    when you dominate the market.
-  */
-
-  if(
-    game.marketShare>12&&
-    game.rival.health>0
-  ){
-
-    game.rival.health=
-      Math.max(
-        0,
-        game.rival.health-
-        .0009*
-        seconds
-      );
-
-  }
-
-
-  /*
-    Rival customers slowly recover
-    while healthy.
-  */
-
-  if(
-    game.rival.health>50&&
-    game.rival.customers<220
-  ){
-
-    game.rival.customers=
-      Math.min(
-        220,
-        game.rival.customers+
-        .008*
-        seconds
-      );
-
-  }
-
-
-  rivalAI();
-
-  updateCars();
-
-  renderRival();
-
-}
-
-
-/* =========================================================
-   RENDER HUD
-========================================================= */
-
-function render(){
-
-  document.getElementById(
-    "companyName"
-  ).textContent=
-    game.company;
-
-
-  document.getElementById(
-    "cash"
-  ).textContent=
-    "£"+
-    Math.floor(
-      game.cash
-    ).toLocaleString();
-
-
-  document.getElementById(
-    "income"
-  ).textContent=
-    "£"+
-    getIncome().toFixed(1)+
-    "/s";
-
-
-  document.getElementById(
-    "customers"
-  ).textContent=
-    Math.floor(
-      game.customers
-    );
-
-
-  document.getElementById(
-    "market"
-  ).textContent=
-    game.marketShare.toFixed(1)+
-    "%";
-
-
-  document.getElementById(
-    "reputation"
-  ).textContent=
-    Math.floor(
-      game.reputation
-    );
-
-
-  renderBuildings();
-
-  renderRival();
-
-}
-
-
-/* =========================================================
-   STARTUP
-========================================================= */
-
-function startGame(){
-
-  loadGame();
-
-  offlineIncome();
-
-  rivalAI();
-
-  render();
-
-  createCars();
-
-  createPeople();
-
-  saveGame();
-
-
-  /*
-    Re-render after offline calculation.
-  */
-
-  setTimeout(
-    ()=>{
-      render();
-      createPeople();
-    },
-    600
-  );
-
-
-  toast(
-    "👑 Welcome to King's Mart Tycoon!"
-  );
-
-}
-
-
-/* =========================================================
-   TIMERS
-========================================================= */
-
-setInterval(
-  ()=>{
-    createPeople();
-  },
-  22000
-);
-
-
-setInterval(
-  ()=>{
-    randomEvent();
-  },
-  30000
-);
-
-
-setInterval(
-  ()=>{
-    saveGame();
-  },
-  5000
-);
-
-
-setInterval(
-  ()=>{
-    render();
-  },
-  1000
-);
-
-
-/* =========================================================
-   START
-========================================================= */
-
-startGame();
-
-setInterval(
-  gameLoop,
-  33
-);
-
-</script>
-
-</body>
-</html>
+    )*0.3;

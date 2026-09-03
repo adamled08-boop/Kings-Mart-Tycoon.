@@ -6,12 +6,43 @@
 <title>King's Mart Tycoon</title>
 
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,Helvetica,sans-serif;background:#101820;color:#fff;}
-button{font:inherit;border:0;cursor:pointer;}
-#game{position:fixed;inset:0;display:flex;flex-direction:column;background:#101820;}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-/* TOP HUD */
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#101820;
+  color:#fff;
+}
+
+button{
+  font:inherit;
+  border:0;
+  cursor:pointer;
+}
+
+/* =========================================================
+   GAME
+========================================================= */
+
+#game{
+  position:fixed;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  background:#101820;
+}
+
+/* =========================================================
+   TOP HUD
+========================================================= */
+
 #topBar{
   height:58px;
   flex-shrink:0;
@@ -24,62 +55,186 @@ button{font:inherit;border:0;cursor:pointer;}
   z-index:1000;
   overflow:hidden;
 }
+
 .logo{
-  width:44px;height:44px;flex-shrink:0;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
+  width:44px;
+  height:44px;
+  flex-shrink:0;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   background:linear-gradient(145deg,#f6ca43,#c48b19);
-  color:#3d2a06;font-size:25px;
+  color:#3d2a06;
+  font-size:25px;
   box-shadow:inset 0 2px #fff8,0 3px 8px #0008;
   user-select:none;
 }
-.companyTitle{min-width:100px;max-width:180px;overflow:hidden;}
-.companyTitle b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.companyTitle small{color:#9eafb7;font-size:9px;}
-.stats{margin-left:auto;display:flex;gap:7px;align-items:center;}
-.stat{
-  min-width:74px;padding:5px 8px;border-radius:8px;
-  background:#111a1f;border:1px solid #42545e;
-  text-align:center;box-shadow:inset 0 1px #fff1;
-}
-.stat span{display:block;color:#91a5ae;font-size:8px;text-transform:uppercase;}
-.stat strong{display:block;margin-top:2px;font-size:12px;}
 
-/* WORLD */
+.companyTitle{
+  min-width:100px;
+  max-width:180px;
+  overflow:hidden;
+}
+
+.companyTitle b{
+  display:block;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.companyTitle small{
+  color:#9eafb7;
+  font-size:9px;
+}
+
+.stats{
+  margin-left:auto;
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+
+.stat{
+  min-width:74px;
+  padding:5px 8px;
+  border-radius:8px;
+  background:#111a1f;
+  border:1px solid #42545e;
+  text-align:center;
+  box-shadow:inset 0 1px #fff1;
+}
+
+.stat span{
+  display:block;
+  color:#91a5ae;
+  font-size:8px;
+  text-transform:uppercase;
+}
+
+.stat strong{
+  display:block;
+  margin-top:2px;
+  font-size:12px;
+}
+
+/* =========================================================
+   WORLD / CAMERA
+========================================================= */
+
 #world{
   position:relative;
   flex:1;
   overflow:hidden;
-  background:linear-gradient(135deg,#76a95b 0%,#679d51 45%,#5d934d 100%);
+  background:#76a95b;
   isolation:isolate;
+
+  /* Clash-style touch movement */
+  touch-action:none;
+  user-select:none;
+  cursor:grab;
 }
-#world::before{
+
+#world.dragging{
+  cursor:grabbing;
+}
+
+#worldContent{
+  position:absolute;
+  left:0;
+  top:0;
+
+  /*
+    The world is deliberately larger than the screen.
+    This allows proper panning and zooming.
+  */
+  width:1600px;
+  height:1200px;
+
+  transform-origin:0 0;
+  will-change:transform;
+}
+
+#world::after{
   content:"";
   position:absolute;
   inset:0;
-  background:
-    radial-gradient(circle at 20% 30%,#ffffff0b 0 2px,transparent 3px),
-    radial-gradient(circle at 70% 70%,#00000008 0 2px,transparent 3px);
-  background-size:55px 55px,70px 70px;
   pointer-events:none;
+  z-index:5000;
 }
 
-/* DISTRICTS */
-.district{position:absolute;border-radius:20px;opacity:.55;z-index:2;}
-.district.one{left:0;top:0;width:53%;height:52%;background:#83b967;}
-.district.two{left:0;top:52%;width:53%;height:48%;background:#72a95b;}
-.district.three{left:69%;top:0;width:31%;height:52%;background:#7eae61;}
-.district.four{left:69%;top:52%;width:31%;height:48%;background:#6fa256;}
+/* =========================================================
+   DISTRICTS
+========================================================= */
+
+.district{
+  position:absolute;
+  border-radius:20px;
+  opacity:.55;
+  z-index:2;
+}
+
+.district.one{
+  left:0;
+  top:0;
+  width:53%;
+  height:52%;
+  background:#83b967;
+}
+
+.district.two{
+  left:0;
+  top:52%;
+  width:53%;
+  height:48%;
+  background:#72a95b;
+}
+
+.district.three{
+  left:69%;
+  top:0;
+  width:31%;
+  height:52%;
+  background:#7eae61;
+}
+
+.district.four{
+  left:69%;
+  top:52%;
+  width:31%;
+  height:48%;
+  background:#6fa256;
+}
 
 .zoneLabel{
-  position:absolute;z-index:15;padding:5px 9px;border-radius:8px;
-  background:#172027aa;border:1px solid #ffffff22;
-  font-size:8px;font-weight:bold;letter-spacing:1px;
+  position:absolute;
+  z-index:15;
+  padding:5px 9px;
+  border-radius:8px;
+  background:#172027aa;
+  border:1px solid #ffffff22;
+  font-size:8px;
+  font-weight:bold;
+  letter-spacing:1px;
   pointer-events:none;
 }
-.playerZone{left:3%;top:2%;}
-.rivalZone{right:3%;top:2%;}
 
-/* RIVER */
+.playerZone{
+  left:3%;
+  top:2%;
+}
+
+.rivalZone{
+  right:3%;
+  top:2%;
+}
+
+/* =========================================================
+   REALISTIC FLOWING RIVER
+========================================================= */
+
 #river{
   position:absolute;
   z-index:20;
@@ -87,34 +242,105 @@ button{font:inherit;border:0;cursor:pointer;}
   top:0;
   width:12%;
   height:100%;
-  background:repeating-linear-gradient(0deg,#438bb0 0 18px,#4b96b9 18px 36px);
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      90deg,
+      #3b83aa,
+      #4f9fc0 28%,
+      #438daf 52%,
+      #5aa7c4 76%,
+      #3b83aa
+    );
+
   border-left:5px solid #80b5c8;
   border-right:5px solid #80b5c8;
-  box-shadow:inset 0 0 20px #174c6c99;
+
+  box-shadow:
+    inset 10px 0 18px #174c6c55,
+    inset -10px 0 18px #174c6c55;
 }
+
+/* moving water layer */
 #river::before{
   content:"";
   position:absolute;
+  inset:-100px 0;
+
+  background:
+    repeating-linear-gradient(
+      -12deg,
+      transparent 0 25px,
+      #ffffff25 25px 29px,
+      transparent 29px 48px,
+      #164f6d18 48px 53px,
+      transparent 53px 78px
+    );
+
+  animation:riverFlow 4s linear infinite;
+}
+
+#river::after{
+  content:"";
+  position:absolute;
   inset:0;
-  background:repeating-linear-gradient(
-    -18deg,
-    transparent 0 34px,
-    #ffffff18 34px 38px,
-    transparent 38px 70px
-  );
+
+  background:
+    radial-gradient(
+      ellipse at 30% 15%,
+      #ffffff35 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      ellipse at 65% 40%,
+      #ffffff25 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      ellipse at 40% 70%,
+      #ffffff30 0 2px,
+      transparent 3px
+    );
+
+  background-size:
+    50px 95px,
+    70px 110px,
+    65px 125px;
+
+  animation:
+    waterSparkle 3s ease-in-out infinite alternate;
+}
+
+@keyframes riverFlow{
+  from{
+    transform:translateY(-30px);
+  }
+  to{
+    transform:translateY(30px);
+  }
+}
+
+@keyframes waterSparkle{
+  from{
+    opacity:.35;
+  }
+  to{
+    opacity:.8;
+  }
 }
 
 /* =========================================================
-   NEW CITY LAYOUT
-   Roads are placed around the grass plots.
-   Player shops form a vertical column.
+   ROADS
 ========================================================= */
 
 .road{
   position:absolute;
   z-index:30;
   background:#3b4144;
-  box-shadow:inset 0 2px #555c5f,inset 0 -2px #25292b;
+  box-shadow:
+    inset 0 2px #555c5f,
+    inset 0 -2px #25292b;
 }
 
 .road.horizontal{
@@ -131,18 +357,15 @@ button{font:inherit;border:0;cursor:pointer;}
   transform:translateX(-50%);
 }
 
-/* Main horizontal roads */
 .h1{top:13%;}
 .h2{top:38%;}
 .h3{top:63%;}
 .h4{top:87%;}
 
-/* Main vertical roads */
 .v1{left:18%;}
 .v2{left:42%;}
 .v3{left:76%;}
 
-/* Road markings */
 .road.horizontal::after{
   content:"";
   position:absolute;
@@ -151,11 +374,13 @@ button{font:inherit;border:0;cursor:pointer;}
   width:100%;
   height:3px;
   transform:translateY(-50%);
-  background:repeating-linear-gradient(
-    90deg,
-    #f1d34d 0 22px,
-    transparent 22px 42px
-  );
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #f1d34d 0 22px,
+      transparent 22px 42px
+    );
 }
 
 .road.vertical::after{
@@ -166,14 +391,19 @@ button{font:inherit;border:0;cursor:pointer;}
   width:3px;
   height:100%;
   transform:translateX(-50%);
-  background:repeating-linear-gradient(
-    0deg,
-    #f1d34d 0 22px,
-    transparent 22px 42px
-  );
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #f1d34d 0 22px,
+      transparent 22px 42px
+    );
 }
 
-/* intersections */
+/* =========================================================
+   INTERSECTIONS
+========================================================= */
+
 .intersection{
   position:absolute;
   z-index:35;
@@ -183,7 +413,10 @@ button{font:inherit;border:0;cursor:pointer;}
   background:#3b4144;
 }
 
-/* PAVEMENTS */
+/* =========================================================
+   PAVEMENTS
+========================================================= */
+
 .pavement{
   position:absolute;
   z-index:40;
@@ -217,23 +450,6 @@ button{font:inherit;border:0;cursor:pointer;}
 .pv3{left:47%;}
 .pv4{left:84%;}
 
-.path{
-  position:absolute;
-  z-index:42;
-  background:#c8c4b2;
-  border:1px solid #aaa697;
-  box-shadow:0 1px 3px #0002;
-}
-
-.shopPath{
-  position:absolute;
-  z-index:44;
-  width:12px;
-  background:#c8c4b2;
-  border-left:1px solid #aaa697;
-  border-right:1px solid #aaa697;
-}
-
 .crossing{
   position:absolute;
   z-index:50;
@@ -256,6 +472,7 @@ button{font:inherit;border:0;cursor:pointer;}
 /* =========================================================
    ROUNDABOUT
 ========================================================= */
+
 #roundabout{
   position:absolute;
   z-index:38;
@@ -312,7 +529,10 @@ button{font:inherit;border:0;cursor:pointer;}
 .ra3{left:81px;top:18px;transform:rotate(90deg);}
 .ra4{left:81px;bottom:18px;transform:rotate(-90deg);}
 
-/* BRIDGES */
+/* =========================================================
+   BRIDGES
+========================================================= */
+
 .bridge{
   position:absolute;
   z-index:55;
@@ -320,11 +540,12 @@ button{font:inherit;border:0;cursor:pointer;}
   width:13%;
   height:7%;
   transform:translate(-50%,-50%);
-  background:repeating-linear-gradient(
-    90deg,
-    #6b7376 0 22px,
-    #51585b 22px 44px
-  );
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #6b7376 0 22px,
+      #51585b 22px 44px
+    );
   border-top:3px solid #d0d1c8;
   border-bottom:3px solid #d0d1c8;
   box-shadow:0 3px 8px #0006;
@@ -335,7 +556,6 @@ button{font:inherit;border:0;cursor:pointer;}
 
 /* =========================================================
    GRASS PLOTS
-   Each building is completely inside its corresponding plot.
 ========================================================= */
 
 .plot{
@@ -358,18 +578,54 @@ button{font:inherit;border:0;cursor:pointer;}
   pointer-events:none;
 }
 
-/* PLAYER SIDE — vertical row */
-.plot1{left:3%;top:2%;width:13%;height:9%;}
-.plot2{left:3%;top:27%;width:13%;height:9%;}
-.plot3{left:3%;top:52%;width:13%;height:9%;}
-.plot4{left:3%;top:76%;width:13%;height:9%;}
+.plot1{
+  left:3%;
+  top:2%;
+  width:13%;
+  height:9%;
+}
 
-/* Bottom grass area */
-.plot5{left:20%;top:91%;width:29%;height:8%;}
+.plot2{
+  left:3%;
+  top:27%;
+  width:13%;
+  height:9%;
+}
 
-/* KING'S MART SIDE */
-.plot6{right:3%;top:18%;width:25%;height:19%;}
-.plot7{right:6%;top:68%;width:20%;height:18%;}
+.plot3{
+  left:3%;
+  top:52%;
+  width:13%;
+  height:9%;
+}
+
+.plot4{
+  left:3%;
+  top:76%;
+  width:13%;
+  height:9%;
+}
+
+.plot5{
+  left:20%;
+  top:91%;
+  width:29%;
+  height:8%;
+}
+
+.plot6{
+  right:3%;
+  top:18%;
+  width:25%;
+  height:19%;
+}
+
+.plot7{
+  right:6%;
+  top:68%;
+  width:20%;
+  height:18%;
+}
 
 /* =========================================================
    BUILDINGS
@@ -384,7 +640,9 @@ button{font:inherit;border:0;cursor:pointer;}
   transition:filter .15s;
 }
 
-.building:hover{filter:brightness(1.1);}
+.building:hover{
+  filter:brightness(1.1);
+}
 
 .buildingBody{
   position:absolute;
@@ -392,7 +650,9 @@ button{font:inherit;border:0;cursor:pointer;}
   border:3px solid #3c3f3c;
   border-radius:5px;
   background:#d8c58a;
-  box-shadow:0 7px 0 #756e59,0 10px 12px #0005;
+  box-shadow:
+    0 7px 0 #756e59,
+    0 10px 12px #0005;
 }
 
 .roof{
@@ -507,11 +767,6 @@ button{font:inherit;border:0;cursor:pointer;}
 .stateBadge.RENOVATING{background:#3f85b4;color:#fff;}
 .stateBadge.OPENING{background:#8a5cc9;color:#fff;}
 
-/* =========================================================
-   NEW PLAYER BUILDING POSITIONS
-   Every shop is completely inside its grass plot.
-========================================================= */
-
 #shop1{
   left:5%;
   top:3%;
@@ -540,17 +795,39 @@ button{font:inherit;border:0;cursor:pointer;}
   height:7%;
 }
 
-.playerBuilding .buildingBody{background:#e3c35a;}
-.playerBuilding .roof{background:#9b622d;}
+.playerBuilding .buildingBody{
+  background:#e3c35a;
+}
 
-.abandonedBuilding{background:#555;}
-.abandonedBuilding .buildingBody{background:#777;}
-.abandonedBuilding .roof{background:#494949;}
-.abandonedBuilding .sign{background:#555;color:#eee;}
+.playerBuilding .roof{
+  background:#9b622d;
+}
 
-.playerPurchased .buildingBody{background:#e3c35a;}
-.playerPurchased .roof{background:#9b622d;}
-.playerPurchased .sign{background:#f1c63e;color:#2c250d;}
+.abandonedBuilding .buildingBody{
+  background:#777;
+}
+
+.abandonedBuilding .roof{
+  background:#494949;
+}
+
+.abandonedBuilding .sign{
+  background:#555;
+  color:#eee;
+}
+
+.playerPurchased .buildingBody{
+  background:#e3c35a;
+}
+
+.playerPurchased .roof{
+  background:#9b622d;
+}
+
+.playerPurchased .sign{
+  background:#f1c63e;
+  color:#2c250d;
+}
 
 /* =========================================================
    KING'S MART
@@ -569,7 +846,9 @@ button{font:inherit;border:0;cursor:pointer;}
 #kingsHQ .buildingBody{
   background:#d7dce0;
   border:4px solid #26343b;
-  box-shadow:0 9px 0 #657078,0 13px 16px #0007;
+  box-shadow:
+    0 9px 0 #657078,
+    0 13px 16px #0007;
 }
 
 #kingsHQ .roof{
@@ -590,8 +869,14 @@ button{font:inherit;border:0;cursor:pointer;}
   min-width:100%;
 }
 
-#kingsHQ .windows{top:35%;}
-#kingsHQ .window{height:25px;background:#78bdd5;}
+#kingsHQ .windows{
+  top:35%;
+}
+
+#kingsHQ .window{
+  height:25px;
+  background:#78bdd5;
+}
 
 #kingsHQ .door{
   height:43%;
@@ -611,6 +896,28 @@ button{font:inherit;border:0;cursor:pointer;}
   border-radius:3px;
   font-size:7px;
   font-weight:bold;
+}
+
+/* Bought King's Mart */
+#kingsHQ.ownedByPlayer .buildingBody{
+  background:#e3c35a;
+  border-color:#725c18;
+}
+
+#kingsHQ.ownedByPlayer .roof{
+  background:#9b622d;
+  border-color:#5c391d;
+}
+
+#kingsHQ.ownedByPlayer .sign{
+  background:#f1c63e;
+  color:#2c250d;
+  border-color:#725c18;
+}
+
+#kingsHQ.ownedByPlayer .hqBanner{
+  background:#d9a928;
+  color:#241b08;
 }
 
 #kingsExpress{
@@ -637,6 +944,21 @@ button{font:inherit;border:0;cursor:pointer;}
   background:#dc3434;
   color:#fff;
   border-color:#711d1d;
+}
+
+#kingsExpress.ownedByPlayer .buildingBody{
+  background:#e3c35a;
+  border-color:#725c18;
+}
+
+#kingsExpress.ownedByPlayer .roof{
+  background:#9b622d;
+}
+
+#kingsExpress.ownedByPlayer .sign{
+  background:#f1c63e;
+  color:#2c250d;
+  border-color:#725c18;
 }
 
 /* =========================================================
@@ -673,8 +995,15 @@ button{font:inherit;border:0;cursor:pointer;}
   border:2px solid #412719;
 }
 
-.bench.b1{left:25%;top:73%;}
-.bench.b2{left:35%;top:80%;}
+.bench.b1{
+  left:25%;
+  top:73%;
+}
+
+.bench.b2{
+  left:35%;
+  top:80%;
+}
 
 .lamp{
   position:absolute;
@@ -710,7 +1039,9 @@ button{font:inherit;border:0;cursor:pointer;}
   border-radius:50%;
   background:#43833e;
   border:4px solid #316633;
-  box-shadow:inset 5px 5px #72ad5a,0 5px 4px #0003;
+  box-shadow:
+    inset 5px 5px #72ad5a,
+    0 5px 4px #0003;
 }
 
 .tree::after{
@@ -756,8 +1087,13 @@ button{font:inherit;border:0;cursor:pointer;}
 .parking span:nth-child(2){left:35%;}
 .parking span:nth-child(3){left:65%;}
 
-/* PEOPLE + CARS */
-#peopleLayer,#carsLayer,#deliveryLayer{
+/* =========================================================
+   PEOPLE / CARS
+========================================================= */
+
+#peopleLayer,
+#carsLayer,
+#deliveryLayer{
   position:absolute;
   inset:0;
   pointer-events:none;
@@ -792,8 +1128,13 @@ button{font:inherit;border:0;cursor:pointer;}
   border-color:#701919;
 }
 
-.person.red::before{background:#ffc0a5;}
-.person.hidden{opacity:0;}
+.person.red::before{
+  background:#ffc0a5;
+}
+
+.person.hidden{
+  opacity:0;
+}
 
 .car{
   position:absolute;
@@ -806,7 +1147,8 @@ button{font:inherit;border:0;cursor:pointer;}
   box-shadow:0 3px 5px #0008;
 }
 
-.car::before,.car::after{
+.car::before,
+.car::after{
   content:"";
   position:absolute;
   top:2px;
@@ -818,6 +1160,7 @@ button{font:inherit;border:0;cursor:pointer;}
 
 .car::before{left:4px;}
 .car::after{right:4px;}
+
 .car.redCar{background:#c94343;}
 .car.blueCar{background:#4288b8;}
 .car.yellowCar{background:#d7aa35;}
@@ -843,7 +1186,10 @@ button{font:inherit;border:0;cursor:pointer;}
   font-weight:bold;
 }
 
-/* DEBUG */
+/* =========================================================
+   DEBUG
+========================================================= */
+
 #debugLayer{
   position:absolute;
   inset:0;
@@ -852,10 +1198,12 @@ button{font:inherit;border:0;cursor:pointer;}
   display:none;
 }
 
-#debugLayer.on{display:block;}
+#debugLayer.on{
+  display:block;
+}
 
 #debugBadge{
-  position:absolute;
+  position:fixed;
   left:6px;
   top:62px;
   z-index:950;
@@ -868,9 +1216,14 @@ button{font:inherit;border:0;cursor:pointer;}
   display:none;
 }
 
-#debugBadge.on{display:block;}
+#debugBadge.on{
+  display:block;
+}
 
-/* BOTTOM BAR */
+/* =========================================================
+   BOTTOM BAR
+========================================================= */
+
 #bottomBar{
   height:57px;
   flex-shrink:0;
@@ -895,17 +1248,22 @@ button{font:inherit;border:0;cursor:pointer;}
   margin-bottom:1px;
 }
 
-.navButton:active{background:#30424c;}
+.navButton:active{
+  background:#30424c;
+}
 
-/* PANEL */
+/* =========================================================
+   PANEL
+========================================================= */
+
 #panel{
-  position:absolute;
+  position:fixed;
   z-index:2000;
   right:15px;
-  top:15px;
+  top:73px;
   width:330px;
   max-width:calc(100% - 30px);
-  max-height:calc(100% - 30px);
+  max-height:calc(100% - 145px);
   overflow:auto;
   padding:16px;
   border-radius:15px;
@@ -915,9 +1273,21 @@ button{font:inherit;border:0;cursor:pointer;}
   display:none;
 }
 
-#panel.open{display:block;}
-#panel h2{margin:0 0 5px;font-size:18px;}
-#panel p{margin:6px 0;color:#b8c7cd;font-size:12px;line-height:1.4;}
+#panel.open{
+  display:block;
+}
+
+#panel h2{
+  margin:0 0 5px;
+  font-size:18px;
+}
+
+#panel p{
+  margin:6px 0;
+  color:#b8c7cd;
+  font-size:12px;
+  line-height:1.4;
+}
 
 .panelClose{
   position:absolute;
@@ -959,7 +1329,9 @@ button{font:inherit;border:0;cursor:pointer;}
   border-color:#73b7e2;
 }
 
-.actionButton:disabled{opacity:.45;}
+.actionButton:disabled{
+  opacity:.45;
+}
 
 .input{
   width:100%;
@@ -984,6 +1356,15 @@ button{font:inherit;border:0;cursor:pointer;}
   color:#f2ca48;
 }
 
+.staffIncome{
+  margin-top:6px;
+  padding:6px;
+  border-radius:6px;
+  background:#263f2b;
+  color:#8be596;
+  font-weight:bold;
+}
+
 .statGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -1004,11 +1385,16 @@ button{font:inherit;border:0;cursor:pointer;}
   font-size:8px;
 }
 
-.miniStat b{font-size:12px;}
+.miniStat b{
+  font-size:12px;
+}
 
-/* TOAST */
+/* =========================================================
+   TOAST
+========================================================= */
+
 #toast{
-  position:absolute;
+  position:fixed;
   z-index:3000;
   left:50%;
   bottom:75px;
@@ -1033,375 +1419,697 @@ button{font:inherit;border:0;cursor:pointer;}
   transform:translateX(-50%) translateY(0);
 }
 
-/* RESPONSIVE */
+/* =========================================================
+   ZOOM CONTROLS
+========================================================= */
+
+#zoomControls{
+  position:fixed;
+  z-index:1800;
+  right:12px;
+  bottom:68px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.zoomButton{
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:#182229dd;
+  color:#fff;
+  border:1px solid #687a82;
+  font-size:21px;
+  font-weight:bold;
+  box-shadow:0 3px 8px #0007;
+}
+
+.zoomButton:active{
+  background:#3b4d56;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
 @media(max-width:900px){
-  #topBar{height:52px;padding:5px 7px;}
-  .logo{width:38px;height:38px;font-size:20px;}
-  .companyTitle{min-width:80px;}
-  .companyTitle b{font-size:11px;}
-  .stat{min-width:58px;padding:4px;}
-  .stat span{font-size:6px;}
-  .stat strong{font-size:9px;}
-  #bottomBar{height:52px;}
-  .navButton{font-size:7px;}
-  .navButton span{font-size:16px;}
+
+  #topBar{
+    height:52px;
+    padding:5px 7px;
+  }
+
+  .logo{
+    width:38px;
+    height:38px;
+    font-size:20px;
+  }
+
+  .companyTitle{
+    min-width:80px;
+  }
+
+  .companyTitle b{
+    font-size:11px;
+  }
+
+  .stat{
+    min-width:58px;
+    padding:4px;
+  }
+
+  .stat span{
+    font-size:6px;
+  }
+
+  .stat strong{
+    font-size:9px;
+  }
+
+  #bottomBar{
+    height:52px;
+  }
+
+  .navButton{
+    font-size:7px;
+  }
+
+  .navButton span{
+    font-size:16px;
+  }
+
   #panel{
     width:300px;
-    top:8px;
+    top:60px;
     right:8px;
-    max-height:calc(100% - 16px);
+    max-height:calc(100% - 125px);
   }
-  #roundabout{width:135px;height:135px;}
-  .roundIsland{inset:42px;}
-  .window{height:13px;}
-  .tree{width:24px;height:24px;}
+
+  #roundabout{
+    width:135px;
+    height:135px;
+  }
+
+  .roundIsland{
+    inset:42px;
+  }
+
+  .window{
+    height:13px;
+  }
+
+  .tree{
+    width:24px;
+    height:24px;
+  }
+
 }
 
 @media(max-width:600px){
-  .stats{gap:3px;}
-  .stat:nth-child(4),.stat:nth-child(5){display:none;}
-  .companyTitle{max-width:95px;}
-  #panel{width:280px;}
+
+  .stats{
+    gap:3px;
+  }
+
+  .stat:nth-child(4),
+  .stat:nth-child(5){
+    display:none;
+  }
+
+  .companyTitle{
+    max-width:95px;
+  }
+
+  #panel{
+    width:280px;
+  }
+
 }
 </style>
 </head>
 
 <body>
+
 <div id="game">
 
-<div id="topBar">
-  <div class="logo" id="logoTap">👑</div>
+  <!-- =====================================================
+       TOP HUD
+  ====================================================== -->
 
-  <div class="companyTitle">
-    <b id="companyName">Your Company</b>
-    <small>King's Mart Tycoon</small>
-  </div>
+  <div id="topBar">
 
-  <div class="stats">
-    <div class="stat"><span>Cash</span><strong id="cash">£5,000</strong></div>
-    <div class="stat"><span>Income</span><strong id="income">£12/s</strong></div>
-    <div class="stat"><span>Customers</span><strong id="customers">42</strong></div>
-    <div class="stat"><span>Market</span><strong id="market">8%</strong></div>
-    <div class="stat"><span>Rep</span><strong id="reputation">50</strong></div>
-  </div>
-</div>
+    <div class="logo" id="logoTap">👑</div>
 
-<div id="world">
+    <div class="companyTitle">
+      <b id="companyName">Your Company</b>
+      <small>King's Mart Tycoon</small>
+    </div>
 
-  <div class="district one"></div>
-  <div class="district two"></div>
-  <div class="district three"></div>
-  <div class="district four"></div>
+    <div class="stats">
 
-  <div class="zoneLabel playerZone">YOUR CITY</div>
-  <div class="zoneLabel rivalZone">KING'S MART DISTRICT</div>
+      <div class="stat">
+        <span>Cash</span>
+        <strong id="cash">£5,000</strong>
+      </div>
 
-  <div id="river"></div>
+      <div class="stat">
+        <span>Income</span>
+        <strong id="income">£12/s</strong>
+      </div>
 
-  <!-- ROADS -->
-  <div class="road horizontal h1"></div>
-  <div class="road horizontal h2"></div>
-  <div class="road horizontal h3"></div>
-  <div class="road horizontal h4"></div>
+      <div class="stat">
+        <span>Customers</span>
+        <strong id="customers">42</strong>
+      </div>
 
-  <div class="road vertical v1"></div>
-  <div class="road vertical v2"></div>
-  <div class="road vertical v3"></div>
+      <div class="stat">
+        <span>Market</span>
+        <strong id="market">8%</strong>
+      </div>
 
-  <!-- INTERSECTIONS -->
-  <div class="intersection" style="left:18%;top:13%"></div>
-  <div class="intersection" style="left:42%;top:13%"></div>
-  <div class="intersection" style="left:76%;top:13%"></div>
+      <div class="stat">
+        <span>Rep</span>
+        <strong id="reputation">50</strong>
+      </div>
 
-  <div class="intersection" style="left:18%;top:38%"></div>
-  <div class="intersection" style="left:42%;top:38%"></div>
-  <div class="intersection" style="left:76%;top:38%"></div>
+    </div>
 
-  <div class="intersection" style="left:18%;top:63%"></div>
-  <div class="intersection" style="left:42%;top:63%"></div>
-  <div class="intersection" style="left:76%;top:63%"></div>
-
-  <div class="intersection" style="left:18%;top:87%"></div>
-  <div class="intersection" style="left:42%;top:87%"></div>
-  <div class="intersection" style="left:76%;top:87%"></div>
-
-  <!-- PAVEMENTS -->
-  <div class="pavement horizontal ph1"></div>
-  <div class="pavement horizontal ph2"></div>
-  <div class="pavement horizontal ph3"></div>
-  <div class="pavement horizontal ph4"></div>
-
-  <div class="pavement vertical pv1"></div>
-  <div class="pavement vertical pv2"></div>
-  <div class="pavement vertical pv3"></div>
-  <div class="pavement vertical pv4"></div>
-
-  <!-- CROSSINGS -->
-  <div class="crossing" style="left:18%;top:38%">
-    <i></i><i></i><i></i><i></i><i></i>
-  </div>
-
-  <div class="crossing" style="left:42%;top:38%">
-    <i></i><i></i><i></i><i></i><i></i>
-  </div>
-
-  <div class="crossing" style="left:76%;top:38%">
-    <i></i><i></i><i></i><i></i><i></i>
-  </div>
-
-  <!-- ROUNDABOUT -->
-  <div id="roundabout">
-    <div class="roundRoad"></div>
-    <div class="roundIsland"></div>
-    <div class="roundArrow ra1">➜</div>
-    <div class="roundArrow ra2">➜</div>
-    <div class="roundArrow ra3">➜</div>
-    <div class="roundArrow ra4">➜</div>
-  </div>
-
-  <!-- BRIDGES -->
-  <div class="bridge bridge1"></div>
-  <div class="bridge bridge2"></div>
-
-  <!-- GRASS PLOTS -->
-  <div class="plot plot1"></div>
-  <div class="plot plot2"></div>
-  <div class="plot plot3"></div>
-  <div class="plot plot4"></div>
-  <div class="plot plot5"></div>
-  <div class="plot plot6"></div>
-  <div class="plot plot7"></div>
-
-  <!-- PARK -->
-  <div class="park"></div>
-
-  <div class="bench b1"></div>
-  <div class="bench b2"></div>
-
-  <!-- TREES -->
-  <div class="tree t1"></div>
-  <div class="tree t2"></div>
-  <div class="tree t3"></div>
-  <div class="tree t4"></div>
-  <div class="tree t5"></div>
-  <div class="tree t6"></div>
-
-  <!-- LAMPS -->
-  <div class="lamp l1"></div>
-  <div class="lamp l2"></div>
-  <div class="lamp l3"></div>
-  <div class="lamp l4"></div>
-  <div class="lamp l5"></div>
-
-  <!-- PARKING -->
-  <div class="parking">
-    <span></span><span></span><span></span>
   </div>
 
   <!-- =====================================================
-       PLAYER SHOPS
-       Four shops are now stacked vertically on the left.
-       Buttons / onclick handlers remain unchanged.
+       WORLD
   ====================================================== -->
 
-  <div id="shop1"
-       class="building playerBuilding collisionSolid"
-       onclick="openShop(0)">
-    <div class="sign">MY MART</div>
-    <div class="levelBadge">LV 1</div>
-    <div class="buildingBody">
-      <div class="roof"></div>
-      <div class="windows">
-        <div class="window"></div>
-        <div class="window"></div>
-        <div class="window"></div>
+  <div id="world">
+
+    <div id="worldContent">
+
+      <div class="district one"></div>
+      <div class="district two"></div>
+      <div class="district three"></div>
+      <div class="district four"></div>
+
+      <div class="zoneLabel playerZone">
+        YOUR CITY
       </div>
-      <div class="door"></div>
+
+      <div class="zoneLabel rivalZone">
+        KING'S MART DISTRICT
+      </div>
+
+      <!-- RIVER -->
+      <div id="river"></div>
+
+      <!-- ROADS -->
+      <div class="road horizontal h1"></div>
+      <div class="road horizontal h2"></div>
+      <div class="road horizontal h3"></div>
+      <div class="road horizontal h4"></div>
+
+      <div class="road vertical v1"></div>
+      <div class="road vertical v2"></div>
+      <div class="road vertical v3"></div>
+
+      <!-- INTERSECTIONS -->
+
+      <div class="intersection" style="left:18%;top:13%"></div>
+      <div class="intersection" style="left:42%;top:13%"></div>
+      <div class="intersection" style="left:76%;top:13%"></div>
+
+      <div class="intersection" style="left:18%;top:38%"></div>
+      <div class="intersection" style="left:42%;top:38%"></div>
+      <div class="intersection" style="left:76%;top:38%"></div>
+
+      <div class="intersection" style="left:18%;top:63%"></div>
+      <div class="intersection" style="left:42%;top:63%"></div>
+      <div class="intersection" style="left:76%;top:63%"></div>
+
+      <div class="intersection" style="left:18%;top:87%"></div>
+      <div class="intersection" style="left:42%;top:87%"></div>
+      <div class="intersection" style="left:76%;top:87%"></div>
+
+      <!-- PAVEMENTS -->
+
+      <div class="pavement horizontal ph1"></div>
+      <div class="pavement horizontal ph2"></div>
+      <div class="pavement horizontal ph3"></div>
+      <div class="pavement horizontal ph4"></div>
+
+      <div class="pavement vertical pv1"></div>
+      <div class="pavement vertical pv2"></div>
+      <div class="pavement vertical pv3"></div>
+      <div class="pavement vertical pv4"></div>
+
+      <!-- CROSSINGS -->
+
+      <div class="crossing" style="left:18%;top:38%">
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <div class="crossing" style="left:42%;top:38%">
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <div class="crossing" style="left:76%;top:38%">
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+
+      <!-- ROUNDABOUT -->
+
+      <div id="roundabout">
+
+        <div class="roundRoad"></div>
+        <div class="roundIsland"></div>
+
+        <div class="roundArrow ra1">➜</div>
+        <div class="roundArrow ra2">➜</div>
+        <div class="roundArrow ra3">➜</div>
+        <div class="roundArrow ra4">➜</div>
+
+      </div>
+
+      <!-- BRIDGES -->
+
+      <div class="bridge bridge1"></div>
+      <div class="bridge bridge2"></div>
+
+      <!-- GRASS PLOTS -->
+
+      <div class="plot plot1"></div>
+      <div class="plot plot2"></div>
+      <div class="plot plot3"></div>
+      <div class="plot plot4"></div>
+      <div class="plot plot5"></div>
+      <div class="plot plot6"></div>
+      <div class="plot plot7"></div>
+
+      <!-- PARK -->
+
+      <div class="park"></div>
+
+      <div class="bench b1"></div>
+      <div class="bench b2"></div>
+
+      <!-- TREES -->
+
+      <div class="tree t1"></div>
+      <div class="tree t2"></div>
+      <div class="tree t3"></div>
+      <div class="tree t4"></div>
+      <div class="tree t5"></div>
+      <div class="tree t6"></div>
+
+      <!-- LAMPS -->
+
+      <div class="lamp l1"></div>
+      <div class="lamp l2"></div>
+      <div class="lamp l3"></div>
+      <div class="lamp l4"></div>
+      <div class="lamp l5"></div>
+
+      <!-- PARKING -->
+
+      <div class="parking">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- =================================================
+           PLAYER SHOPS
+      ================================================== -->
+
+      <div
+        id="shop1"
+        class="building playerBuilding collisionSolid"
+        onclick="openShop(0)"
+      >
+
+        <div class="sign">
+          MY MART
+        </div>
+
+        <div class="levelBadge">
+          LV 1
+        </div>
+
+        <div class="buildingBody">
+
+          <div class="roof"></div>
+
+          <div class="windows">
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="door"></div>
+
+        </div>
+
+      </div>
+
+      <div
+        id="shop2"
+        class="building abandonedBuilding collisionSolid"
+        onclick="openProperty(0)"
+      >
+
+        <div class="sign">
+          £2,200
+        </div>
+
+        <div class="levelBadge">
+          FOR SALE
+        </div>
+
+        <div class="buildingBody">
+
+          <div class="roof"></div>
+
+          <div class="windows">
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="door"></div>
+
+        </div>
+
+      </div>
+
+      <div
+        id="shop3"
+        class="building abandonedBuilding collisionSolid"
+        onclick="openProperty(1)"
+      >
+
+        <div class="sign">
+          £3,500
+        </div>
+
+        <div class="levelBadge">
+          FOR SALE
+        </div>
+
+        <div class="buildingBody">
+
+          <div class="roof"></div>
+
+          <div class="windows">
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="door"></div>
+
+        </div>
+
+      </div>
+
+      <div
+        id="shop4"
+        class="building abandonedBuilding collisionSolid"
+        onclick="openProperty(2)"
+      >
+
+        <div class="sign">
+          £4,800
+        </div>
+
+        <div class="levelBadge">
+          FOR SALE
+        </div>
+
+        <div class="buildingBody">
+
+          <div class="roof"></div>
+
+          <div class="windows">
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="door"></div>
+
+        </div>
+
+      </div>
+
+      <!-- =================================================
+           KING'S MART HQ
+      ================================================== -->
+
+      <div id="kingsHQ" onclick="openRival()">
+
+        <div class="sign">
+          KING'S MART
+        </div>
+
+        <div class="levelBadge">
+          HQ
+        </div>
+
+        <div class="buildingBody">
+
+          <div class="roof"></div>
+
+          <div class="windows">
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="door"></div>
+
+          <div class="hqBanner">
+            KING'S MART • MAIN STORE
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- =================================================
+           KING'S MART EXPRESS
+      ================================================== -->
+
+      <div id="kingsExpress" onclick="openRival()">
+
+        <div class="sign">
+          KING'S MART EXPRESS
+        </div>
+
+        <div class="buildingBody">
+
+          <div class="roof"></div>
+
+          <div class="windows">
+            <div class="window"></div>
+            <div class="window"></div>
+          </div>
+
+          <div class="door"></div>
+
+        </div>
+
+      </div>
+
+      <div
+        id="rivalCustomerLabel"
+        style="
+        position:absolute;
+        z-index:150;
+        right:7%;
+        top:36%;
+        width:18%;
+        text-align:center;
+        padding:5px;
+        border-radius:7px;
+        background:#571b1b;
+        border:1px solid #e65b5b;
+        color:#fff;
+        font-size:8px;
+        font-weight:bold;"
+      >
+        🔴 220 CUSTOMERS
+      </div>
+
+      <!-- MOVING OBJECTS -->
+
+      <div id="carsLayer"></div>
+      <div id="deliveryLayer"></div>
+      <div id="peopleLayer"></div>
+
+      <!-- DEBUG -->
+
+      <svg
+        id="debugLayer"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      ></svg>
+
     </div>
-  </div>
 
-  <div id="shop2"
-       class="building abandonedBuilding collisionSolid"
-       onclick="openProperty(0)">
-    <div class="sign">£2,200</div>
-    <div class="levelBadge">FOR SALE</div>
-    <div class="buildingBody">
-      <div class="roof"></div>
-      <div class="windows">
-        <div class="window"></div>
-        <div class="window"></div>
-      </div>
-      <div class="door"></div>
+    <div id="debugBadge">
+      DEBUG MODE
     </div>
+
   </div>
-
-  <div id="shop3"
-       class="building abandonedBuilding collisionSolid"
-       onclick="openProperty(1)">
-    <div class="sign">£3,500</div>
-    <div class="levelBadge">FOR SALE</div>
-    <div class="buildingBody">
-      <div class="roof"></div>
-      <div class="windows">
-        <div class="window"></div>
-        <div class="window"></div>
-        <div class="window"></div>
-      </div>
-      <div class="door"></div>
-    </div>
-  </div>
-
-  <div id="shop4"
-       class="building abandonedBuilding collisionSolid"
-       onclick="openProperty(2)">
-    <div class="sign">£4,800</div>
-    <div class="levelBadge">FOR SALE</div>
-    <div class="buildingBody">
-      <div class="roof"></div>
-      <div class="windows">
-        <div class="window"></div>
-        <div class="window"></div>
-      </div>
-      <div class="door"></div>
-    </div>
-  </div>
-
-  <!-- KING'S MART HQ -->
-  <div id="kingsHQ" onclick="openRival()">
-    <div class="sign">KING'S MART</div>
-    <div class="levelBadge">HQ</div>
-
-    <div class="buildingBody">
-      <div class="roof"></div>
-
-      <div class="windows">
-        <div class="window"></div>
-        <div class="window"></div>
-        <div class="window"></div>
-        <div class="window"></div>
-      </div>
-
-      <div class="door"></div>
-
-      <div class="hqBanner">
-        KING'S MART • MAIN STORE
-      </div>
-    </div>
-  </div>
-
-  <!-- KING'S MART EXPRESS -->
-  <div id="kingsExpress" onclick="openRival()">
-    <div class="sign">KING'S MART EXPRESS</div>
-
-    <div class="buildingBody">
-      <div class="roof"></div>
-
-      <div class="windows">
-        <div class="window"></div>
-        <div class="window"></div>
-      </div>
-
-      <div class="door"></div>
-    </div>
-  </div>
-
-  <div id="rivalCustomerLabel"
-       style="
-       position:absolute;
-       z-index:150;
-       right:7%;
-       top:36%;
-       width:18%;
-       text-align:center;
-       padding:5px;
-       border-radius:7px;
-       background:#571b1b;
-       border:1px solid #e65b5b;
-       color:#fff;
-       font-size:8px;
-       font-weight:bold;">
-    🔴 220 CUSTOMERS
-  </div>
-
-  <!-- MOVING OBJECTS -->
-  <div id="carsLayer"></div>
-  <div id="deliveryLayer"></div>
-  <div id="peopleLayer"></div>
-
-  <!-- DEBUG -->
-  <svg id="debugLayer"
-       viewBox="0 0 100 100"
-       preserveAspectRatio="none"></svg>
-
-  <div id="debugBadge">DEBUG MODE</div>
 
   <!-- PANEL -->
+
   <div id="panel">
-    <button class="panelClose" onclick="closePanel()">×</button>
+
+    <button
+      class="panelClose"
+      onclick="closePanel()"
+    >
+      ×
+    </button>
+
     <div id="panelContent"></div>
+
   </div>
 
   <!-- TOAST -->
+
   <div id="toast"></div>
 
-</div>
+  <!-- ZOOM -->
 
-<!-- BOTTOM NAV — UNCHANGED -->
-<div id="bottomBar">
-  <button class="navButton" onclick="showCity()">
-    <span>🗺️</span>CITY
-  </button>
+  <div id="zoomControls">
 
-  <button class="navButton" onclick="openShops()">
-    <span>🏪</span>SHOPS
-  </button>
+    <button
+      class="zoomButton"
+      onclick="zoomIn()"
+    >
+      +
+    </button>
 
-  <button class="navButton" onclick="openStaff()">
-    <span>👷</span>STAFF
-  </button>
+    <button
+      class="zoomButton"
+      onclick="resetCamera()"
+    >
+      ⌂
+    </button>
 
-  <button class="navButton" onclick="openRival()">
-    <span>⚔️</span>RIVAL
-  </button>
+    <button
+      class="zoomButton"
+      onclick="zoomOut()"
+    >
+      −
+    </button>
 
-  <button class="navButton" onclick="openCompany()">
-    <span>🏢</span>COMPANY
-  </button>
-</div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+
+  <div id="bottomBar">
+
+    <button
+      class="navButton"
+      onclick="showCity()"
+    >
+      <span>🗺️</span>
+      CITY
+    </button>
+
+    <button
+      class="navButton"
+      onclick="openShops()"
+    >
+      <span>🏪</span>
+      SHOPS
+    </button>
+
+    <button
+      class="navButton"
+      onclick="openStaff()"
+    >
+      <span>👷</span>
+      STAFF
+    </button>
+
+    <button
+      class="navButton"
+      onclick="openRival()"
+    >
+      <span>⚔️</span>
+      RIVAL
+    </button>
+
+    <button
+      class="navButton"
+      onclick="openCompany()"
+    >
+      <span>🏢</span>
+      COMPANY
+    </button>
+
+  </div>
 
 </div>
 
 <script>
+
 /* =========================================================
-   KING'S MART TYCOON
-   Claude gameplay systems preserved.
-   Layout/world coordinates updated to match new city.
+   GAME STATE
 ========================================================= */
 
-const SAVE_KEY = "kings_mart_tycoon_city_v12_layout";
-let DEBUG_MODE = false;
+const SAVE_KEY =
+  "kings_mart_tycoon_city_v13";
 
-/* ---------------------------------------------------------
-   GAME STATE
---------------------------------------------------------- */
+let DEBUG_MODE=false;
 
-let game = {
-  company: "Your Company",
-  cash: 5000,
-  reputation: 50,
-  marketShare: 8,
-  customers: 42,
-  totalStores: 1,
-  selectedShop: 0,
-  staff: [],
+let game={
 
-  properties: [
-    {name:"Old Corner Shop",price:2200,bought:false,storeIndex:null},
-    {name:"Empty High Street",price:3500,bought:false,storeIndex:null},
-    {name:"Abandoned Supermarket",price:4800,bought:false,storeIndex:null}
+  company:"Your Company",
+
+  cash:5000,
+
+  reputation:50,
+
+  marketShare:8,
+
+  customers:42,
+
+  totalStores:1,
+
+  selectedShop:0,
+
+  staff:[],
+
+  properties:[
+
+    {
+      name:"Old Corner Shop",
+      price:2200,
+      bought:false,
+      storeIndex:null
+    },
+
+    {
+      name:"Empty High Street",
+      price:3500,
+      bought:false,
+      storeIndex:null
+    },
+
+    {
+      name:"Abandoned Supermarket",
+      price:4800,
+      bought:false,
+      storeIndex:null
+    }
+
   ],
 
-  stores: [
+  stores:[
+
     {
       name:"My Mart",
       level:1,
@@ -1414,54 +2122,103 @@ let game = {
       renovatingUntil:0,
       openingUntil:0
     }
+
   ],
 
   rival:{
+
     name:"King's Mart",
+
     customers:220,
+
     health:100,
+
     marketShare:32,
+
     income:95,
+
     stage:"HEALTHY"
+
   },
 
   lastSave:Date.now()
+
 };
 
-/* ---------------------------------------------------------
-   LOAD / MIGRATE
---------------------------------------------------------- */
+/* =========================================================
+   ADAM
+========================================================= */
+
+const ADAM={
+
+  name:"Adam",
+
+  age:18,
+
+  intelligence:100,
+
+  management:95,
+
+  stocking:65,
+
+  customerService:72,
+
+  problemSolving:100,
+
+  trait:"Natural Manager",
+
+  salary:100000,
+
+  incomeBonus:50
+
+};
+
+/* =========================================================
+   LOAD
+========================================================= */
 
 function loadGame(){
 
   let old=null;
 
-  try{
-    old=JSON.parse(localStorage.getItem(SAVE_KEY));
-  }catch(e){
-    old=null;
-  }
+  const keys=[
 
-  if(!old){
+    SAVE_KEY,
 
-    const oldKeys=[
-      "kings_mart_tycoon_city_v11",
-      "kings_mart_tycoon_city_v10",
-      "kings_mart_tycoon_city_v9",
-      "kings_mart_tycoon_city_v8",
-      "kings_mart_tycoon_city_v7",
-      "kings_mart_tycoon_v5"
-    ];
+    "kings_mart_tycoon_city_v12_layout",
 
-    for(const key of oldKeys){
-      try{
-        const data=JSON.parse(localStorage.getItem(key));
-        if(data){
-          old=data;
-          break;
-        }
-      }catch(e){}
-    }
+    "kings_mart_tycoon_city_v11",
+
+    "kings_mart_tycoon_city_v10",
+
+    "kings_mart_tycoon_city_v9",
+
+    "kings_mart_tycoon_city_v8",
+
+    "kings_mart_tycoon_city_v7",
+
+    "kings_mart_tycoon_v5"
+
+  ];
+
+  for(const key of keys){
+
+    try{
+
+      const data=
+        JSON.parse(
+          localStorage.getItem(key)
+        );
+
+      if(data){
+
+        old=data;
+        break;
+
+      }
+
+    }catch(e){}
+
   }
 
   if(old){
@@ -1475,171 +2232,204 @@ function loadGame(){
       }
     };
 
-    if(!Array.isArray(game.stores))game.stores=[];
-    if(!Array.isArray(game.properties))game.properties=[];
-    if(!Array.isArray(game.staff))game.staff=[];
-
-    game.stores.forEach(shop=>{
-
-      if(typeof shop.stock!=="number")shop.stock=100;
-      if(typeof shop.maxStock!=="number")shop.maxStock=100;
-      if(typeof shop.upgrades!=="number")shop.upgrades=0;
-      if(typeof shop.level!=="number")shop.level=1;
-      if(typeof shop.condition!=="number")shop.condition=50;
-      if(typeof shop.customers!=="number")shop.customers=10;
-      if(typeof shop.renovatingUntil!=="number")shop.renovatingUntil=0;
-      if(typeof shop.openingUntil!=="number")shop.openingUntil=0;
-
-    });
-
-    game.properties.forEach(property=>{
-
-      if(
-        property.bought &&
-        (
-          property.storeIndex===null ||
-          typeof property.storeIndex!=="number" ||
-          !game.stores[property.storeIndex]
-        )
-      ){
-        property.bought=false;
-        property.storeIndex=null;
-      }
-
-    });
   }
+
+  if(!Array.isArray(game.stores))
+    game.stores=[];
+
+  if(!Array.isArray(game.properties))
+    game.properties=[];
+
+  if(!Array.isArray(game.staff))
+    game.staff=[];
 
   if(!game.stores.length){
 
     game.stores.push({
+
       name:"My Mart",
+
       level:1,
+
       condition:65,
+
       baseIncome:12,
+
       customers:42,
+
       upgrades:0,
+
       stock:100,
+
       maxStock:100,
+
       renovatingUntil:0,
+
       openingUntil:0
+
     });
 
   }
 
+  /* Ensure Adam gets the new values
+     if an old save already contained him. */
+
+  game.staff.forEach(person=>{
+
+    if(person.name==="Adam"){
+
+      person.salary=100000;
+      person.incomeBonus=50;
+
+    }
+
+  });
+
 }
 
-/* ---------------------------------------------------------
+/* =========================================================
    SAVE
---------------------------------------------------------- */
+========================================================= */
 
 function saveGame(){
 
   game.lastSave=Date.now();
 
   try{
+
     localStorage.setItem(
       SAVE_KEY,
       JSON.stringify(game)
     );
+
   }catch(e){}
 
 }
 
-/* ---------------------------------------------------------
+/* =========================================================
    OFFLINE INCOME
---------------------------------------------------------- */
+========================================================= */
 
 function offlineIncome(){
 
   const now=Date.now();
 
   const elapsed=Math.min(
+
     28800,
+
     Math.max(
       0,
       (now-game.lastSave)/1000
     )
+
   );
 
-  if(elapsed<5)return;
+  if(elapsed<5)
+    return;
 
-  const amount=Math.floor(
-    getIncome()*elapsed
-  );
+  const amount=
+    Math.floor(
+      getIncome()*elapsed
+    );
 
   if(amount>0){
 
     game.cash+=amount;
 
     setTimeout(
-      ()=>toast(
-        "💰 Offline earnings: £"+
-        amount.toLocaleString()
-      ),
+      ()=>{
+        toast(
+          "💰 Offline earnings: £"+
+          amount.toLocaleString()
+        );
+      },
       500
     );
+
   }
+
 }
 
-/* ---------------------------------------------------------
-   STAFF
---------------------------------------------------------- */
-
-const ADAM={
-  name:"Adam",
-  age:18,
-  intelligence:100,
-  management:95,
-  stocking:65,
-  customerService:72,
-  problemSolving:100,
-  trait:"Natural Manager"
-};
+/* =========================================================
+   STAFF BONUS
+========================================================= */
 
 function getStaffBonus(){
 
   let incomeBonus=0;
   let customerBonus=0;
   let stockBonus=0;
+  let flatIncome=0;
 
-  game.staff.forEach(p=>{
+  game.staff.forEach(person=>{
 
-    incomeBonus+=(p.management||0)*0.00035;
-    incomeBonus+=(p.problemSolving||0)*0.00015;
+    incomeBonus+=
+      (person.management||0)*
+      0.00035;
 
-    customerBonus+=(p.intelligence||0)*0.00008;
-    customerBonus+=(p.customerService||0)*0.00006;
+    incomeBonus+=
+      (person.problemSolving||0)*
+      0.00015;
 
-    stockBonus+=(p.stocking||0)*0.0003;
+    customerBonus+=
+      (person.intelligence||0)*
+      0.00008;
+
+    customerBonus+=
+      (person.customerService||0)*
+      0.00006;
+
+    stockBonus+=
+      (person.stocking||0)*
+      0.0003;
+
+    /*
+      Adam's special bonus:
+      +£50 every second.
+    */
+
+    flatIncome+=
+      person.incomeBonus||0;
 
   });
 
   return{
+
     incomeBonus,
+
     customerBonus,
-    stockBonus
+
+    stockBonus,
+
+    flatIncome
+
   };
 
 }
 
-/* ---------------------------------------------------------
+/* =========================================================
    ECONOMY
---------------------------------------------------------- */
+========================================================= */
 
 function getShopIncome(shop){
 
   let income=
+
     shop.baseIncome+
+
     ((shop.level-1)*10)+
+
     ((shop.upgrades||0)*8);
 
-  const stock=Math.max(
-    0,
-    Math.min(
-      1,
-      (shop.stock||0)/100
-    )
-  );
+  const stock=
+    Math.max(
+      0,
+      Math.min(
+        1,
+        (shop.stock||0)/100
+      )
+    );
 
   const stockMultiplier=
     0.5+
@@ -1658,21 +2448,35 @@ function getShopIncome(shop){
   return income*
     stockMultiplier*
     condition;
+
 }
 
 function getIncome(){
 
   let total=0;
 
-  game.stores.forEach(shop=>{
-    total+=getShopIncome(shop);
-  });
+  game.stores.forEach(
+    shop=>{
+      total+=
+        getShopIncome(shop);
+    }
+  );
 
-  const staff=getStaffBonus();
+  const staff=
+    getStaffBonus();
 
-  total*=1+staff.incomeBonus;
+  total*=
+    1+
+    staff.incomeBonus;
+
+  /* Adam and any future specialist
+     staff bonuses are added here. */
+
+  total+=
+    staff.flatIncome;
 
   return total;
+
 }
 
 function computeShopState(shop){
@@ -1680,57 +2484,63 @@ function computeShopState(shop){
   const now=Date.now();
 
   if(
-    shop.renovatingUntil &&
+    shop.renovatingUntil&&
     now<shop.renovatingUntil
-  ){
+  )
     return"RENOVATING";
-  }
 
   if(
-    shop.openingUntil &&
+    shop.openingUntil&&
     now<shop.openingUntil
-  ){
+  )
     return"OPENING";
-  }
 
-  if((shop.stock||0)<=0){
+  if(
+    (shop.stock||0)<=0
+  )
     return"CLOSED";
-  }
 
-  if((shop.stock||0)<20){
+  if(
+    (shop.stock||0)<20
+  )
     return"LOW_STOCK";
-  }
 
-  if(shop.customers>60){
+  if(
+    shop.customers>60
+  )
     return"BUSY";
-  }
 
   return"OPEN";
+
 }
 
 function updateCustomers(seconds){
 
-  const staff=getStaffBonus();
+  const staff=
+    getStaffBonus();
 
   game.stores.forEach(shop=>{
 
-    const stock=Math.min(
-      1,
-      Math.max(
-        0,
-        (shop.stock||0)/100
-      )
-    );
+    const stock=
+      Math.min(
+        1,
+        Math.max(
+          0,
+          (shop.stock||0)/100
+        )
+      );
 
-    const condition=Math.min(
-      1,
-      Math.max(
-        0,
-        shop.condition/100
-      )
-    );
+    const condition=
+      Math.min(
+        1,
+        Math.max(
+          0,
+          shop.condition/100
+        )
+      );
 
     let growth=
+
       (
         0.012+
         staff.customerBonus+
@@ -1767,14 +2577,13 @@ let deliveryTimer=0;
 
 function updateStock(seconds){
 
-  const staff=getStaffBonus();
+  const staff=
+    getStaffBonus();
 
   game.stores.forEach(shop=>{
 
-    if(typeof shop.stock!=="number")
-      shop.stock=100;
-
     const consumption=
+
       shop.customers*
       0.0022*
       seconds*
@@ -1800,28 +2609,38 @@ function updateStock(seconds){
 
     deliveryTimer=0;
 
-    game.stores.forEach((shop,idx)=>{
+    game.stores.forEach(
+      (shop,idx)=>{
 
-      shop.stock=
-        Math.min(
-          shop.maxStock||100,
-          (shop.stock||0)+35
+        shop.stock=
+          Math.min(
+            shop.maxStock||100,
+            (shop.stock||0)+35
+          );
+
+        spawnDeliveryForStore(
+          idx
         );
 
-      spawnDeliveryForStore(idx);
+      }
+    );
 
-    });
-
-    toast("🚚 Your deliveries have arrived!");
+    toast(
+      "🚚 Your deliveries have arrived!"
+    );
 
   }
 
 }
 
+/* =========================================================
+   RIVAL
+========================================================= */
+
 function updateRival(seconds){
 
   if(
-    game.marketShare>12 &&
+    game.marketShare>12&&
     game.rival.health>0
   ){
 
@@ -1835,7 +2654,7 @@ function updateRival(seconds){
   }
 
   if(
-    game.rival.health>50 &&
+    game.rival.health>50&&
     game.rival.customers<220
   ){
 
@@ -1854,7 +2673,8 @@ function updateRival(seconds){
 
 function rivalAI(){
 
-  const health=game.rival.health;
+  const health=
+    game.rival.health;
 
   if(health>75)
     game.rival.stage="HEALTHY";
@@ -1884,14 +2704,18 @@ function rivalAI(){
       maximum
     );
 
-  if(game.rival.health<=0)
+  if(game.rival.health<=0){
+
     game.rival.customers=0;
+
+    game.rival.stage="FOR SALE";
+
+  }
 
 }
 
 /* =========================================================
    WORLD DATA
-   ONLY WORLD COORDINATES CHANGED TO MATCH NEW LAYOUT
 ========================================================= */
 
 const SLOTS=[
@@ -1902,7 +2726,10 @@ const SLOTS=[
     by:3,
     bw:9,
     bh:7,
-    entrance:{x:9.5,y:11},
+    entrance:{
+      x:9.5,
+      y:11
+    },
     pedNode:"PW_A2",
     roadNode:"W18_13"
   },
@@ -1913,7 +2740,10 @@ const SLOTS=[
     by:28,
     bw:9,
     bh:7,
-    entrance:{x:9.5,y:36},
+    entrance:{
+      x:9.5,
+      y:36
+    },
     pedNode:"PW_B2",
     roadNode:"W18_38"
   },
@@ -1924,7 +2754,10 @@ const SLOTS=[
     by:53,
     bw:9,
     bh:7,
-    entrance:{x:9.5,y:61},
+    entrance:{
+      x:9.5,
+      y:61
+    },
     pedNode:"PW_C2",
     roadNode:"W18_63"
   },
@@ -1935,7 +2768,10 @@ const SLOTS=[
     by:77,
     bw:9,
     bh:7,
-    entrance:{x:9.5,y:85},
+    entrance:{
+      x:9.5,
+      y:85
+    },
     pedNode:"PW_D2",
     roadNode:"W18_87"
   }
@@ -1943,29 +2779,53 @@ const SLOTS=[
 ];
 
 const KINGS_HQ={
+
   el:"kingsHQ",
+
   bx:75,
+
   by:20,
+
   bw:18,
+
   bh:15,
-  entrance:{x:84,y:36},
+
+  entrance:{
+    x:84,
+    y:36
+  },
+
   pedNode:"PE_A2",
+
   roadNode:"E76_13"
+
 };
 
 const KINGS_EXPRESS={
+
   el:"kingsExpress",
+
   bx:77,
+
   by:70,
+
   bw:14,
+
   bh:14,
-  entrance:{x:84,y:86},
-  pedNode:"PE_C2",
+
+  entrance:{
+    x:84,
+    y:86
+  },
+
+  pedNode:"PE_D2",
+
   roadNode:"E76_87"
+
 };
 
 /* =========================================================
-   VEHICLE ROAD GRAPH
+   ROAD GRAPH
 ========================================================= */
 
 const ROAD_NODES={
@@ -2013,6 +2873,7 @@ const ROAD_NODES={
   E_R38:{x:98,y:38},
   E_R63:{x:98,y:63},
   E_R87:{x:98,y:87}
+
 };
 
 const ROAD_EDGES=[
@@ -2033,7 +2894,7 @@ const ROAD_EDGES=[
   ["W18_13","W42_13"],
 
   ["W_L38","W18_38"],
-  ["W42_38","W76_38"],
+  ["W42_38","E76_38"],
 
   ["W_L63","W18_63"],
   ["W18_63","W42_63"],
@@ -2041,10 +2902,8 @@ const ROAD_EDGES=[
   ["W_L87","W18_87"],
   ["W18_87","W42_87"],
 
-  /* bridge 1 */
   ["W42_13","E76_13"],
 
-  /* bridge 2 */
   ["W42_87","E76_87"],
 
   ["E76_T","E76_13"],
@@ -2056,14 +2915,15 @@ const ROAD_EDGES=[
   ["E76_13","E_R13"],
   ["E76_38","E_R38"],
   ["E76_63","E_R63"],
-  ["E76_87","E_R87"]
+  ["E76_87","E_R87"],
+
+  ["W18_38","RA_W"],
+  ["W42_38","RA_E"]
 
 ];
 
-/* Fix missing node created by bridge edge */
-ROAD_NODES.W76_38={x:76,y:38};
-
 const ROUNDABOUT_LOOP=[
+
   "RA_W",
   "RA_SW",
   "RA_S",
@@ -2073,6 +2933,7 @@ const ROUNDABOUT_LOOP=[
   "RA_N",
   "RA_NW",
   "RA_W"
+
 ];
 
 const ROAD_EDGES_DIRECTED=[];
@@ -2082,19 +2943,13 @@ for(
   i<ROUNDABOUT_LOOP.length-1;
   i++
 ){
+
   ROAD_EDGES_DIRECTED.push([
     ROUNDABOUT_LOOP[i],
     ROUNDABOUT_LOOP[i+1]
   ]);
+
 }
-
-ROAD_EDGES.push(
-  ["W18_38","RA_W"],
-  ["W42_38","RA_E"]
-);
-
-const ROUNDABOUT_LOOP_SET=
-  new Set(ROUNDABOUT_LOOP);
 
 /* =========================================================
    PEDESTRIAN GRAPH
@@ -2203,18 +3058,8 @@ const PED_EDGES=[
   ["PE_B1","PE_C1"],
   ["PE_C1","PE_D1"],
 
-  /* bridge sidewalks */
   ["PW_A5","PE_A1"],
-  ["PW_D5","PE_D1"],
-
-  /* entrances */
-  ["shop1_entrance","PW_A2"],
-  ["shop2_entrance","PW_B2"],
-  ["shop3_entrance","PW_C2"],
-  ["shop4_entrance","PW_D2"],
-
-  ["kingsHQ_entrance","PE_A2"],
-  ["kingsExpress_entrance","PE_D2"]
+  ["PW_D5","PE_D1"]
 
 ];
 
@@ -2224,18 +3069,17 @@ function buildPedNodesWithEntrances(){
     ...PED_NODES
   };
 
-  const entranceNames=[
-    "shop1_entrance",
-    "shop2_entrance",
-    "shop3_entrance",
-    "shop4_entrance"
-  ];
+  nodes.shop1_entrance=
+    SLOTS[0].entrance;
 
-  SLOTS.forEach(
-    (slot,i)=>{
-      nodes[entranceNames[i]]=slot.entrance;
-    }
-  );
+  nodes.shop2_entrance=
+    SLOTS[1].entrance;
+
+  nodes.shop3_entrance=
+    SLOTS[2].entrance;
+
+  nodes.shop4_entrance=
+    SLOTS[3].entrance;
 
   nodes.kingsHQ_entrance=
     KINGS_HQ.entrance;
@@ -2244,36 +3088,52 @@ function buildPedNodesWithEntrances(){
     KINGS_EXPRESS.entrance;
 
   return nodes;
+
 }
 
 let PED_NODES_ALL=
   buildPedNodesWithEntrances();
 
-/* =========================================================
-   GRAPH HELPERS
-========================================================= */
-
-function buildAdjacency(edges,directedEdges){
+function buildAdjacency(
+  edges,
+  directedEdges
+){
 
   const adj={};
 
-  const add=(a,b)=>{
-    (adj[a]=adj[a]||[]).push(b);
-  };
+  function add(a,b){
 
-  (edges||[]).forEach(([a,b])=>{
-    add(a,b);
-    add(b,a);
-  });
+    if(!adj[a])
+      adj[a]=[];
 
-  (directedEdges||[]).forEach(([a,b])=>{
-    add(a,b);
-  });
+    adj[a].push(b);
+
+  }
+
+  (edges||[]).forEach(
+    ([a,b])=>{
+
+      add(a,b);
+      add(b,a);
+
+    }
+  );
+
+  (directedEdges||[]).forEach(
+    ([a,b])=>{
+      add(a,b);
+    }
+  );
 
   return adj;
+
 }
 
-function bfsPath(adj,start,goal){
+function bfsPath(
+  adj,
+  start,
+  goal
+){
 
   if(start===goal)
     return[start];
@@ -2308,12 +3168,15 @@ function bfsPath(adj,start,goal){
         return newPath;
 
       visited.add(n);
+
       queue.push(newPath);
 
     }
+
   }
 
   return null;
+
 }
 
 const VEHICLE_ADJ=
@@ -2328,56 +3191,8 @@ const PED_ADJ=
     []
   );
 
-function findVehiclePath(
-  startId,
-  goalId
-){
-
-  const path=
-    bfsPath(
-      VEHICLE_ADJ,
-      startId,
-      goalId
-    );
-
-  if(!path)
-    return null;
-
-  return path.map(
-    id=>({
-      id,
-      x:ROAD_NODES[id].x,
-      y:ROAD_NODES[id].y
-    })
-  );
-}
-
-function findPedestrianPath(
-  startId,
-  goalId
-){
-
-  const path=
-    bfsPath(
-      PED_ADJ,
-      startId,
-      goalId
-    );
-
-  if(!path)
-    return null;
-
-  return path.map(
-    id=>({
-      id,
-      x:PED_NODES_ALL[id].x,
-      y:PED_NODES_ALL[id].y
-    })
-  );
-}
-
 /* =========================================================
-   COLLISION MANAGER
+   COLLISION
 ========================================================= */
 
 const CollisionManager={
@@ -2391,18 +3206,27 @@ const CollisionManager={
     SLOTS.forEach(
       (slot,i)=>{
 
-        const owned=
+        if(
           i===0||
-          isSlotActive(i);
-
-        if(owned){
+          isSlotActive(i)
+        ){
 
           rects.push({
+
             id:slot.el,
+
             left:slot.bx,
-            right:slot.bx+slot.bw,
+
+            right:
+              slot.bx+
+              slot.bw,
+
             top:slot.by,
-            bottom:slot.by+slot.bh
+
+            bottom:
+              slot.by+
+              slot.bh
+
           });
 
         }
@@ -2411,35 +3235,70 @@ const CollisionManager={
     );
 
     rects.push({
+
       id:KINGS_HQ.el,
+
       left:KINGS_HQ.bx,
-      right:KINGS_HQ.bx+KINGS_HQ.bw,
+
+      right:
+        KINGS_HQ.bx+
+        KINGS_HQ.bw,
+
       top:KINGS_HQ.by,
-      bottom:KINGS_HQ.by+KINGS_HQ.bh
+
+      bottom:
+        KINGS_HQ.by+
+        KINGS_HQ.bh
+
     });
 
     rects.push({
+
       id:KINGS_EXPRESS.el,
+
       left:KINGS_EXPRESS.bx,
-      right:KINGS_EXPRESS.bx+KINGS_EXPRESS.bw,
+
+      right:
+        KINGS_EXPRESS.bx+
+        KINGS_EXPRESS.bw,
+
       top:KINGS_EXPRESS.by,
-      bottom:KINGS_EXPRESS.by+KINGS_EXPRESS.bh
+
+      bottom:
+        KINGS_EXPRESS.by+
+        KINGS_EXPRESS.bh
+
     });
 
-    this.buildingRects=rects;
+    this.buildingRects=
+      rects;
 
   },
 
-  isBuildingBlocked(x,y,pad){
+  isBuildingBlocked(
+    x,
+    y,
+    pad
+  ){
 
-    pad=pad||0.6;
+    pad=
+      pad||0.6;
 
     return this.buildingRects.some(
       r=>
-        x>r.left-pad&&
-        x<r.right+pad&&
-        y>r.top-pad&&
-        y<r.bottom+pad
+
+        x>
+        r.left-pad&&
+
+        x<
+        r.right+pad&&
+
+        y>
+        r.top-pad&&
+
+        y<
+        r.bottom+pad
+
     );
 
   },
@@ -2453,51 +3312,46 @@ const CollisionManager={
 
   },
 
-  isRoadBlocked(x,y){
-
-    return false;
-
-  },
-
-  isPedestrianBlocked(x,y){
-
-    return(
-      this.isBuildingBlocked(
-        x,y,0.3
-      )||
-      this.isRiverBlocked(x,y)
-    );
-
-  },
-
-  isVehicleBlocked(x,y){
-
-    return this.isBuildingBlocked(
-      x,y,1.0
-    );
-
-  },
-
-  getNearbyObjects(
+  isPedestrianBlocked(
     x,
-    y,
-    list,
-    radius
+    y
   ){
 
-    return list.filter(
-      o=>
-        Math.hypot(
-          o.x-x,
-          o.y-y
-        )<=radius
+    return(
+
+      this.isBuildingBlocked(
+        x,
+        y,
+        0.3
+      )||
+
+      this.isRiverBlocked(
+        x,
+        y
+      )
+
+    );
+
+  },
+
+  isVehicleBlocked(
+    x,
+    y
+  ){
+
+    return this.isBuildingBlocked(
+      x,
+      y,
+      1
     );
 
   }
 
 };
 
-function isSlotActive(slotIndex){
+function isSlotActive(
+  slotIndex
+){
 
   if(slotIndex===0)
     return true;
@@ -2514,237 +3368,408 @@ function isSlotActive(slotIndex){
 
 }
 
-function storeIndexForSlot(slotIndex){
-
-  if(slotIndex===0)
-    return 0;
-
-  const property=
-    game.properties[
-      slotIndex-1
-    ];
-
-  return property&&
-    property.bought
-    ?property.storeIndex
-    :null;
-
-}
-
 /* =========================================================
-   VALIDATE CITY
+   PEOPLE
 ========================================================= */
 
-function validateCity(){
+let people=[];
 
-  CollisionManager.refreshColliders();
+const PLAYER_WALK_NODES=[
 
-  let errors=0;
+  "PW_A1",
+  "PW_A2",
+  "PW_A3",
+  "PW_A4",
+  "PW_A5",
 
-  CollisionManager.buildingRects.forEach(
-    b=>{
+  "PW_B1",
+  "PW_B2",
+  "PW_B3",
+  "PW_B4",
+  "PW_B5",
+
+  "PW_C1",
+  "PW_C2",
+  "PW_C3",
+  "PW_C4",
+  "PW_C5",
+
+  "PW_D1",
+  "PW_D2",
+  "PW_D3",
+  "PW_D4",
+  "PW_D5",
+
+  "PW_M1"
+
+];
+
+const RIVAL_WALK_NODES=[
+
+  "PE_A1",
+  "PE_A2",
+  "PE_A3",
+
+  "PE_B1",
+  "PE_B2",
+  "PE_B3",
+
+  "PE_C1",
+  "PE_C2",
+  "PE_C3",
+
+  "PE_D1",
+  "PE_D2",
+  "PE_D3"
+
+];
+
+function pedestrianSeparate(p){
+
+  let ox=0;
+  let oy=0;
+
+  people.forEach(
+    other=>{
 
       if(
-        b.left<69&&
-        b.right>57
-      ){
+        other===p||
+        other.kind!==p.kind
+      )
+        return;
 
-        console.error(
-          "ERROR: "+
-          b.id+
-          " overlaps river"
+      const dx=
+        p.x-other.x;
+
+      const dy=
+        p.y-other.y;
+
+      const d=
+        Math.hypot(
+          dx,
+          dy
         );
 
-        errors++;
+      if(
+        d>0.0001&&
+        d<1.1
+      ){
+
+        ox+=
+          dx/d*
+          (1.1-d);
+
+        oy+=
+          dy/d*
+          (1.1-d);
+
       }
 
     }
   );
 
-  [
-    "shop1_entrance",
-    "shop2_entrance",
-    "shop3_entrance",
-    "shop4_entrance",
-    "kingsHQ_entrance",
-    "kingsExpress_entrance"
-  ].forEach(id=>{
+  return{
+    ox,
+    oy
+  };
 
-    if(
-      !PED_ADJ[id]||
-      !PED_ADJ[id].length
-    ){
-
-      console.error(
-        "ERROR: entrance "+
-        id+
-        " has no pedestrian connection"
-      );
-
-      errors++;
-
-    }
-
-  });
-
-  if(errors===0)
-    console.log(
-      "validateCity: OK"
-    );
-  else
-    console.log(
-      "validateCity: "+
-      errors+
-      " problem(s)"
-    );
-
-  return errors;
 }
 
-/* =========================================================
-   DEBUG
-========================================================= */
+function makePerson(kind){
 
-function renderDebug(){
+  const pool=
+    kind==="player"
+    ?PLAYER_WALK_NODES
+    :RIVAL_WALK_NODES;
 
-  const svg=
-    document.getElementById(
-      "debugLayer"
-    );
+  const startId=
+    pool[
+      Math.floor(
+        Math.random()*
+        pool.length
+      )
+    ];
 
-  const badge=
-    document.getElementById(
-      "debugBadge"
-    );
+  const start=
+    PED_NODES_ALL[
+      startId
+    ];
 
-  svg.classList.toggle(
-    "on",
-    DEBUG_MODE
+  return{
+
+    kind,
+
+    x:start.x,
+
+    y:start.y,
+
+    currentNodeId:startId,
+
+    waypoints:[],
+
+    state:"WALKING",
+
+    speed:
+      1.1+
+      Math.random()*0.3,
+
+    stateTimer:0,
+
+    toShop:false,
+
+    el:null
+
+  };
+
+}
+
+function newPersonRoute(
+  kind,
+  fromId
+){
+
+  const pool=
+    kind==="player"
+    ?PLAYER_WALK_NODES
+    :RIVAL_WALK_NODES;
+
+  let goal;
+
+  do{
+
+    goal=
+      pool[
+        Math.floor(
+          Math.random()*
+          pool.length
+        )
+      ];
+
+  }while(
+    goal===fromId
   );
 
-  badge.classList.toggle(
-    "on",
-    DEBUG_MODE
-  );
+  const path=
+    bfsPath(
+      PED_ADJ,
+      fromId,
+      goal
+    );
 
-  if(!DEBUG_MODE){
+  if(
+    !path||
+    path.length<2
+  )
+    return null;
 
-    svg.innerHTML="";
-    return;
+  return{
+    path,
+    toShop:false
+  };
+
+}
+
+function createPeople(){
+
+  const layer=
+    document.getElementById(
+      "peopleLayer"
+    );
+
+  layer.innerHTML="";
+
+  people=[];
+
+  const playerCount=
+    Math.min(
+      18,
+      Math.max(
+        7,
+        Math.floor(
+          game.customers/12
+        )
+      )
+    );
+
+  const rivalCount=
+    Math.min(
+      5,
+      Math.max(
+        0,
+        Math.ceil(
+          game.rival.customers/50
+        )
+      )
+    );
+
+  for(
+    let i=0;
+    i<playerCount;
+    i++
+  ){
+
+    const p=
+      makePerson(
+        "player"
+      );
+
+    const el=
+      document.createElement(
+        "div"
+      );
+
+    el.className=
+      "person";
+
+    layer.appendChild(el);
+
+    p.el=el;
+
+    people.push(p);
 
   }
 
-  let html="";
+  for(
+    let i=0;
+    i<rivalCount;
+    i++
+  ){
 
-  CollisionManager
-    .buildingRects
-    .forEach(r=>{
+    const p=
+      makePerson(
+        "rival"
+      );
 
-      html+=
-        `<rect
-          x="${r.left}"
-          y="${r.top}"
-          width="${r.right-r.left}"
-          height="${r.bottom-r.top}"
-          fill="#ff000033"
-          stroke="#ff3333"
-          stroke-width="0.3"/>`;
+    const el=
+      document.createElement(
+        "div"
+      );
 
-    });
+    el.className=
+      "person red";
 
-  ROAD_EDGES
-    .concat(
-      ROAD_EDGES_DIRECTED
-    )
-    .forEach(([a,b])=>{
+    layer.appendChild(el);
 
-      const A=ROAD_NODES[a];
-      const B=ROAD_NODES[b];
+    p.el=el;
 
-      if(A&&B){
+    people.push(p);
 
-        html+=
-          `<line
-            x1="${A.x}"
-            y1="${A.y}"
-            x2="${B.x}"
-            y2="${B.y}"
-            stroke="#33ccff"
-            stroke-width="0.4"/>`;
-
-      }
-
-    });
-
-  Object.values(
-    ROAD_NODES
-  ).forEach(n=>{
-
-    html+=
-      `<circle
-        cx="${n.x}"
-        cy="${n.y}"
-        r="0.6"
-        fill="#33ccff"/>`;
-
-  });
-
-  PED_EDGES.forEach(([a,b])=>{
-
-    const A=PED_NODES_ALL[a];
-    const B=PED_NODES_ALL[b];
-
-    if(A&&B){
-
-      html+=
-        `<line
-          x1="${A.x}"
-          y1="${A.y}"
-          x2="${B.x}"
-          y2="${B.y}"
-          stroke="#ffcc33"
-          stroke-width="0.25"/>`;
-
-    }
-
-  });
-
-  Object.values(
-    PED_NODES_ALL
-  ).forEach(n=>{
-
-    html+=
-      `<circle
-        cx="${n.x}"
-        cy="${n.y}"
-        r="0.4"
-        fill="#ffcc33"/>`;
-
-  });
-
-  svg.innerHTML=html;
+  }
 
 }
 
-let logoTapCount=0;
-let logoTapTimer=null;
+function updatePedestrians(dt){
 
-function toggleDebug(){
+  people.forEach(
+    p=>{
 
-  DEBUG_MODE=!DEBUG_MODE;
+      if(
+        !p.waypoints.length
+      ){
 
-  renderDebug();
+        const route=
+          newPersonRoute(
+            p.kind,
+            p.currentNodeId
+          );
 
-  toast(
-    DEBUG_MODE
-    ?"🐞 Debug mode ON"
-    :"🐞 Debug mode OFF"
+        if(route){
+
+          p.waypoints=
+            route.path.slice(1);
+
+        }
+
+        return;
+
+      }
+
+      const target=
+        p.waypoints[0];
+
+      const dx=
+        target.x-p.x;
+
+      const dy=
+        target.y-p.y;
+
+      const dist=
+        Math.hypot(
+          dx,
+          dy
+        );
+
+      const sep=
+        pedestrianSeparate(p);
+
+      const move=
+        Math.min(
+          p.speed*dt,
+          dist
+        );
+
+      if(dist>0.001){
+
+        const nx=
+          p.x+
+          (dx/dist)*move+
+          sep.ox*dt;
+
+        const ny=
+          p.y+
+          (dy/dist)*move+
+          sep.oy*dt;
+
+        if(
+          !CollisionManager
+            .isPedestrianBlocked(
+              nx,
+              ny
+            )
+        ){
+
+          p.x=nx;
+          p.y=ny;
+
+        }
+
+      }
+
+      if(
+        dist<=move+0.05
+      ){
+
+        p.currentNodeId=
+          target.id||
+          p.currentNodeId;
+
+        p.waypoints.shift();
+
+      }
+
+    }
+  );
+
+}
+
+function renderPedestrians(){
+
+  people.forEach(
+    p=>{
+
+      p.el.style.left=
+        p.x+"%";
+
+      p.el.style.top=
+        p.y+"%";
+
+    }
   );
 
 }
 
 /* =========================================================
-   VEHICLES
+   CARS
 ========================================================= */
 
 let cars=[];
@@ -2777,6 +3802,7 @@ function randomNodeId(
   );
 
   return id;
+
 }
 
 function newCarRoute(
@@ -2795,7 +3821,8 @@ function newCarRoute(
       );
 
     const path=
-      findVehiclePath(
+      bfsPath(
+        VEHICLE_ADJ,
         fromId,
         goal
       );
@@ -2803,12 +3830,22 @@ function newCarRoute(
     if(
       path&&
       path.length>1
-    )
-      return path;
+    ){
+
+      return path.map(
+        id=>({
+          id,
+          x:ROAD_NODES[id].x,
+          y:ROAD_NODES[id].y
+        })
+      );
+
+    }
 
   }
 
   return null;
+
 }
 
 function createCars(){
@@ -2819,6 +3856,7 @@ function createCars(){
     );
 
   layer.innerHTML="";
+
   cars=[];
 
   for(
@@ -2850,7 +3888,8 @@ function createCars(){
       (
         i%3===0
         ?"blueCar"
-        :i%3===1
+        :
+        i%3===1
         ?"yellowCar"
         :""
       );
@@ -2860,23 +3899,22 @@ function createCars(){
     const route=
       newCarRoute(
         startId
-      )||
-      [{
-        id:startId,
-        x:start.x,
-        y:start.y
-      }];
+      );
 
     cars.push({
 
       el,
+
       x:start.x,
+
       y:start.y,
 
       currentNodeId:startId,
 
       waypoints:
-        route.slice(1),
+        route
+        ?route.slice(1)
+        :[],
 
       speed:0,
 
@@ -2956,127 +3994,88 @@ function carAheadTooClose(car){
   }
 
   return false;
-}
-
-function roundaboutBlockedFor(car){
-
-  const target=
-    car.waypoints[0];
-
-  if(
-    !target||
-    !target.id
-  )
-    return false;
-
-  const enteringLoop=
-    ROUNDABOUT_LOOP_SET.has(
-      target.id
-    )&&
-    !ROUNDABOUT_LOOP_SET.has(
-      car.currentNodeId
-    );
-
-  if(!enteringLoop)
-    return false;
-
-  return cars.some(
-    o=>
-      o!==car&&
-      ROUNDABOUT_LOOP_SET.has(
-        o.currentNodeId
-      )&&
-      Math.hypot(
-        o.x-target.x,
-        o.y-target.y
-      )<6
-  );
 
 }
 
 function updateCars(dt){
 
-  cars.forEach(car=>{
+  cars.forEach(
+    car=>{
 
-    if(!car.waypoints.length){
+      if(!car.waypoints.length){
 
-      const route=
-        newCarRoute(
-          car.currentNodeId
-        );
+        const route=
+          newCarRoute(
+            car.currentNodeId
+          );
 
-      if(route)
-        car.waypoints=
-          route.slice(1);
+        if(route)
+          car.waypoints=
+            route.slice(1);
 
-      return;
-    }
+        return;
 
-    const target=
-      car.waypoints[0];
+      }
 
-    let desired=
-      car.maxSpeed;
+      const target=
+        car.waypoints[0];
 
-    if(carAheadTooClose(car))
-      desired=0;
-
-    if(roundaboutBlockedFor(car))
-      desired=0;
-
-    car.speed+=
-      (
-        desired-
-        car.speed
-      )*
-      Math.min(
-        1,
-        dt*3
-      );
-
-    if(car.speed<0.05)
-      car.speed=0;
-
-    const dx=
-      target.x-car.x;
-
-    const dy=
-      target.y-car.y;
-
-    const dist=
-      Math.hypot(
-        dx,
-        dy
-      );
-
-    const move=
-      Math.min(
-        car.speed*dt,
-        dist
-      );
-
-    if(dist>0.001){
-
-      const nx=
-        car.x+
-        (dx/dist)*move;
-
-      const ny=
-        car.y+
-        (dy/dist)*move;
+      let desired=
+        car.maxSpeed;
 
       if(
-        !CollisionManager
-          .isVehicleBlocked(
-            nx,
-            ny
-          )
-      ){
+        carAheadTooClose(car)
+      )
+        desired=0;
 
-        car.x=nx;
-        car.y=ny;
+      car.speed+=
+        (
+          desired-
+          car.speed
+        )*
+        Math.min(
+          1,
+          dt*3
+        );
 
-        if(move>0.001){
+      const dx=
+        target.x-car.x;
+
+      const dy=
+        target.y-car.y;
+
+      const dist=
+        Math.hypot(
+          dx,
+          dy
+        );
+
+      const move=
+        Math.min(
+          car.speed*dt,
+          dist
+        );
+
+      if(dist>0.001){
+
+        const nx=
+          car.x+
+          (dx/dist)*move;
+
+        const ny=
+          car.y+
+          (dy/dist)*move;
+
+        if(
+          !CollisionManager
+            .isVehicleBlocked(
+              nx,
+              ny
+            )
+        ){
+
+          car.x=nx;
+          car.y=ny;
 
           car.angle=
             Math.atan2(
@@ -3086,53 +4085,53 @@ function updateCars(dt){
             180/
             Math.PI;
 
+        }else{
+
+          car.speed=0;
+
         }
 
-      }else{
+      }
 
-        car.speed=0;
+      if(
+        dist<=move+0.05
+      ){
+
+        car.currentNodeId=
+          target.id;
+
+        car.waypoints.shift();
 
       }
 
     }
-
-    if(
-      dist<=move+0.05
-    ){
-
-      car.currentNodeId=
-        target.id||
-        car.currentNodeId;
-
-      car.waypoints.shift();
-
-    }
-
-  });
+  );
 
 }
 
 function renderCars(){
 
-  cars.forEach(car=>{
+  cars.forEach(
+    car=>{
 
-    car.el.style.left=
-      car.x+"%";
+      car.el.style.left=
+        car.x+"%";
 
-    car.el.style.top=
-      car.y+"%";
+      car.el.style.top=
+        car.y+"%";
 
-    car.el.style.transform=
-      "translate(-50%,-50%) rotate("+
-      car.angle+
-      "deg)";
+      car.el.style.transform=
+        "translate(-50%,-50%) rotate("+
+        car.angle+
+        "deg)";
 
-  });
+    }
+  );
 
 }
 
 /* =========================================================
-   DELIVERY VANS
+   DELIVERY
 ========================================================= */
 
 let deliveryVans=[];
@@ -3143,7 +4142,7 @@ function spawnDeliveryForStore(
 
   const slotIndex=
     SLOTS.findIndex(
-      (s,i)=>
+      (slot,i)=>
         storeIndexForSlot(i)===
         storeIndex
     );
@@ -3183,6 +4182,7 @@ function spawnDeliveryForStore(
     el,
 
     x:path[0].x,
+
     y:path[0].y,
 
     waypoints:
@@ -3194,15 +4194,43 @@ function spawnDeliveryForStore(
 
 }
 
+function findVehiclePath(
+  startId,
+  goalId
+){
+
+  const path=
+    bfsPath(
+      VEHICLE_ADJ,
+      startId,
+      goalId
+    );
+
+  if(!path)
+    return null;
+
+  return path.map(
+    id=>({
+      id,
+      x:ROAD_NODES[id].x,
+      y:ROAD_NODES[id].y
+    })
+  );
+
+}
+
 function updateDeliveries(dt){
 
   deliveryVans=
     deliveryVans.filter(
       van=>{
 
-        if(!van.waypoints.length){
+        if(
+          !van.waypoints.length
+        ){
 
           van.el.remove();
+
           return false;
 
         }
@@ -3240,8 +4268,11 @@ function updateDeliveries(dt){
 
         if(
           dist<=move+0.05
-        )
+        ){
+
           van.waypoints.shift();
+
+        }
 
         van.el.style.left=
           van.x+"%";
@@ -3257,586 +4288,7 @@ function updateDeliveries(dt){
 }
 
 /* =========================================================
-   PEDESTRIANS
-========================================================= */
-
-let people=[];
-
-const PLAYER_WALK_NODES=[
-  "PW_A1","PW_A2","PW_A3","PW_A4","PW_A5",
-  "PW_B1","PW_B2","PW_B3","PW_B4","PW_B5",
-  "PW_C1","PW_C2","PW_C3","PW_C4","PW_C5",
-  "PW_D1","PW_D2","PW_D3","PW_D4","PW_D5",
-  "PW_M1"
-];
-
-const RIVAL_WALK_NODES=[
-  "PE_A1","PE_A2","PE_A3",
-  "PE_B1","PE_B2","PE_B3",
-  "PE_C1","PE_C2","PE_C3",
-  "PE_D1","PE_D2","PE_D3"
-];
-
-function activeEntranceIds(){
-
-  const ids=[
-    "shop1_entrance"
-  ];
-
-  for(
-    let i=1;
-    i<SLOTS.length;
-    i++
-  ){
-
-    if(isSlotActive(i)){
-
-      ids.push(
-        [
-          "shop1_entrance",
-          "shop2_entrance",
-          "shop3_entrance",
-          "shop4_entrance"
-        ][i]
-      );
-
-    }
-
-  }
-
-  return ids;
-}
-
-function pedestrianSeparate(p){
-
-  let ox=0;
-  let oy=0;
-
-  people.forEach(o=>{
-
-    if(
-      o===p||
-      o.kind!==p.kind
-    )
-      return;
-
-    const dx=
-      p.x-o.x;
-
-    const dy=
-      p.y-o.y;
-
-    const d=
-      Math.hypot(
-        dx,
-        dy
-      );
-
-    if(
-      d>0.0001&&
-      d<1.1
-    ){
-
-      ox+=
-        dx/d*
-        (1.1-d);
-
-      oy+=
-        dy/d*
-        (1.1-d);
-
-    }
-
-  });
-
-  return{
-    ox,
-    oy
-  };
-
-}
-
-function newPersonRoute(
-  kind,
-  fromId
-){
-
-  const pool=
-    kind==="player"
-    ?PLAYER_WALK_NODES
-    :RIVAL_WALK_NODES;
-
-  const entrances=
-    kind==="player"
-    ?activeEntranceIds()
-    :[
-      "kingsHQ_entrance",
-      "kingsExpress_entrance"
-    ];
-
-  const wantsShop=
-    Math.random()<0.35&&
-    entrances.length;
-
-  let goal;
-
-  if(wantsShop){
-
-    goal=
-      entrances[
-        Math.floor(
-          Math.random()*
-          entrances.length
-        )
-      ];
-
-  }else{
-
-    do{
-
-      goal=
-        pool[
-          Math.floor(
-            Math.random()*
-            pool.length
-          )
-        ];
-
-    }while(
-      goal===fromId
-    );
-
-  }
-
-  const path=
-    findPedestrianPath(
-      fromId,
-      goal
-    );
-
-  if(
-    !path||
-    path.length<2
-  )
-    return null;
-
-  return{
-    path,
-    toShop:wantsShop
-  };
-
-}
-
-function makePerson(kind){
-
-  const pool=
-    kind==="player"
-    ?PLAYER_WALK_NODES
-    :RIVAL_WALK_NODES;
-
-  const startId=
-    pool[
-      Math.floor(
-        Math.random()*
-        pool.length
-      )
-    ];
-
-  const start=
-    PED_NODES_ALL[
-      startId
-    ];
-
-  return{
-
-    kind,
-
-    x:start.x,
-    y:start.y,
-
-    currentNodeId:startId,
-
-    waypoints:[],
-
-    state:"WALKING",
-
-    speed:
-      1.1+
-      Math.random()*0.3,
-
-    stateTimer:0,
-
-    targetEntrance:null
-
-  };
-
-}
-
-function createPeople(){
-
-  const layer=
-    document.getElementById(
-      "peopleLayer"
-    );
-
-  layer.innerHTML="";
-  people=[];
-
-  const playerCount=
-    Math.min(
-      18,
-      Math.max(
-        7,
-        Math.floor(
-          game.customers/12
-        )
-      )
-    );
-
-  const rivalCount=
-    Math.min(
-      8,
-      Math.max(
-        1,
-        Math.ceil(
-          game.rival.customers/45
-        )
-      )
-    );
-
-  for(
-    let i=0;
-    i<playerCount;
-    i++
-  ){
-
-    const p=
-      makePerson(
-        "player"
-      );
-
-    const el=
-      document.createElement(
-        "div"
-      );
-
-    el.className=
-      "person";
-
-    layer.appendChild(el);
-
-    p.el=el;
-
-    people.push(p);
-
-  }
-
-  for(
-    let i=0;
-    i<rivalCount;
-    i++
-  ){
-
-    const p=
-      makePerson(
-        "rival"
-      );
-
-    const el=
-      document.createElement(
-        "div"
-      );
-
-    el.className=
-      "person red";
-
-    layer.appendChild(el);
-
-    p.el=el;
-
-    people.push(p);
-
-  }
-
-}
-
-function updatePedestrians(dt){
-
-  people.forEach(p=>{
-
-    if(
-      p.state==="APPROACHING_SHOP"||
-      p.state==="ENTERING"||
-      p.state==="SHOPPING"||
-      p.state==="EXITING"
-    ){
-
-      p.stateTimer-=dt;
-
-      if(
-        p.stateTimer<=0
-      ){
-
-        if(
-          p.state==="APPROACHING_SHOP"
-        ){
-
-          p.state="ENTERING";
-          p.stateTimer=0.6;
-
-        }
-
-        else if(
-          p.state==="ENTERING"
-        ){
-
-          p.state="SHOPPING";
-
-          p.stateTimer=
-            3+
-            Math.random()*4;
-
-          p.el.classList.add(
-            "hidden"
-          );
-
-        }
-
-        else if(
-          p.state==="SHOPPING"
-        ){
-
-          p.state="EXITING";
-
-          p.stateTimer=0.6;
-
-          p.el.classList.remove(
-            "hidden"
-          );
-
-        }
-
-        else if(
-          p.state==="EXITING"
-        ){
-
-          p.state="WALKING";
-
-          const route=
-            newPersonRoute(
-              p.kind,
-              p.currentNodeId
-            );
-
-          if(route){
-
-            p.waypoints=
-              route.path.slice(1);
-
-            p.toShop=false;
-
-          }
-
-        }
-
-      }
-
-      return;
-
-    }
-
-    if(
-      !p.waypoints.length
-    ){
-
-      const route=
-        newPersonRoute(
-          p.kind,
-          p.currentNodeId
-        );
-
-      if(route){
-
-        p.waypoints=
-          route.path.slice(1);
-
-        p.toShop=
-          route.toShop;
-
-      }
-
-      return;
-
-    }
-
-    const target=
-      p.waypoints[0];
-
-    const dx=
-      target.x-p.x;
-
-    const dy=
-      target.y-p.y;
-
-    const dist=
-      Math.hypot(
-        dx,
-        dy
-      );
-
-    const sep=
-      pedestrianSeparate(p);
-
-    const move=
-      Math.min(
-        p.speed*dt,
-        dist
-      );
-
-    if(dist>0.001){
-
-      let nx=
-        p.x+
-        (dx/dist)*move+
-        sep.ox*dt;
-
-      let ny=
-        p.y+
-        (dy/dist)*move+
-        sep.oy*dt;
-
-      if(
-        !CollisionManager
-          .isPedestrianBlocked(
-            nx,
-            ny
-          )
-      ){
-
-        p.x=nx;
-        p.y=ny;
-
-      }else{
-
-        p.x+=
-          (dx/dist)*move;
-
-        p.y+=
-          (dy/dist)*move;
-
-      }
-
-    }
-
-    if(
-      dist<=move+0.05
-    ){
-
-      p.currentNodeId=
-        target.id||
-        p.currentNodeId;
-
-      p.waypoints.shift();
-
-      if(
-        !p.waypoints.length&&
-        p.toShop&&
-        String(
-          p.currentNodeId
-        ).endsWith("_entrance")
-      ){
-
-        p.state=
-          "APPROACHING_SHOP";
-
-        p.stateTimer=0.5;
-
-      }
-
-    }
-
-  });
-
-}
-
-function renderPedestrians(){
-
-  people.forEach(p=>{
-
-    p.el.style.left=
-      p.x+"%";
-
-    p.el.style.top=
-      p.y+"%";
-
-  });
-
-}
-
-/* =========================================================
-   PANEL / TOAST
-========================================================= */
-
-function openPanel(html){
-
-  document.getElementById(
-    "panelContent"
-  ).innerHTML=html;
-
-  document.getElementById(
-    "panel"
-  ).classList.add("open");
-
-}
-
-function closePanel(){
-
-  document.getElementById(
-    "panel"
-  ).classList.remove("open");
-
-}
-
-let toastTimer=null;
-
-function toast(message){
-
-  const el=
-    document.getElementById(
-      "toast"
-    );
-
-  el.textContent=message;
-
-  el.classList.add("show");
-
-  clearTimeout(
-    toastTimer
-  );
-
-  toastTimer=
-    setTimeout(
-      ()=>el.classList.remove(
-        "show"
-      ),
-      2800
-    );
-
-}
-
-function escapeHtml(text){
-
-  return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-/* =========================================================
-   SHOP PANEL
+   SHOP FUNCTIONS
 ========================================================= */
 
 function openShop(index){
@@ -3857,26 +4309,23 @@ function openShop(index){
     shop.level*850+
     (shop.upgrades||0)*700;
 
-  const stock=
-    Math.floor(
-      shop.stock||0
-    );
-
   const state=
-    computeShopState(
-      shop
-    );
+    computeShopState(shop);
 
   openPanel(`
 
-    <h2>🏪 ${escapeHtml(shop.name)}</h2>
+    <h2>
+      🏪
+      ${escapeHtml(shop.name)}
+    </h2>
 
     <div
       class="stateBadge ${state}"
       style="
       position:static;
       display:inline-block;
-      transform:none;">
+      transform:none;"
+    >
       ${state.replace("_"," ")}
     </div>
 
@@ -3904,7 +4353,7 @@ function openShop(index){
 
       <div class="miniStat">
         <small>STOCK</small>
-        <b>${stock}%</b>
+        <b>${Math.floor(shop.stock)}%</b>
       </div>
 
       <div class="miniStat">
@@ -3916,25 +4365,30 @@ function openShop(index){
 
     <button
       class="actionButton"
-      onclick="upgradeShop(${index})">
-      ⬆️ Upgrade — £${upgradeCost.toLocaleString()}
+      onclick="upgradeShop(${index})"
+    >
+      ⬆️ Upgrade —
+      £${upgradeCost.toLocaleString()}
     </button>
 
     <button
       class="actionButton green"
-      onclick="renovateShop(${index})">
+      onclick="renovateShop(${index})"
+    >
       🔨 Renovate — £750
     </button>
 
     <button
       class="actionButton blue"
-      onclick="advertiseShop(${index})">
+      onclick="advertiseShop(${index})"
+    >
       📢 Advertise — £500
     </button>
 
     <button
       class="actionButton"
-      onclick="orderStock(${index})">
+      onclick="orderStock(${index})"
+    >
       📦 Order Stock — £250
     </button>
 
@@ -3962,6 +4416,7 @@ function upgradeShop(index){
     );
 
     return;
+
   }
 
   game.cash-=cost;
@@ -3981,7 +4436,7 @@ function upgradeShop(index){
   shop.stock=
     Math.min(
       100,
-      (shop.stock||0)+15
+      shop.stock+15
     );
 
   game.reputation+=2;
@@ -4012,6 +4467,7 @@ function renovateShop(index){
     );
 
     return;
+
   }
 
   game.cash-=750;
@@ -4030,7 +4486,9 @@ function renovateShop(index){
   game.reputation+=2;
 
   saveGame();
+
   render();
+
   openShop(index);
 
   toast(
@@ -4050,6 +4508,7 @@ function advertiseShop(index){
     );
 
     return;
+
   }
 
   game.cash-=500;
@@ -4066,7 +4525,9 @@ function advertiseShop(index){
   game.reputation+=1;
 
   saveGame();
+
   render();
+
   openShop(index);
 
   toast(
@@ -4084,6 +4545,7 @@ function orderStock(index){
     );
 
     return;
+
   }
 
   game.cash-=250;
@@ -4091,13 +4553,15 @@ function orderStock(index){
   game.stores[index].stock=
     Math.min(
       game.stores[index].maxStock||100,
-      (game.stores[index].stock||0)+35
+      game.stores[index].stock+35
     );
 
   spawnDeliveryForStore(index);
 
   saveGame();
+
   render();
+
   openShop(index);
 
   toast(
@@ -4115,9 +4579,11 @@ function openShops(){
     (shop,index)=>{
 
       html+=`
+
         <button
           class="actionButton"
-          onclick="openShop(${index})">
+          onclick="openShop(${index})"
+        >
           ${escapeHtml(shop.name)}
           —
           Lv ${shop.level}
@@ -4125,6 +4591,7 @@ function openShops(){
           ${Math.floor(shop.customers)}
           customers
         </button>
+
       `;
 
     }
@@ -4153,11 +4620,15 @@ function openProperty(index){
     );
 
     return;
+
   }
 
   openPanel(`
 
-    <h2>🏚️ ${escapeHtml(property.name)}</h2>
+    <h2>
+      🏚️
+      ${escapeHtml(property.name)}
+    </h2>
 
     <p>
       This abandoned property can be renovated
@@ -4166,12 +4637,15 @@ function openProperty(index){
 
     <p>
       Purchase price:
-      <b>£${property.price.toLocaleString()}</b>
+      <b>
+        £${property.price.toLocaleString()}
+      </b>
     </p>
 
     <button
       class="actionButton green"
-      onclick="buyProperty(${index})">
+      onclick="buyProperty(${index})"
+    >
       🏪 Buy & Rebuild —
       £${property.price.toLocaleString()}
     </button>
@@ -4199,6 +4673,7 @@ function buyProperty(index){
       );
 
     return;
+
   }
 
   if(
@@ -4212,6 +4687,7 @@ function buyProperty(index){
     );
 
     return;
+
   }
 
   game.cash-=
@@ -4275,21 +4751,54 @@ function buyProperty(index){
 
 }
 
+function storeIndexForSlot(
+  slotIndex
+){
+
+  if(slotIndex===0)
+    return 0;
+
+  const property=
+    game.properties[
+      slotIndex-1
+    ];
+
+  if(
+    property&&
+    property.bought
+  )
+    return property.storeIndex;
+
+  return null;
+
+}
+
 /* =========================================================
-   STAFF
+   STAFF PANEL
 ========================================================= */
 
 function openStaff(){
 
-  let html=
-    "<h2>👷 Your Staff</h2>"+
-    "<p>Good employees improve your stores.</p>";
+  let html=`
+
+    <h2>👷 Your Staff</h2>
+
+    <p>
+      Employees improve your company.
+      Special employees can also generate
+      direct income.
+    </p>
+
+  `;
 
   if(
     game.staff.length===0
-  )
+  ){
+
     html+=
       "<p>No employees hired yet.</p>";
+
+  }
 
   game.staff.forEach(
     person=>{
@@ -4323,6 +4832,17 @@ function openStaff(){
           ⭐
           ${escapeHtml(person.trait)}
 
+          ${
+            person.incomeBonus
+            ?
+            `
+              <div class="staffIncome">
+                💰 +£${person.incomeBonus}/second
+              </div>
+            `
+            :""
+          }
+
         </div>
 
       `;
@@ -4335,18 +4855,68 @@ function openStaff(){
       p=>p.name==="Adam"
     );
 
-  html+=
-    alreadyHasAdam
-    ?
-      "<p>Adam is already working for you.</p>"
-    :
-      `
-      <button
-        class="actionButton green"
-        onclick="hireAdam()">
-        👨‍💼 Hire Adam — £1,000
-      </button>
-      `;
+  if(alreadyHasAdam){
+
+    html+=`
+
+      <div class="staffCard">
+
+        <strong>
+          👨‍💼 Adam
+        </strong>
+
+        <div class="staffIncome">
+          💰 Adam generates
+          +£50 per second
+        </div>
+
+        <p>
+          Adam is already employed by your company.
+        </p>
+
+      </div>
+
+    `;
+
+  }else{
+
+    html+=`
+
+      <div class="staffCard">
+
+        <strong>
+          👨‍💼 Adam
+        </strong>
+
+        <p>
+          Age 18 • Natural Manager
+        </p>
+
+        <p>
+          Intelligence 100<br>
+          Management 95<br>
+          Stocking 65<br>
+          Customer Service 72<br>
+          Problem Solving 100
+        </p>
+
+        <div class="staffIncome">
+          💰 Generates +£50 per second
+        </div>
+
+        <button
+          class="actionButton green"
+          onclick="hireAdam()"
+        >
+          👨‍💼 Hire Adam —
+          £100,000
+        </button>
+
+      </div>
+
+    `;
+
+  }
 
   openPanel(html);
 
@@ -4354,27 +4924,44 @@ function openStaff(){
 
 function hireAdam(){
 
-  if(game.cash<1000){
+  if(
+    game.staff.some(
+      p=>p.name==="Adam"
+    )
+  ){
 
     toast(
-      "❌ You need £1,000."
+      "Adam already works for you."
     );
 
     return;
+
   }
 
-  game.cash-=1000;
+  if(game.cash<100000){
+
+    toast(
+      "❌ Adam costs £100,000."
+    );
+
+    return;
+
+  }
+
+  game.cash-=100000;
 
   game.staff.push({
     ...ADAM
   });
 
   saveGame();
+
   render();
+
   openStaff();
 
   toast(
-    "👨‍💼 Adam joined your company!"
+    "👨‍💼 Adam joined your company! +£50/s"
   );
 
 }
@@ -4385,9 +4972,30 @@ function hireAdam(){
 
 function renderRival(){
 
-  document.getElementById(
-    "rivalCustomerLabel"
-  ).textContent=
+  const label=
+    document.getElementById(
+      "rivalCustomerLabel"
+    );
+
+  if(
+    game.rival.health<=0&&
+    game.rival.customers<=0
+  ){
+
+    label.textContent=
+      "👑 YOUR COMPANY";
+
+    label.style.background=
+      "#57400f";
+
+    label.style.borderColor=
+      "#e0b83e";
+
+    return;
+
+  }
+
+  label.textContent=
     "🔴 "+
     Math.floor(
       game.rival.customers
@@ -4418,17 +5026,27 @@ function openRival(){
 
       <div class="miniStat">
         <small>CUSTOMERS</small>
-        <b>${Math.floor(game.rival.customers)}</b>
+        <b>
+          ${Math.floor(
+            game.rival.customers
+          )}
+        </b>
       </div>
 
       <div class="miniStat">
         <small>HEALTH</small>
-        <b>${Math.floor(game.rival.health)}%</b>
+        <b>
+          ${Math.floor(
+            game.rival.health
+          )}%
+        </b>
       </div>
 
       <div class="miniStat">
         <small>MARKET</small>
-        <b>${game.rival.marketShare.toFixed(1)}%</b>
+        <b>
+          ${game.rival.marketShare.toFixed(1)}%
+        </b>
       </div>
 
     </div>
@@ -4440,7 +5058,8 @@ function openRival(){
 
     <button
       class="actionButton red"
-      onclick="attackRival()">
+      onclick="attackRival()"
+    >
       ⚔️ Attack King's Mart
     </button>
 
@@ -4455,8 +5074,10 @@ function openRival(){
 
       <button
         class="actionButton green"
-        onclick="buyRival()">
-        👑 Buy King's Mart — £9,000
+        onclick="buyRival()"
+      >
+        👑 Buy King's Mart —
+        £9,000
       </button>
 
     `;
@@ -4479,6 +5100,7 @@ function attackRival(){
     );
 
     return;
+
   }
 
   const loss=
@@ -4521,8 +5143,11 @@ function attackRival(){
   rivalAI();
 
   saveGame();
+
   render();
+
   createPeople();
+
   openRival();
 
   toast(
@@ -4544,6 +5169,7 @@ function buyRival(){
     );
 
     return;
+
   }
 
   if(game.cash<9000){
@@ -4553,13 +5179,18 @@ function buyRival(){
     );
 
     return;
+
   }
 
   game.cash-=9000;
 
   game.rival.customers=0;
+
   game.rival.health=0;
+
   game.rival.marketShare=0;
+
+  game.rival.stage="OWNED";
 
   game.marketShare=
     Math.min(
@@ -4569,13 +5200,36 @@ function buyRival(){
 
   game.reputation+=10;
 
+  /*
+    KING'S MART BECOMES YOURS
+  */
+
+  document
+    .getElementById(
+      "kingsHQ"
+    )
+    .classList.add(
+      "ownedByPlayer"
+    );
+
+  document
+    .getElementById(
+      "kingsExpress"
+    )
+    .classList.add(
+      "ownedByPlayer"
+    );
+
   saveGame();
+
   render();
+
   createPeople();
+
   closePanel();
 
   toast(
-    "👑 You bought King's Mart!"
+    "👑 King's Mart is now YOURS!"
   );
 
 }
@@ -4600,11 +5254,13 @@ function openCompany(){
       class="input"
       maxlength="28"
       value="${escapeHtml(game.company)}"
-      placeholder="Company name">
+      placeholder="Company name"
+    >
 
     <button
       class="actionButton green"
-      onclick="saveCompanyName()">
+      onclick="saveCompanyName()"
+    >
       💾 Save Company Name
     </button>
 
@@ -4634,7 +5290,8 @@ function openCompany(){
 
     <button
       class="actionButton"
-      onclick="saveGame();toast('💾 Game saved!')">
+      onclick="saveGame();toast('💾 Game saved!')"
+    >
       💾 Save Game
     </button>
 
@@ -4662,6 +5319,7 @@ function saveCompanyName(){
     );
 
     return;
+
   }
 
   game.company=name;
@@ -4683,13 +5341,13 @@ function showCity(){
   closePanel();
 
   toast(
-    "🗺️ Tap your shops, abandoned buildings or King's Mart."
+    "🗺️ Drag the city to explore. Pinch or use +/− to zoom."
   );
 
 }
 
 /* =========================================================
-   BUILDING RENDER
+   BUILDINGS
 ========================================================= */
 
 function renderBuildings(){
@@ -4783,9 +5441,7 @@ function renderBuildings(){
 
           setStateBadge(
             el,
-            computeShopState(
-              shop
-            )
+            computeShopState(shop)
           );
 
           setStockBadge(
@@ -4823,6 +5479,31 @@ function renderBuildings(){
     }
   );
 
+  /*
+    Keep King's Mart ownership visual after loading.
+  */
+
+  const owned=
+    game.rival.stage==="OWNED";
+
+  document
+    .getElementById(
+      "kingsHQ"
+    )
+    .classList.toggle(
+      "ownedByPlayer",
+      owned
+    );
+
+  document
+    .getElementById(
+      "kingsExpress"
+    )
+    .classList.toggle(
+      "ownedByPlayer",
+      owned
+    );
+
 }
 
 function setStockBadge(
@@ -4851,9 +5532,7 @@ function setStockBadge(
 
   badge.textContent=
     "📦 "+
-    Math.floor(
-      stock||0
-    )+
+    Math.floor(stock||0)+
     "% stock";
 
 }
@@ -4896,21 +5575,21 @@ function setStateBadge(
 
 function clearBadges(el){
 
-  const s=
+  const stock=
     el.querySelector(
       ".stockBadge"
     );
 
-  if(s)
-    s.remove();
+  if(stock)
+    stock.remove();
 
-  const st=
+  const state=
     el.querySelector(
       ".stateBadge"
     );
 
-  if(st)
-    st.remove();
+  if(state)
+    state.remove();
 
 }
 
@@ -5008,45 +5687,795 @@ function randomEvent(){
 }
 
 /* =========================================================
-   MAIN LOOP
+   CAMERA
+   CLASH OF CLANS STYLE
 ========================================================= */
 
-let lastLoop=
-  performance.now();
+const camera={
 
-function gameLoop(now){
+  x:0,
 
-  const dt=
-    Math.min(
-      0.25,
-      (now-lastLoop)/1000
+  y:0,
+
+  zoom:1,
+
+  minZoom:1,
+
+  maxZoom:2.5
+
+};
+
+let cameraStart=null;
+
+let pinchStart=null;
+
+let movedDuringGesture=false;
+
+let suppressWorldClick=false;
+
+function getWorldSize(){
+
+  const world=
+    document.getElementById(
+      "world"
     );
 
-  lastLoop=now;
+  return{
 
-  game.cash+=
-    getIncome()*dt;
+    width:
+      world.clientWidth,
 
-  updateCustomers(dt);
-  updateStock(dt);
-  updateRival(dt);
+    height:
+      world.clientHeight
 
-  updateCars(dt);
-  updatePedestrians(dt);
-  updateDeliveries(dt);
+  };
 
-  renderCars();
-  renderPedestrians();
-  renderRival();
+}
 
-  requestAnimationFrame(
-    gameLoop
+function clampCamera(){
+
+  const size=
+    getWorldSize();
+
+  const content=
+    document.getElementById(
+      "worldContent"
+    );
+
+  const width=
+    content.offsetWidth*
+    camera.zoom;
+
+  const height=
+    content.offsetHeight*
+    camera.zoom;
+
+  /*
+    Allow the player to move around the entire
+    city but never drag the map completely away.
+  */
+
+  const maxX=
+    Math.max(
+      0,
+      width-size.width
+    );
+
+  const maxY=
+    Math.max(
+      0,
+      height-size.height
+    );
+
+  camera.x=
+    Math.min(
+      maxX,
+      Math.max(
+        0,
+        camera.x
+      )
+    );
+
+  camera.y=
+    Math.min(
+      maxY,
+      Math.max(
+        0,
+        camera.y
+      )
+    );
+
+}
+
+function applyCamera(){
+
+  clampCamera();
+
+  const content=
+    document.getElementById(
+      "worldContent"
+    );
+
+  content.style.transform=
+    "translate("+
+    (-camera.x)+
+    "px,"+
+    (-camera.y)+
+    "px) scale("+
+    camera.zoom+
+    ")";
+
+}
+
+function zoomAt(
+  newZoom,
+  screenX,
+  screenY
+){
+
+  const oldZoom=
+    camera.zoom;
+
+  newZoom=
+    Math.max(
+      camera.minZoom,
+      Math.min(
+        camera.maxZoom,
+        newZoom
+      )
+    );
+
+  if(
+    newZoom===
+    oldZoom
+  )
+    return;
+
+  /*
+    Keep the point under the user's finger
+    in the same place while zooming.
+  */
+
+  const worldX=
+    (
+      camera.x+
+      screenX
+    )/
+    oldZoom;
+
+  const worldY=
+    (
+      camera.y+
+      screenY
+    )/
+    oldZoom;
+
+  camera.zoom=
+    newZoom;
+
+  camera.x=
+    worldX*
+    newZoom-
+    screenX;
+
+  camera.y=
+    worldY*
+    newZoom-
+    screenY;
+
+  applyCamera();
+
+}
+
+function zoomIn(){
+
+  const world=
+    document.getElementById(
+      "world"
+    );
+
+  zoomAt(
+    camera.zoom+0.2,
+    world.clientWidth/2,
+    world.clientHeight/2
   );
 
 }
 
+function zoomOut(){
+
+  const world=
+    document.getElementById(
+      "world"
+    );
+
+  zoomAt(
+    camera.zoom-0.2,
+    world.clientWidth/2,
+    world.clientHeight/2
+  );
+
+}
+
+function resetCamera(){
+
+  camera.zoom=1;
+
+  camera.x=0;
+
+  camera.y=0;
+
+  applyCamera();
+
+}
+
+function distanceBetweenTouches(
+  a,
+  b
+){
+
+  return Math.hypot(
+    a.clientX-b.clientX,
+    a.clientY-b.clientY
+  );
+
+}
+
+function midpointTouches(
+  a,
+  b
+){
+
+  return{
+
+    x:
+      (a.clientX+b.clientX)/
+      2,
+
+    y:
+      (a.clientY+b.clientY)/
+      2
+
+  };
+
+}
+
 /* =========================================================
-   TOP RENDER
+   TOUCH CAMERA
+========================================================= */
+
+const worldElement=
+  document.getElementById(
+    "world"
+  );
+
+worldElement.addEventListener(
+  "touchstart",
+  event=>{
+
+    if(
+      event.target.closest(
+        "button,input,#panel"
+      )
+    )
+      return;
+
+    if(
+      event.touches.length===1
+    ){
+
+      const t=
+        event.touches[0];
+
+      cameraStart={
+
+        x:t.clientX,
+
+        y:t.clientY,
+
+        cameraX:camera.x,
+
+        cameraY:camera.y
+
+      };
+
+      movedDuringGesture=false;
+
+      worldElement.classList.add(
+        "dragging"
+      );
+
+    }
+
+    else if(
+      event.touches.length===2
+    ){
+
+      pinchStart={
+
+        distance:
+          distanceBetweenTouches(
+            event.touches[0],
+            event.touches[1]
+          ),
+
+        zoom:camera.zoom,
+
+        midpoint:
+          midpointTouches(
+            event.touches[0],
+            event.touches[1]
+          ),
+
+        cameraX:camera.x,
+
+        cameraY:camera.y
+
+      };
+
+      cameraStart=null;
+
+      movedDuringGesture=true;
+
+    }
+
+  },
+  {passive:true}
+);
+
+worldElement.addEventListener(
+  "touchmove",
+  event=>{
+
+    if(
+      event.target.closest(
+        "button,input,#panel"
+      )
+    )
+      return;
+
+    if(
+      event.touches.length===1&&
+      cameraStart
+    ){
+
+      const t=
+        event.touches[0];
+
+      const dx=
+        t.clientX-
+        cameraStart.x;
+
+      const dy=
+        t.clientY-
+        cameraStart.y;
+
+      if(
+        Math.abs(dx)>4||
+        Math.abs(dy)>4
+      ){
+
+        movedDuringGesture=true;
+
+      }
+
+      camera.x=
+        cameraStart.cameraX-
+        dx;
+
+      camera.y=
+        cameraStart.cameraY-
+        dy;
+
+      applyCamera();
+
+    }
+
+    else if(
+      event.touches.length===2&&
+      pinchStart
+    ){
+
+      const distance=
+        distanceBetweenTouches(
+          event.touches[0],
+          event.touches[1]
+        );
+
+      const ratio=
+        distance/
+        Math.max(
+          1,
+          pinchStart.distance
+        );
+
+      const newZoom=
+        pinchStart.zoom*
+        ratio;
+
+      const mid=
+        midpointTouches(
+          event.touches[0],
+          event.touches[1]
+        );
+
+      camera.zoom=
+        Math.max(
+          camera.minZoom,
+          Math.min(
+            camera.maxZoom,
+            newZoom
+          )
+        );
+
+      const oldZoom=
+        pinchStart.zoom;
+
+      camera.x=
+        (
+          pinchStart.cameraX+
+          mid.x
+        )/
+        oldZoom*
+        camera.zoom-
+        mid.x;
+
+      camera.y=
+        (
+          pinchStart.cameraY+
+          mid.y
+        )/
+        oldZoom*
+        camera.zoom-
+        mid.y;
+
+      applyCamera();
+
+    }
+
+  },
+  {passive:true}
+);
+
+worldElement.addEventListener(
+  "touchend",
+  event=>{
+
+    worldElement.classList.remove(
+      "dragging"
+    );
+
+    if(
+      movedDuringGesture
+    ){
+
+      suppressWorldClick=true;
+
+      setTimeout(
+        ()=>{
+          suppressWorldClick=false;
+        },
+        100
+      );
+
+    }
+
+    cameraStart=null;
+
+    if(
+      event.touches.length<2
+    )
+      pinchStart=null;
+
+  },
+  {passive:true}
+);
+
+/* =========================================================
+   MOUSE CAMERA
+========================================================= */
+
+let mouseCamera=null;
+
+worldElement.addEventListener(
+  "mousedown",
+  event=>{
+
+    if(event.button!==0)
+      return;
+
+    if(
+      event.target.closest(
+        "button,input,#panel"
+      )
+    )
+      return;
+
+    mouseCamera={
+
+      x:event.clientX,
+
+      y:event.clientY,
+
+      cameraX:camera.x,
+
+      cameraY:camera.y
+
+    };
+
+    movedDuringGesture=false;
+
+    worldElement.classList.add(
+      "dragging"
+    );
+
+  }
+);
+
+window.addEventListener(
+  "mousemove",
+  event=>{
+
+    if(!mouseCamera)
+      return;
+
+    const dx=
+      event.clientX-
+      mouseCamera.x;
+
+    const dy=
+      event.clientY-
+      mouseCamera.y;
+
+    if(
+      Math.abs(dx)>4||
+      Math.abs(dy)>4
+    )
+      movedDuringGesture=true;
+
+    camera.x=
+      mouseCamera.cameraX-
+      dx;
+
+    camera.y=
+      mouseCamera.cameraY-
+      dy;
+
+    applyCamera();
+
+  }
+);
+
+window.addEventListener(
+  "mouseup",
+  ()=>{
+
+    if(!mouseCamera)
+      return;
+
+    worldElement.classList.remove(
+      "dragging"
+    );
+
+    if(
+      movedDuringGesture
+    ){
+
+      suppressWorldClick=true;
+
+      setTimeout(
+        ()=>{
+          suppressWorldClick=false;
+        },
+        100
+      );
+
+    }
+
+    mouseCamera=null;
+
+  }
+);
+
+/* Mouse wheel zoom */
+
+worldElement.addEventListener(
+  "wheel",
+  event=>{
+
+    event.preventDefault();
+
+    const rect=
+      worldElement.getBoundingClientRect();
+
+    const x=
+      event.clientX-
+      rect.left;
+
+    const y=
+      event.clientY-
+      rect.top;
+
+    zoomAt(
+      camera.zoom+
+      (
+        event.deltaY<0
+        ?0.12
+        :-0.12
+      ),
+      x,
+      y
+    );
+
+  },
+  {passive:false}
+);
+
+/* =========================================================
+   DON'T LET DRAGGING OPEN BUILDINGS
+========================================================= */
+
+worldElement.addEventListener(
+  "click",
+  event=>{
+
+    if(suppressWorldClick){
+
+      event.preventDefault();
+      event.stopPropagation();
+
+    }
+
+  },
+  true
+);
+
+/* =========================================================
+   DEBUG
+========================================================= */
+
+let logoTapCount=0;
+let logoTapTimer=null;
+
+function toggleDebug(){
+
+  DEBUG_MODE=
+    !DEBUG_MODE;
+
+  document
+    .getElementById(
+      "debugLayer"
+    )
+    .classList.toggle(
+      "on",
+      DEBUG_MODE
+    );
+
+  document
+    .getElementById(
+      "debugBadge"
+    )
+    .classList.toggle(
+      "on",
+      DEBUG_MODE
+    );
+
+  toast(
+    DEBUG_MODE
+    ?"🐞 Debug mode ON"
+    :"🐞 Debug mode OFF"
+  );
+
+}
+
+document
+  .getElementById(
+    "logoTap"
+  )
+  .addEventListener(
+    "click",
+    ()=>{
+
+      logoTapCount++;
+
+      clearTimeout(
+        logoTapTimer
+      );
+
+      logoTapTimer=
+        setTimeout(
+          ()=>{
+            logoTapCount=0;
+          },
+          1500
+        );
+
+      if(
+        logoTapCount>=5
+      ){
+
+        logoTapCount=0;
+
+        toggleDebug();
+
+      }
+
+    }
+  );
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer=null;
+
+function toast(message){
+
+  const el=
+    document.getElementById(
+      "toast"
+    );
+
+  el.textContent=
+    message;
+
+  el.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toastTimer=
+    setTimeout(
+      ()=>{
+        el.classList.remove(
+          "show"
+        );
+      },
+      2800
+    );
+
+}
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(text){
+
+  return String(text)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+/* =========================================================
+   RENDER
 ========================================================= */
 
 function render(){
@@ -5095,13 +6524,10 @@ function render(){
 
   renderRival();
 
-  if(DEBUG_MODE)
-    renderDebug();
-
 }
 
 /* =========================================================
-   STARTUP
+   START
 ========================================================= */
 
 function initGame(){
@@ -5123,7 +6549,7 @@ function initGame(){
 
   saveGame();
 
-  validateCity();
+  applyCamera();
 
   setTimeout(
     ()=>{
@@ -5139,44 +6565,53 @@ function initGame(){
 
 }
 
-/* DEBUG TAP */
-document.getElementById(
-  "logoTap"
-).addEventListener(
-  "click",
-  ()=>{
+/* =========================================================
+   MAIN LOOP
+========================================================= */
 
-    logoTapCount++;
+let lastLoop=
+  performance.now();
 
-    clearTimeout(
-      logoTapTimer
+function gameLoop(now){
+
+  const dt=
+    Math.min(
+      0.25,
+      (now-lastLoop)/1000
     );
 
-    logoTapTimer=
-      setTimeout(
-        ()=>{
-          logoTapCount=0;
-        },
-        1500
-      );
+  lastLoop=now;
 
-    if(
-      logoTapCount>=5
-    ){
+  game.cash+=
+    getIncome()*dt;
 
-      logoTapCount=0;
+  updateCustomers(dt);
 
-      toggleDebug();
+  updateStock(dt);
 
-    }
+  updateRival(dt);
 
-  }
-);
+  updateCars(dt);
 
-window.toggleDebug=
-  toggleDebug;
+  updatePedestrians(dt);
 
-/* TIMERS */
+  updateDeliveries(dt);
+
+  renderCars();
+
+  renderPedestrians();
+
+  renderRival();
+
+  requestAnimationFrame(
+    gameLoop
+  );
+
+}
+
+/* =========================================================
+   TIMERS
+========================================================= */
 
 setInterval(
   ()=>{
@@ -5206,12 +6641,15 @@ setInterval(
   1000
 );
 
-/* START */
+/* =========================================================
+   START GAME
+========================================================= */
 
 initGame();
 
 requestAnimationFrame(
   t=>{
+
     lastLoop=t;
 
     requestAnimationFrame(
